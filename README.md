@@ -1,6 +1,14 @@
 # qgis-expressions
 DUMP
 
+## TABLE OF CONTENTS
+
+1. [Symbology](#Symbology)
+
+2. [Labels](#Labels)
+
+3. [Extra](#Extra)
+
 ## Symbology
 
 Stack points by height (order by dem ascending)
