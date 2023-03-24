@@ -16,6 +16,7 @@ Calculate percent from top
 `round(((((y(@map_extent_center))+(@map_extent_height/2)-$y))/(@map_extent_height))*100) || '%'`
 
 ???
+
 `make_line(centroid($geometry),project(centroid($geometry),$length,radians((atan((xat(-1)-xat(0))/(yat(-1)-yat(0)))) * 180/3.14159 + (180 *(((yat(-1)-yat(0)) < 0) + (((xat(-1)-xat(0)) < 0 AND (yat(-1) - yat(0)) >0)*2))))))`
 
 Set color ramps
