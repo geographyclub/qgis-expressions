@@ -12,6 +12,11 @@ Snap points by rounding
 
 `make_point(round($x/100)*100,round($y/100)*100)`
 
+Calculate percent from top
+
+`round(((((y(@map_extent_center))+(@map_extent_height/2)-$y))/(@map_extent_height))*100) || '%'`
+
+
 ### Strings
 Delete english characters
 
@@ -22,6 +27,30 @@ Delete english characters
 Translate chinese featureclass
 
 `replace(replace(replace(replace(replace(replace(replace(replace(replace("featureclass",'A','境'),'H','水'),'L','区'),'P','位'),'R','路'),'S','点'),'T','山'),'U','海'),'V','卉')`
+
+Get sentence
+
+`substr("field_4",strpos("field_4",'\\.')+2,strpos(substr("field_4",strpos("field_4",'\\.')+2,200),'\\.'))`
+
+Get nth word
+
+`regexp_substr("point_tags", '^(?:\\S+\\s){0}(\\S+)')`
+
+`regexp_substr("ECO_NAME",'([^( ]*)$')`
+
+Add space/newline between characters
+
+`regexp_replace("Cls",'([A-Z])','\\1 ')`
+
+`regexp_replace("zh",'(.)','\\1\n')`
+
+Extract osm tags
+
+`replace(regexp_substr("other_tags",'(height"=>"[0-9]+\\.[0-9]+)'),'height"=>"','')`
+
+`replace(regexp_substr("other_tags",'(building:levels"=>"[0-9]+)'),'building:levels"=>"','')`
+
+`replace(regexp_substr("other_tags",'(addr:housenumber"=>"[1-9]{1,3})'),'addr:housenumber"=>"','')`
 
 ### Styling
 Set color ramps
