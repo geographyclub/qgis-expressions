@@ -5,7 +5,8 @@ DUMP
 
 1. [Symbology](#Symbology)
 2. [Labels](#Labels)
-3. [Extra](#Extra)
+3. [Print layout](#Print-layout)
+4. [Extras](#Extras)
 
 ## Symbology
 
@@ -372,7 +373,7 @@ Layout projection to atlas_feature
 
 `'PROJ:+proj=ortho +lat_0="[% attribute(@atlas_feature,LATITUDE) %]" +lon_0="[% attribute(@atlas_feature,LONGITUDE) %]" +ellps=sphere'`
 
-## Extra
+## Extras
 WWF codes
 
 ```
