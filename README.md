@@ -1,5 +1,5 @@
 # qgis-expressions
-DUMP
+My most used QGIS expressions.
 
 ## TABLE OF CONTENTS
 
