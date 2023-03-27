@@ -130,7 +130,7 @@ Projected line
 
 `angle_at_vertex(transform(make_line($geometry,translate($geometry,10,0)),'EPSG:4326','EPSG:53029'),1)`
 
-Point/Line from map center
+Point/line from map center
 
 `project($geometry,2,radians(angle_at_vertex(make_line(@map_extent_center,$geometry),0)))`
 
@@ -326,15 +326,32 @@ Get attribute
 
 `aggregate(layer:='ne_50m_admin_0_countries',aggregate:='concatenate',expression:="CONTINENT",filter:=intersects($geometry,@map_extent_center),concatenator:=' ') || '\n' || wordwrap("_ECO_NAME",20) || '\n1:' || format_number(@map_scale,0)`
 
-Label around geometry
+Get top ten in aray
+
+`[%replace(replace(array_to_string(array_slice(string_to_array(attribute(@atlas_feature,'geonames_mt')),0,9)),'{',''),'"','')%]`
+
+Place label around geometry
 
 `difference(@map_extent,$geometry)`
 
 `intersection($geometry,minimal_circle(@atlas_geometry))`
 
-Label along map extent
+Place label along map extent
 
 `make_line(make_point((x(@map_extent)-(@map_extent_width/3)),y_max(@map_extent)),make_point((x(@map_extent)-(@map_extent_width/3)),y_min(@map_extent)))`
+
+Distribute labels evenly
+
+`transform(smooth(make_line(make_point(-95,scale_linear("rank",1,10,50,45)), make_point(-85,scale_linear("rank",1,10,50,45)), make_point(-75,scale_linear("rank",1,10,50,45))),3),'ESRI:4326','EPSG:102010')`
+
+`transform(smooth(make_line(make_point(scale_linear("row",1,52,-66,-127),50), make_point(scale_linear("row",1,52,-66,-127),55), make_point(scale_linear("row",1,52,-66,-127),60)),3),'ESRI:4326','EPSG:102010')`
+
+HTML labels (check allow html formatting)
+
+```
+format('<span style="color:#d9d9d9">%1</span> <span style="color:#000">%2</span> <span style="color:#c0cbce">%3</span> <span style="color:#000">%4</span>', '⬛', format_number(minimum(to_real("age_median")),0) || '-' || format_number(q1(to_real("age_median")),0), '⬛', format_number(q1(to_real("age_median")),0) || '-' || format_number(median(to_real("age_median")),0))
+format('<span style="font-size:26pt">%1</span> <span style="font-size:18pt">%2</span>', '⬛', format_number("population"), '⬛', format_number("area"))
+```
 
 ## Print layout
 
