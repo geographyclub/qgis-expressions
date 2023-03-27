@@ -62,6 +62,10 @@ Make line from wind direction
 
 `make_line($geometry,project($geometry,("wind_sp"*0.1),(radians("wind_dir"))))`
 
+Make lines from center
+
+`make_line(centroid($geometry),project(centroid($geometry),0.1,radians(scale_linear((array_find(array_distinct(array_agg(expression:="id", filter:=intersects_bbox($geometry,@map_extent), order_by:=azimuth(@map_extent_center,(centroid($geometry))))),"id") + 1),1,30,0,360))))`
+
 ## Move
 
 Stack points by height (order by dem ascending)
@@ -243,8 +247,6 @@ Label direction from point
 Order angles from center (for distributing labels evenly in a circle)
 
 `(array_find(array_distinct(array_agg(expression:="id", filter:=intersects_bbox($geometry,@map_extent), order_by:=azimuth(@map_extent_center,(centroid($geometry))))),"id") + 1)`
-
-`make_line(centroid($geometry),project(centroid($geometry),0.1,radians(scale_linear((array_find(array_distinct(array_agg(expression:="id", filter:=intersects_bbox($geometry,@map_extent), order_by:=azimuth(@map_extent_center,(centroid($geometry))))),"id") + 1),1,30,0,360))))`
 
 ## Strings
 
