@@ -3,92 +3,70 @@ My most used QGIS expressions.
 
 ## TABLE OF CONTENTS
 
-1. [Symbology](#Symbology)
-2. [Labels](#Labels)
-3. [Print layout](#Print-layout)
-4. [Extras](#Extras)
+1. [Make](#Make)
+2. [Move](#Move)
+3. [Calculate](#Calculate)
+4. [Strings](#Strings)
+5. [Print layout](#Print-layout)
+6. [Extras](#Extras)
 
-## Symbology
+## Make
+
+Clipping with make_polygon
+
+`intersection($geometry, make_polygon(geom_from_wkt('LINESTRING(-180,-90 -180,90 180,90 180,-90)')))`
+
+
+Make points snap to grid by rounding
+
+`make_point(round($x/100)*100,round($y/100)*100)`
+
+Make line
+
+`make_line(centroid($geometry),project(centroid($geometry),$length,radians((atan((xat(-1)-xat(0))/(yat(-1)-yat(0)))) * 180/3.14159 + (180 *(((yat(-1)-yat(0)) < 0) + (((xat(-1)-xat(0)) < 0 AND (yat(-1) - yat(0)) >0)*2))))))`
+
+`make_line($geometry,make_point((x(@map_extent_center)-(@map_extent_width/4)),(y(@map_extent_center)-(@map_extent_height/4))))`
+
+`make_line($geometry,geometry(get_feature('jp_snap_labels','geonameid',
+attribute($currentfeature,'geonameid'))))`
+
+`make_line(centroid($geometry),geometry(get_feature('Citybike','STATION','Millennium Tower' )))`
+
+`make_line(centroid($geometry),make_point((x(@map_extent_center)+(@map_extent_width/2)),y(@map_extent_center)))`
+
+Make conditional line
+
+```
+CASE WHEN $x > x(@map_extent_center) THEN make_line($geometry,make_point((x(@map_extent_center)+(@map_extent_width/3)),$y))
+  ELSE make_line($geometry,make_point((x(@map_extent_center)-(@map_extent_width/3)),$y))
+END
+```
+
+Make point/line from map center
+
+`project($geometry,2,radians(angle_at_vertex(make_line(@map_extent_center,$geometry),0)))`
+
+`make_line($geometry,project($geometry,2,radians(angle_at_vertex(make_line(@map_extent_center,$geometry),0))))
+closest_point(exterior_ring(buffer(@map_extent_center,2)),$geometry)`
+
+`make_line(closest_point(exterior_ring(buffer(transform(@map_extent_center,'EPSG:4326','EPSG:53029'),2)),$geometry),$geometry)
+closest_point(boundary(buffer(@map_extent_center,(@map_extent_width/2.5))),$geometry)`
+
+Make point/line from geometry
+
+`line_interpolate_point((make_line($geometry,closest_point((boundary(buffer(geometry(get_feature(@mylayer1,@myfield1,@myvalue1)),3))),$geometry))),(length(make_line($geometry,closest_point((boundary(buffer(geometry(get_feature(@mylayer1,@myfield1,@myvalue1)),3))),$geometry)))/2))`
+
+`make_line($geometry,line_interpolate_point((make_line($geometry,closest_point((boundary(buffer(geometry(get_feature(@mylayer1,@myfield1,@myvalue1)),3))),$geometry))),(length(make_line($geometry,closest_point((boundary(buffer(geometry(get_feature(@mylayer1,@myfield1,@myvalue1)),3))),$geometry)))/2)))`
+
+Make line from wind direction
+
+`make_line($geometry,project($geometry,("wind_sp"*0.1),(radians("wind_dir"))))`
+
+## Move
 
 Stack points by height (order by dem ascending)
 
 `translate(make_point(round(x($geometry),1),round(y($geometry),1)),-clamp(0,"dem"*0.0002,0.5),clamp(0,"dem"*0.0002,0.5))`
-
-Snap points by rounding
-
-`make_point(round($x/100)*100,round($y/100)*100)`
-
-Calculate percent from top
-
-`round(((((y(@map_extent_center))+(@map_extent_height/2)-$y))/(@map_extent_height))*100) || '%'`
-
-???
-
-`make_line(centroid($geometry),project(centroid($geometry),$length,radians((atan((xat(-1)-xat(0))/(yat(-1)-yat(0)))) * 180/3.14159 + (180 *(((yat(-1)-yat(0)) < 0) + (((xat(-1)-xat(0)) < 0 AND (yat(-1) - yat(0)) >0)*2))))))`
-
-Set color ramps
-
-`ramp_color(@mycolorramp1,scale_linear(elev,@mymin1,@mymax1,0,1))`
-
-`set_color_part(ramp_color(@mycolorramp1,scale_linear(elev,@mymin1,@mymax1,0,1)),'alpha',@myalpha1)`
-
-```
-CASE WHEN DN >= 0 THEN ramp_color(@mycolorramp1,scale_linear("DN",@mymin1,@mymax1,0,1))
-  ELSE ramp_color(@mycolorramp2,scale_linear("DN",@mymin2,@mymax2,0,1))
-END
-```
-
-Odd & even
-
-`floor( $id / number_of_columns ) % 2 = 1`
-
-`floor( $id / number_of_columns ) % 2 = 0`
-
-Query angle
-
-`(atan((xat(-1)-xat(0))/(yat(-1)-yat(0)))) * 180/3.14159 + (180 *(((yat(-1)-yat(0)) < 0) + (((xat(-1)-xat(0)) < 0 AND (yat(-1) - yat(0)) >0)*2)))`
-
-Restrict angle
-
-```
-CASE WHEN ("line_direction" > 0 AND "line_direction" < 45) OR ("line_direction" > 135 AND "line_direction" < 225) OR ("line_direction" > 315) THEN 0
-  WHEN ("line_direction" >= 45 AND "line_direction" <= 135) OR ("line_direction" >= 225 AND "line_direction" <= 315) THEN 315
-  ELSE 0
-END
-```
-
-Get coordinates from top-left (0,0)
-
-`round(((((x(@map_extent_center))-(@map_extent_width/2)-$x))/(-@map_extent_width))*100) || '|' ||`
-
-`round(((((y(@map_extent_center))+(@map_extent_height/2)-$y))/(@map_extent_height))*100) || '|'`
-
-Select from map window
-
-`(@map_extent_width/3) > distance(centroid($geometry),@map_extent_center)`
-
-`intersects($geometry,buffer(@map_extent_center,0.5))`
-
-```
-x($geometry) > (x(@map_extent_center) - (@map_extent_width/4)) AND
-x($geometry) < (x(@map_extent_center) + (@map_extent_width/4)) AND
-y($geometry) > (y(@map_extent_center) - (@map_extent_height/4)) AND
-y($geometry) < (y(@map_extent_center) + (@map_extent_height/4))
-```
-
-```
-x($geometry) > (x(@map_extent_center) + (@map_extent_width*(-0.2))) AND
-x($geometry) < (x(@map_extent_center) + (@map_extent_width*(-0.1))) AND
-y($geometry) > (y(@map_extent_center) + (@map_extent_height*(-0.3))) AND
-y($geometry) < (y(@map_extent_center) + (@map_extent_height*(0.3)))
-```
-
-```
-x(transform($geometry, 'EPSG:4326', @map_crs)) > (x(@map_extent_center) - (@map_extent_width/4)) AND
-x(transform($geometry, 'EPSG:4326', @map_crs)) < (x(@map_extent_center) + (@map_extent_width/4)) AND
-y(transform($geometry, 'EPSG:4326', @map_crs)) > (y(@map_extent_center) - (@map_extent_height/4)) AND
-y(transform($geometry, 'EPSG:4326', @map_crs)) < (y(@map_extent_center) + (@map_extent_height/4))
-```
 
 Rotate
 
@@ -101,54 +79,138 @@ Extrude
 
 Align points
 
-`make_point(($x-($x-(x(@map_extent_center)-(@map_extent_width/3)))),$y)`
+```
+# align vertically
+make_point(($x-($x-(x(@map_extent_center)-(@map_extent_width/3)))),$y)
 
-`make_point(($x-($x-(x(@map_extent_center)-(@map_extent_width/3)))),round($y,1))`
+# align both ways
+make_point(($x-($x-(x(@map_extent_center)-(@map_extent_width/3)))),round($y,1))
+```
 
-Intersection with make_polygon
-
-`intersection($geometry, make_polygon(geom_from_wkt('LINESTRING(-180,-90 -180,90 180,90 180,-90)')))`
-
-Make line
-
-`make_line($geometry,make_point((x(@map_extent_center)-(@map_extent_width/4)),(y(@map_extent_center)-(@map_extent_height/4))))`
-
-`make_line($geometry,geometry(get_feature('jp_snap_labels','geonameid',
-attribute($currentfeature,'geonameid'))))`
-
-`make_line(centroid($geometry),geometry(get_feature('Citybike','STATION','Millennium Tower' )))`
-
-`make_line(centroid($geometry),make_point((x(@map_extent_center)+(@map_extent_width/2)),y(@map_extent_center)))`
+Rotate labels
 
 ```
-CASE WHEN $x > x(@map_extent_center) THEN make_line($geometry,make_point((x(@map_extent_center)+(@map_extent_width/3)),$y))
-  ELSE make_line($geometry,make_point((x(@map_extent_center)-(@map_extent_width/3)),$y))
+CASE WHEN "aspect" >= 0 AND "aspect" < 90 THEN scale_linear("aspect",0,90,350,360)
+  WHEN "aspect" >= 90 AND "aspect" < 180 THEN scale_linear("aspect",90,180,0,10)
+  WHEN "aspect" >= 180 AND "aspect" < 270 THEN scale_linear("aspect",180,270,170,180)
+  WHEN "aspect" >= 270 AND "aspect" < 360 THEN scale_linear("aspect",270,360,180,190)
+  ELSE 0
 END
 ```
 
-Projected line
+Project labels
+
+`azimuth(transform($geometry,'EPSG:4326','+proj=vandg +lon_0=0 +x_0=0 +y_0=0 +R_A +a=6371000 +b=6371000 +units=m no_defs'), translate(transform($geometry,'EPSG:4326','+proj=vandg +lon_0=0 +x_0=0 +y_0=0 +R_A +a=6371000 +b=6371000 +units=m no_defs'),0,1))`
+
+Arrange labels around map
+
+```
+"degrees" LIKE '%0' AND "direction" IN ('N','S') AND
+(x($geometry) > (x(@map_extent_center) + (@map_extent_width/2.5)) OR x($geometry) < (x(@map_extent_center) - (@map_extent_width/2.5))) AND
+(y($geometry) > (y(@map_extent_center) - (@map_extent_height/2.5)) AND y($geometry) < (y(@map_extent_center) + (@map_extent_height/2.5)))
+```
+
+Arrange labels
+
+`scale_linear(y($geometry),(y(@map_extent_center)-(@map_extent_height)),(y(@map_extent_center)+(@map_extent_height)),(y(@map_extent_center)-(@map_extent_height/1)),(y(@map_extent_center)+(@map_extent_height/3)))`
+
+Place label around geometry
+
+`difference(@map_extent,$geometry)`
+
+`intersection($geometry,minimal_circle(@atlas_geometry))`
+
+Place label along map extent
+
+`make_line(make_point((x(@map_extent)-(@map_extent_width/3)),y_max(@map_extent)),make_point((x(@map_extent)-(@map_extent_width/3)),y_min(@map_extent)))`
+
+Distribute labels evenly
+
+`transform(smooth(make_line(make_point(-95,scale_linear("rank",1,10,50,45)), make_point(-85,scale_linear("rank",1,10,50,45)), make_point(-75,scale_linear("rank",1,10,50,45))),3),'ESRI:4326','EPSG:102010')`
+
+`transform(smooth(make_line(make_point(scale_linear("row",1,52,-66,-127),50), make_point(scale_linear("row",1,52,-66,-127),55), make_point(scale_linear("row",1,52,-66,-127),60)),3),'ESRI:4326','EPSG:102010')`
+
+## Calculate
+
+Calculate percent from top
+
+`round(((((y(@map_extent_center))+(@map_extent_height/2)-$y))/(@map_extent_height))*100) || '%'`
+
+Color ramps
+
+```
+# color ramp by variable
+ramp_color(@mycolorramp1,scale_linear(elev,@mymin1,@mymax1,0,1))
+
+# set alpha
+set_color_part(ramp_color(@mycolorramp1,scale_linear(elev,@mymin1,@mymax1,0,1)),'alpha',@myalpha1)
+
+# conditional color ramps
+CASE WHEN DN >= 0 THEN ramp_color(@mycolorramp1,scale_linear("DN",@mymin1,@mymax1,0,1))
+  ELSE ramp_color(@mycolorramp2,scale_linear("DN",@mymin2,@mymax2,0,1))
+END
+```
+
+Odd & even columns
+
+```
+# odd columns
+floor( $id / number_of_columns ) % 2 = 1
+
+# even columns
+floor( $id / number_of_columns ) % 2 = 0
+```
+
+Calculate angle
+
+`(atan((xat(-1)-xat(0))/(yat(-1)-yat(0)))) * 180/3.14159 + (180 *(((yat(-1)-yat(0)) < 0) + (((xat(-1)-xat(0)) < 0 AND (yat(-1) - yat(0)) >0)*2)))`
+
+Conditional angles
+
+```
+CASE WHEN ("line_direction" > 0 AND "line_direction" < 45) OR ("line_direction" > 135 AND "line_direction" < 225) OR ("line_direction" > 315) THEN 0
+  WHEN ("line_direction" >= 45 AND "line_direction" <= 135) OR ("line_direction" >= 225 AND "line_direction" <= 315) THEN 315
+  ELSE 0
+END
+```
+
+Calculate angle from projected line
 
 `angle_at_vertex(transform(make_line($geometry,translate($geometry,10,0)),'EPSG:4326','EPSG:53029'),1)`
 
-Point/line from map center
+Get coordinates from top-left (0,0)
 
-`project($geometry,2,radians(angle_at_vertex(make_line(@map_extent_center,$geometry),0)))`
+`round(((((x(@map_extent_center))-(@map_extent_width/2)-$x))/(-@map_extent_width))*100) || '|' ||`
 
-`make_line($geometry,project($geometry,2,radians(angle_at_vertex(make_line(@map_extent_center,$geometry),0))))
-closest_point(exterior_ring(buffer(@map_extent_center,2)),$geometry)`
+`round(((((y(@map_extent_center))+(@map_extent_height/2)-$y))/(@map_extent_height))*100) || '|'`
 
-`make_line(closest_point(exterior_ring(buffer(transform(@map_extent_center,'EPSG:4326','EPSG:53029'),2)),$geometry),$geometry)
-closest_point(boundary(buffer(@map_extent_center,(@map_extent_width/2.5))),$geometry)`
+Intersecting with map window
 
-Point/line from geometry
+```
+# using distance
+(@map_extent_width/3) > distance(centroid($geometry),@map_extent_center)
 
-`line_interpolate_point((make_line($geometry,closest_point((boundary(buffer(geometry(get_feature(@mylayer1,@myfield1,@myvalue1)),3))),$geometry))),(length(make_line($geometry,closest_point((boundary(buffer(geometry(get_feature(@mylayer1,@myfield1,@myvalue1)),3))),$geometry)))/2))`
+# using buffer
+intersects($geometry,buffer(@map_extent_center,0.5))
 
-`make_line($geometry,line_interpolate_point((make_line($geometry,closest_point((boundary(buffer(geometry(get_feature(@mylayer1,@myfield1,@myvalue1)),3))),$geometry))),(length(make_line($geometry,closest_point((boundary(buffer(geometry(get_feature(@mylayer1,@myfield1,@myvalue1)),3))),$geometry)))/2)))`
+# using square
+x($geometry) > (x(@map_extent_center) - (@map_extent_width/4)) AND
+x($geometry) < (x(@map_extent_center) + (@map_extent_width/4)) AND
+y($geometry) > (y(@map_extent_center) - (@map_extent_height/4)) AND
+y($geometry) < (y(@map_extent_center) + (@map_extent_height/4))
 
-Line from wind_dir
+# using rectangle
+x(transform($geometry, 'EPSG:4326', @map_crs)) > (x(@map_extent_center) - (@map_extent_width/4)) AND
+x(transform($geometry, 'EPSG:4326', @map_crs)) < (x(@map_extent_center) + (@map_extent_width/4)) AND
+y(transform($geometry, 'EPSG:4326', @map_crs)) > (y(@map_extent_center) - (@map_extent_height/4)) AND
+y(transform($geometry, 'EPSG:4326', @map_crs)) < (y(@map_extent_center) + (@map_extent_height/4))
 
-`make_line($geometry,project($geometry,("wind_sp"*0.1),(radians("wind_dir"))))`
+# using percentages
+x($geometry) > (x(@map_extent_center) + (@map_extent_width*(-0.2))) AND
+x($geometry) < (x(@map_extent_center) + (@map_extent_width*(-0.1))) AND
+y($geometry) > (y(@map_extent_center) + (@map_extent_height*(-0.3))) AND
+y($geometry) < (y(@map_extent_center) + (@map_extent_height*(0.3)))
+```
 
 Geometry-based offset
 
@@ -172,7 +234,19 @@ CASE WHEN intersects($geometry,geometry(get_feature('ne_10m_land','featurecla','
 END
 ```
 
-## Labels
+Label direction from point
+
+`line_interpolate_angle(make_line(make_point(x($geometry),y($geometry)),make_point((x(@map_extent_center)+(@map_extent_width/2)),y(@map_extent_center))),10)+270`
+
+`angle_at_vertex(intersection(@map_extent,smooth($geometry,1)),(num_points(intersection(@map_extent,smooth($geometry,1)))/2))-90`
+
+Order angles from center (for distributing labels evenly in a circle)
+
+`(array_find(array_distinct(array_agg(expression:="id", filter:=intersects_bbox($geometry,@map_extent), order_by:=azimuth(@map_extent_center,(centroid($geometry))))),"id") + 1)`
+
+`make_line(centroid($geometry),project(centroid($geometry),0.1,radians(scale_linear((array_find(array_distinct(array_agg(expression:="id", filter:=intersects_bbox($geometry,@map_extent), order_by:=azimuth(@map_extent_center,(centroid($geometry))))),"id") + 1),1,30,0,360))))`
+
+## Strings
 
 Delete english characters
 
@@ -208,17 +282,6 @@ Extract osm tags
 
 `replace(regexp_substr("other_tags",'(addr:housenumber"=>"[1-9]{1,3})'),'addr:housenumber"=>"','')`
 
-Rotate labels
-
-```
-CASE WHEN "aspect" >= 0 AND "aspect" < 90 THEN scale_linear("aspect",0,90,350,360)
-  WHEN "aspect" >= 90 AND "aspect" < 180 THEN scale_linear("aspect",90,180,0,10)
-  WHEN "aspect" >= 180 AND "aspect" < 270 THEN scale_linear("aspect",180,270,170,180)
-  WHEN "aspect" >= 270 AND "aspect" < 360 THEN scale_linear("aspect",270,360,180,190)
-  ELSE 0
-END
-```
-
 Ascii symbols from aspect
 
 ```
@@ -241,28 +304,6 @@ CASE WHEN "aspectmean" >= 0 AND "aspectmean" < 90 THEN '\\'
   ELSE '/'
 END
 ```
-
-Project labels
-
-`azimuth(transform($geometry,'EPSG:4326','+proj=vandg +lon_0=0 +x_0=0 +y_0=0 +R_A +a=6371000 +b=6371000 +units=m no_defs'), translate(transform($geometry,'EPSG:4326','+proj=vandg +lon_0=0 +x_0=0 +y_0=0 +R_A +a=6371000 +b=6371000 +units=m no_defs'),0,1))`
-
-Label direction from point
-
-`line_interpolate_angle(make_line(make_point(x($geometry),y($geometry)),make_point((x(@map_extent_center)+(@map_extent_width/2)),y(@map_extent_center))),10)+270`
-
-`angle_at_vertex(intersection(@map_extent,smooth($geometry,1)),(num_points(intersection(@map_extent,smooth($geometry,1)))/2))-90`
-
-Arrange labels around map
-
-```
-"degrees" LIKE '%0' AND "direction" IN ('N','S') AND
-(x($geometry) > (x(@map_extent_center) + (@map_extent_width/2.5)) OR x($geometry) < (x(@map_extent_center) - (@map_extent_width/2.5))) AND
-(y($geometry) > (y(@map_extent_center) - (@map_extent_height/2.5)) AND y($geometry) < (y(@map_extent_center) + (@map_extent_height/2.5)))
-```
-
-Arrange labels
-
-`scale_linear(y($geometry),(y(@map_extent_center)-(@map_extent_height)),(y(@map_extent_center)+(@map_extent_height)),(y(@map_extent_center)-(@map_extent_height/1)),(y(@map_extent_center)+(@map_extent_height/3)))`
 
 Aggregate
 
@@ -287,12 +328,6 @@ Enumerate features in extent
 `(array_find(array_distinct(array_agg(expression:="ECO_ID", filter:=intersects_bbox($geometry,@map_extent), order_by:="ECO_NAME")),"ECO_ID") + 1)`
 
 `aggregate(layer:='wwf_terr_ecos_3857',aggregate:='concatenate_unique',expression:='⬜ ' || (array_find(array_agg(expression:="ECO_NAME", filter:=intersects($geometry,@map_extent) AND $area >= '2500000000'), "ECO_NAME") + 1) || ' ' || "ECO_NAME",filter:=intersects($geometry,@map_extent) AND $area >= '2500000000',concatenator:='\n',order_by:="ECO_NAME")`
-
-Order angles from center (for distributing labels evenly in a circle)
-
-`(array_find(array_distinct(array_agg(expression:="id", filter:=intersects_bbox($geometry,@map_extent), order_by:=azimuth(@map_extent_center,(centroid($geometry))))),"id") + 1)`
-
-`make_line(centroid($geometry),project(centroid($geometry),0.1,radians(scale_linear((array_find(array_distinct(array_agg(expression:="id", filter:=intersects_bbox($geometry,@map_extent), order_by:=azimuth(@map_extent_center,(centroid($geometry))))),"id") + 1),1,30,0,360))))`
 
 Get attribute of geometry expression
 
@@ -329,22 +364,6 @@ Get attribute
 Get top ten in array
 
 `replace(replace(array_to_string(array_slice(string_to_array(attribute(@atlas_feature,'geonames_mt')),0,9)),'{',''),'"','')`
-
-Place label around geometry
-
-`difference(@map_extent,$geometry)`
-
-`intersection($geometry,minimal_circle(@atlas_geometry))`
-
-Place label along map extent
-
-`make_line(make_point((x(@map_extent)-(@map_extent_width/3)),y_max(@map_extent)),make_point((x(@map_extent)-(@map_extent_width/3)),y_min(@map_extent)))`
-
-Distribute labels evenly
-
-`transform(smooth(make_line(make_point(-95,scale_linear("rank",1,10,50,45)), make_point(-85,scale_linear("rank",1,10,50,45)), make_point(-75,scale_linear("rank",1,10,50,45))),3),'ESRI:4326','EPSG:102010')`
-
-`transform(smooth(make_line(make_point(scale_linear("row",1,52,-66,-127),50), make_point(scale_linear("row",1,52,-66,-127),55), make_point(scale_linear("row",1,52,-66,-127),60)),3),'ESRI:4326','EPSG:102010')`
 
 HTML labels (check allow html formatting)
 
