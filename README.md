@@ -16,6 +16,9 @@ Clipping with make_polygon
 
 `intersection($geometry, make_polygon(geom_from_wkt('LINESTRING(-180,-90 -180,90 180,90 180,-90)')))`
 
+Clipping with geometry
+
+`intersection($geometry,aggregate('ne_110m_land','collect',$geometry))`
 
 Make points snap to grid by rounding
 
