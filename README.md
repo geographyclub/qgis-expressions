@@ -324,6 +324,8 @@ Aggregate
 
 `intersects($geometry,aggregate('ne_50m_admin_0_map_subunits','collect',$geometry,intersects($geometry,@map_extent_center)))`
 
+`aggregate(layer:='bangkok_toronto_points_neighbourhoods_3857', aggregate:= 'concatenate', filter:=intersects($geometry,@map_extent), expression:= trim(eval(array_find(array_distinct(array_agg(expression:="ogc_fid", filter:=intersects($geometry,@map_extent), order_by:=$x)),"ogc_fid") + 1) || ' ' || "name" || '\n'), order_by:=$x)`
+
 Get attribute matching name
 
 `attribute(get_feature('puma2020_nyc','name',"name"), 'pop2020')`
