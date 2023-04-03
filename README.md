@@ -369,10 +369,7 @@ Get top ten in array
 
 HTML labels (check allow html formatting)
 
-```
-format('<span style="color:#d9d9d9">%1</span> <span style="color:#000">%2</span> <span style="color:#c0cbce">%3</span> <span style="color:#000">%4</span>', '⬛', format_number(minimum(to_real("age_median")),0) || '-' || format_number(q1(to_real("age_median")),0), '⬛', format_number(q1(to_real("age_median")),0) || '-' || format_number(median(to_real("age_median")),0))
-format('<span style="font-size:26pt">%1</span> <span style="font-size:18pt">%2</span>', '⬛', format_number("population"), '⬛', format_number("area"))
-```
+`format('<span style="color:#d9d9d9">%1</span> <span style="color:#000">%2</span> <span style="color:#c0cbce">%3</span> <span style="color:#000">%4</span>', '⬛', format_number(minimum(to_real("age_median")),0) || '-' || format_number(q1(to_real("age_median")),0), '⬛', format_number(q1(to_real("age_median")),0) || '-' || format_number(median(to_real("age_median")),0))`
 
 ## Print layout
 
