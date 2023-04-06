@@ -235,6 +235,8 @@ One-to-many relation (project properties > relations)
 
 Intersects
 
+`intersects($geometry, aggregate(layer:='bangkok_toronto_polygons_admin_level', aggregate:='collect', expression:=$geometry, filter:=intersects($geometry, @map_extent_center) AND "admin_level" IN ('9')))`
+
 ```
 CASE WHEN intersects($geometry,geometry(get_feature('ne_10m_land','featurecla','Land'))) THEN 1
   ELSE 0
