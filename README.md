@@ -200,13 +200,13 @@ Intersecting with map window
 # using buffer
 intersects($geometry,buffer(@map_extent_center,0.5))
 
-# using square
+# using rectangle
 x($geometry) > (x(@map_extent_center) - (@map_extent_width/4)) AND
 x($geometry) < (x(@map_extent_center) + (@map_extent_width/4)) AND
 y($geometry) > (y(@map_extent_center) - (@map_extent_height/4)) AND
 y($geometry) < (y(@map_extent_center) + (@map_extent_height/4))
 
-# using rectangle
+# using projected rectangle
 x(transform($geometry, 'EPSG:4326', @map_crs)) > (x(@map_extent_center) - (@map_extent_width/4)) AND
 x(transform($geometry, 'EPSG:4326', @map_crs)) < (x(@map_extent_center) + (@map_extent_width/4)) AND
 y(transform($geometry, 'EPSG:4326', @map_crs)) > (y(@map_extent_center) - (@map_extent_height/4)) AND
