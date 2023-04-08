@@ -312,6 +312,24 @@ Aggregate
 
 `aggregate(layer:='bangkok_toronto_points_neighbourhoods_3857', aggregate:= 'concatenate', filter:=intersects($geometry,@map_extent), expression:= trim(eval(array_find(array_distinct(array_agg(expression:="ogc_fid", filter:=intersects($geometry,@map_extent), order_by:=$x)),"ogc_fid") + 1) || ' ' || "name" || '\n'), order_by:=$x)`
 
+Aggregate legend
+
+```
+trim(replace(wordwrap(replace(replace(aggregate('places',aggregate:='concatenate',expression:="name" || ' ' || round("longitude") || '°,' || round("latitude") || '°@',filter:="scalerank" IN (0,1,2,3,4,5) AND
+(@map_extent_width/3) > distance(centroid($geometry),@map_extent_center),order_by:="name"
+),' ','_'),'@',' '),50),'_',' '))
+```
+
+Get attribute
+
+`attribute(get_feature('admin1_clean',$geometry,closest_point(geometry(get_feature('admin1_clean','enwiki_title',IS NOT NULL)),$geometry)),'enwiki_title')`
+
+`aggregate(layer:='ne_50m_admin_0_countries',aggregate:='concatenate',expression:="CONTINENT",filter:=intersects($geometry,@map_extent_center),concatenator:=' ') || '\n' || wordwrap("_ECO_NAME",20) || '\n1:' || format_number(@map_scale,0)`
+
+Get top ten in array
+
+`replace(replace(array_to_string(array_slice(string_to_array(attribute(@atlas_feature,'geonames_mt')),0,9)),'{',''),'"','')`
+
 Get attribute matching name
 
 `attribute(get_feature('puma2020_nyc','name',"name"), 'pop2020')`
@@ -339,24 +357,6 @@ CASE WHEN length("pop_max") = 4 THEN left("pop_max",1) || 'k'
   ELSE "pop_max"
 END
 ```
-
-Aggregate legend
-
-```
-trim(replace(wordwrap(replace(replace(aggregate('places',aggregate:='concatenate',expression:="name" || ' ' || round("longitude") || '°,' || round("latitude") || '°@',filter:="scalerank" IN (0,1,2,3,4,5) AND
-(@map_extent_width/3) > distance(centroid($geometry),@map_extent_center),order_by:="name"
-),' ','_'),'@',' '),50),'_',' '))
-```
-
-Get attribute
-
-`attribute(get_feature('admin1_clean',$geometry,closest_point(geometry(get_feature('admin1_clean','enwiki_title',IS NOT NULL)),$geometry)),'enwiki_title')`
-
-`aggregate(layer:='ne_50m_admin_0_countries',aggregate:='concatenate',expression:="CONTINENT",filter:=intersects($geometry,@map_extent_center),concatenator:=' ') || '\n' || wordwrap("_ECO_NAME",20) || '\n1:' || format_number(@map_scale,0)`
-
-Get top ten in array
-
-`replace(replace(array_to_string(array_slice(string_to_array(attribute(@atlas_feature,'geonames_mt')),0,9)),'{',''),'"','')`
 
 HTML labels (check allow html formatting)
 
