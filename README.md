@@ -326,7 +326,7 @@ Get attribute
 
 `aggregate(layer:='ne_50m_admin_0_countries',aggregate:='concatenate',expression:="CONTINENT",filter:=intersects($geometry,@map_extent_center),concatenator:=' ') || '\n' || wordwrap("_ECO_NAME",20) || '\n1:' || format_number(@map_scale,0)`
 
-Get top ten in array
+Get array
 
 `replace(replace(array_to_string(array_slice(string_to_array(attribute(@atlas_feature,'geonames_mt')),0,9)),'{',''),'"','')`
 
