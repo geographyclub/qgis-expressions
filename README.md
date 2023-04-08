@@ -139,12 +139,6 @@ Percentage from top
 
 `round(((((y(@map_extent_center))+(@map_extent_height/2)-$y))/(@map_extent_height))*100) || '%'`
 
-Direction from point
-
-`line_interpolate_angle(make_line(make_point(x($geometry),y($geometry)),make_point((x(@map_extent_center)+(@map_extent_width/2)),y(@map_extent_center))),10)+270`
-
-`angle_at_vertex(intersection(@map_extent,smooth($geometry,1)),(num_points(intersection(@map_extent,smooth($geometry,1)))/2))-90`
-
 Move by height (order by dem ascending)
 
 `translate(make_point(round(x($geometry),1),round(y($geometry),1)),-clamp(0,"dem"*0.0002,0.5),clamp(0,"dem"*0.0002,0.5))`
@@ -211,9 +205,13 @@ CASE WHEN ("line_direction" > 0 AND "line_direction" < 45) OR ("line_direction" 
 END
 ```
 
-Calculate angle from projected line
+Angle from geometry
 
 `angle_at_vertex(transform(make_line($geometry,translate($geometry,10,0)),'EPSG:4326','EPSG:53029'),1)`
+
+`line_interpolate_angle(make_line(make_point(x($geometry),y($geometry)),make_point((x(@map_extent_center)+(@map_extent_width/2)),y(@map_extent_center))),10)+270`
+
+`angle_at_vertex(intersection(@map_extent,smooth($geometry,1)),(num_points(intersection(@map_extent,smooth($geometry,1)))/2))-90`
 
 Get coordinates from top-left (0,0)
 
