@@ -135,12 +135,6 @@ Majority filter
 
 `"SUBREGION" = majority("SUBREGION",filter:=intersects($geometry,@map_extent))`
 
-One-to-many relation (project properties > relations)
-
-`relation_aggregate('contour_gbif','min',"vname_en")`
-
-`relation_aggregate('contour_gbif','concatenate',"vname_en",',')`
-
 Percentage from top
 
 `round(((((y(@map_extent_center))+(@map_extent_height/2)-$y))/(@map_extent_height))*100) || '%'`
@@ -295,6 +289,12 @@ CASE WHEN "aspectmean" >= 0 AND "aspectmean" < 90 THEN '\\'
   ELSE '/'
 END
 ```
+
+One-to-many relation (project properties > relations)
+
+`relation_aggregate('contour_gbif','min',"vname_en")`
+
+`relation_aggregate('contour_gbif','concatenate',"vname_en",',')`
 
 Aggregate
 
