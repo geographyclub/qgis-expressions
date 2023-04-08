@@ -143,6 +143,10 @@ Move by height (order by dem ascending)
 
 `translate(make_point(round(x($geometry),1),round(y($geometry),1)),-clamp(0,"dem"*0.0002,0.5),clamp(0,"dem"*0.0002,0.5))`
 
+Project
+
+`azimuth(transform($geometry,'EPSG:4326','+proj=vandg +lon_0=0 +x_0=0 +y_0=0 +R_A +a=6371000 +b=6371000 +units=m no_defs'), translate(transform($geometry,'EPSG:4326','+proj=vandg +lon_0=0 +x_0=0 +y_0=0 +R_A +a=6371000 +b=6371000 +units=m no_defs'),0,1))`
+
 Rotate
 
 `(((x($geometry) - x(@map_extent_center))*cos(radians(@mydegrees))) - ((y($geometry) - y(@map_extent_center))*sin(radians(@mydegrees)))) + x(@map_extent_center)
@@ -160,11 +164,13 @@ CASE WHEN "aspect" >= 0 AND "aspect" < 90 THEN scale_linear("aspect",0,90,350,36
 END
 ```
 
-Project labels
+Place labels outside geometry
 
-`azimuth(transform($geometry,'EPSG:4326','+proj=vandg +lon_0=0 +x_0=0 +y_0=0 +R_A +a=6371000 +b=6371000 +units=m no_defs'), translate(transform($geometry,'EPSG:4326','+proj=vandg +lon_0=0 +x_0=0 +y_0=0 +R_A +a=6371000 +b=6371000 +units=m no_defs'),0,1))`
+`difference(@map_extent,$geometry)`
 
-Arrange graticule labels around map
+`intersection($geometry,minimal_circle(@atlas_geometry))`
+
+Distribute graticule labels around map
 
 ```
 "degrees" LIKE '%0' AND "direction" IN ('N','S') AND
@@ -172,25 +178,15 @@ Arrange graticule labels around map
 (y($geometry) > (y(@map_extent_center) - (@map_extent_height/2.5)) AND y($geometry) < (y(@map_extent_center) + (@map_extent_height/2.5)))
 ```
 
-Arrange labels evenly in map window
+Distribute labels evenly in map window
 
 `scale_linear(y($geometry),(y(@map_extent_center)-(@map_extent_height)),(y(@map_extent_center)+(@map_extent_height)),(y(@map_extent_center)-(@map_extent_height/1)),(y(@map_extent_center)+(@map_extent_height/3)))`
-
-Place labels around geometry
-
-`difference(@map_extent,$geometry)`
-
-`intersection($geometry,minimal_circle(@atlas_geometry))`
 
 Distribute ranked labels evenly
 
 `transform(smooth(make_line(make_point(-95,scale_linear("rank",1,10,50,45)), make_point(-85,scale_linear("rank",1,10,50,45)), make_point(-75,scale_linear("rank",1,10,50,45))),3),'ESRI:4326','EPSG:102010')`
 
 `transform(smooth(make_line(make_point(scale_linear("row",1,52,-66,-127),50), make_point(scale_linear("row",1,52,-66,-127),55), make_point(scale_linear("row",1,52,-66,-127),60)),3),'ESRI:4326','EPSG:102010')`
-
-Order angles from center (for distributing labels evenly in a circle)
-
-`(array_find(array_distinct(array_agg(expression:="id", filter:=intersects_bbox($geometry,@map_extent), order_by:=azimuth(@map_extent_center,(centroid($geometry))))),"id") + 1)`
 
 Calculate angle
 
@@ -204,6 +200,10 @@ CASE WHEN ("line_direction" > 0 AND "line_direction" < 45) OR ("line_direction" 
   ELSE 0
 END
 ```
+
+Order angles from center (for distributing labels evenly in a circle)
+
+`(array_find(array_distinct(array_agg(expression:="id", filter:=intersects_bbox($geometry,@map_extent), order_by:=azimuth(@map_extent_center,(centroid($geometry))))),"id") + 1)`
 
 Angle from geometry
 
