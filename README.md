@@ -259,11 +259,14 @@ Add space/newline between characters
 
 Extract osm tags
 
-`replace(regexp_substr("other_tags",'(height"=>"[0-9]+\\.[0-9]+)'),'height"=>"','')`
+```
+# building height, levels
+replace(regexp_substr("other_tags",'(height"=>"[0-9]+\\.[0-9]+)'),'height"=>"','')
+replace(regexp_substr("other_tags",'(building:levels"=>"[0-9]+)'),'building:levels"=>"','')*10
 
-`replace(regexp_substr("other_tags",'(building:levels"=>"[0-9]+)'),'building:levels"=>"','')*10`
-
-`replace(regexp_substr("other_tags",'(addr:housenumber"=>"[1-9]{1,3})'),'addr:housenumber"=>"','')`
+# address
+replace(regexp_substr("other_tags",'(addr:housenumber"=>"[1-9]{1,3})'),'addr:housenumber"=>"','')
+```
 
 Ascii symbols from aspect
 
@@ -398,7 +401,24 @@ Layout projection to atlas_feature
 `'PROJ:+proj=ortho +lat_0="[% attribute(@atlas_feature,LATITUDE) %]" +lon_0="[% attribute(@atlas_feature,LONGITUDE) %]" +ellps=sphere'`
 
 ## Extras
-WWF codes
+
+### OpenStreetMap
+
+Multilinestrings
+
+```
+# subway route from multilinestring
+other_tags LIKE '%"route"=>"subway"%'
+```
+
+Points
+
+```
+# subway station
+other_tags LIKE '%station"=>"subway"%'
+```
+
+### WWF
 
 ```
 CASE WHEN "REALM" = 'AA' THEN 'Australasia'
@@ -432,7 +452,7 @@ CASE WHEN "BIOME" = 1 THEN 'Tropical & Subtropical Moist Broadleaf Forests'
 END
 ```
 
-Lithology codes
+### Lithology
 
 ```
 CASE WHEN "xx" = 'ad' THEN 'Alluvial Deposits'
