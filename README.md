@@ -257,7 +257,7 @@ Add space/newline between characters
 
 `regexp_replace("zh",'(.)','\\1\n')`
 
-Extract osm tags
+Extract & replace
 
 ```
 # building height, levels
@@ -404,17 +404,13 @@ Layout projection to atlas_feature
 
 ### OpenStreetMap
 
-Multilinestrings
+Subways
 
 ```
-# subway route from multilinestring
+# subway routes from multilinestrings
 other_tags LIKE '%"route"=>"subway"%'
-```
 
-Points
-
-```
-# subway station
+# subway station from points
 other_tags LIKE '%station"=>"subway"%'
 ```
 
