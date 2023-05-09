@@ -414,6 +414,13 @@ other_tags LIKE '%"route"=>"subway"%'
 other_tags LIKE '%station"=>"subway"%'
 ```
 
+Amenities
+
+```
+# parking
+other_tags LIKE '%"amenity"=>"parking"%'
+```
+
 ### WWF
 
 ```
