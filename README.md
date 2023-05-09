@@ -74,6 +74,14 @@ Extrude
 
 ## Calculate
 
+Case
+
+```
+CASE WHEN other_tags LIKE '%"amenity"=>"parking"%' THEN 1
+  ELSE 0
+END
+```
+
 Color ramps
 
 ```
