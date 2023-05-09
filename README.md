@@ -19,6 +19,10 @@ Intersection with geometry
 
 `intersection($geometry,aggregate('ne_110m_land','collect',$geometry))`
 
+Splitscreen
+
+`translate(intersection($geometry, @map_extent), (@map_extent_width/2), 0)`
+
 Make snapped points by rounding
 
 `make_point(round($x/100)*100,round($y/100)*100)`
