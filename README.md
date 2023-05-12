@@ -7,7 +7,7 @@ My most used QGIS expressions.
 2. [Calculate](#Calculate)
 3. [Strings](#Strings)
 4. [Print layout](#Print-layout)
-5. [Extras](#Extras)
+5. [Datasets](#Datasets)
 
 ## Make
 
@@ -412,7 +412,7 @@ Layout projection to atlas_feature
 
 `'PROJ:+proj=ortho +lat_0="[% attribute(@atlas_feature,LATITUDE) %]" +lon_0="[% attribute(@atlas_feature,LONGITUDE) %]" +ellps=sphere'`
 
-## Extras
+## Datasets
 
 ### OpenStreetMap
 
