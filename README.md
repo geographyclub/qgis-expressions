@@ -89,15 +89,20 @@ END
 Color ramps
 
 ```
-# color ramp by variable
+# ramp by variable
 ramp_color(@mycolorramp1,scale_linear(elev,@mymin1,@mymax1,0,1))
 
-# set alpha
+# ramp with alpha
 set_color_part(ramp_color(@mycolorramp1,scale_linear(elev,@mymin1,@mymax1,0,1)),'alpha',@myalpha1)
 
-# conditional color ramps
+# conditional ramp (with layer variables)
 CASE WHEN DN >= 0 THEN ramp_color(@mycolorramp1,scale_linear("DN",@mymin1,@mymax1,0,1))
   ELSE ramp_color(@mycolorramp2,scale_linear("DN",@mymin2,@mymax2,0,1))
+END
+
+# conditional ramp from raster value
+CASE WHEN raster_value('topo15_4320', 1, centroid($geometry)) > 0 THEN ramp_color('wiki-1.02', scale_linear(raster_value('topo15_4320', 1, centroid($geometry)),-1500,2000,0,1))
+  ELSE ramp_color('Mako', scale_linear(raster_value('topo15_4320', 1, centroid($geometry)),-6000,0,0,1))
 END
 ```
 
