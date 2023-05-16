@@ -76,6 +76,10 @@ Extrude
 
 `extrude(boundary($geometry),0,0.2)`
 
+3D contour lines from 2D
+
+`translate($geometry,0,scale_linear("meters",0,7800,0,2))`
+
 ## Calculate
 
 Case
