@@ -80,6 +80,19 @@ Extrude
 
 `translate($geometry,0,scale_linear("meters",0,7800,0,2))`
 
+Move by height (order by dem ascending)
+
+`translate(make_point(round(x($geometry),1),round(y($geometry),1)),-clamp(0,"dem"*0.0002,0.5),clamp(0,"dem"*0.0002,0.5))`
+
+Project
+
+`azimuth(transform($geometry,'EPSG:4326','+proj=vandg +lon_0=0 +x_0=0 +y_0=0 +R_A +a=6371000 +b=6371000 +units=m no_defs'), translate(transform($geometry,'EPSG:4326','+proj=vandg +lon_0=0 +x_0=0 +y_0=0 +R_A +a=6371000 +b=6371000 +units=m no_defs'),0,1))`
+
+Rotate
+
+`(((x($geometry) - x(@map_extent_center))*cos(radians(@mydegrees))) - ((y($geometry) - y(@map_extent_center))*sin(radians(@mydegrees)))) + x(@map_extent_center)
+(((x($geometry) - x(@map_extent_center))*sin(radians(@mydegrees))) + ((y($geometry) - y(@map_extent_center))*cos(radians(@mydegrees)))) + y(@map_extent_center)`
+
 ## Calculate
 
 Case
@@ -159,20 +172,6 @@ Majority filter
 Percentage from top
 
 `round(((((y(@map_extent_center))+(@map_extent_height/2)-$y))/(@map_extent_height))*100) || '%'`
-
-Move by height (order by dem ascending)
-
-`translate(make_point(round(x($geometry),1),round(y($geometry),1)),-clamp(0,"dem"*0.0002,0.5),clamp(0,"dem"*0.0002,0.5))`
-
-Project
-
-`azimuth(transform($geometry,'EPSG:4326','+proj=vandg +lon_0=0 +x_0=0 +y_0=0 +R_A +a=6371000 +b=6371000 +units=m no_defs'), translate(transform($geometry,'EPSG:4326','+proj=vandg +lon_0=0 +x_0=0 +y_0=0 +R_A +a=6371000 +b=6371000 +units=m no_defs'),0,1))`
-
-Rotate
-
-`(((x($geometry) - x(@map_extent_center))*cos(radians(@mydegrees))) - ((y($geometry) - y(@map_extent_center))*sin(radians(@mydegrees)))) + x(@map_extent_center)
-(((x($geometry) - x(@map_extent_center))*sin(radians(@mydegrees))) + ((y($geometry) - y(@map_extent_center))*cos(radians(@mydegrees)))) + y(@map_extent_center)`
-
 
 Rotate labels
 
@@ -258,7 +257,7 @@ Delete english characters
 
 `regexp_replace("name", '[0-9A-Za-z;\\?\\/\\-\\(\\)]' , '' )`
 
-Translate chinese featureclass
+Translate by replace
 
 `replace(replace(replace(replace(replace(replace(replace(replace(replace("featureclass",'A','境'),'H','水'),'L','区'),'P','位'),'R','路'),'S','点'),'T','山'),'U','海'),'V','卉')`
 
