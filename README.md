@@ -365,6 +365,10 @@ Get attribute of geometry expression
 
 `"SUBREGION" = array_to_string(array_agg(expression:="SUBREGION", filter:=intersects($geometry,@map_extent_center)))`
 
+Get array of names of nearest features
+
+`array_to_string(overlay_nearest(layer:='bangkok_points', expression:="name", filter:=other_tags LIKE '%station"=>"subway"%', limit:=1))`
+
 Format large numbers
 
 ```
