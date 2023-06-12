@@ -436,6 +436,9 @@ other_tags LIKE '%"route"=>"subway"%'
 
 # subway station from points
 other_tags LIKE '%station"=>"subway"%'
+
+# buildings nearest to subway station
+array_to_string(overlay_nearest(layer:='bangkok_points', filter:="other_tags" LIKE '%station"=>"subway"%', expression:="name")) = 'นานา'
 ```
 
 Amenities
