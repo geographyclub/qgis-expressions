@@ -439,6 +439,9 @@ other_tags LIKE '%station"=>"subway"%'
 
 # buildings nearest to subway station
 array_to_string(overlay_nearest(layer:='bangkok_points', filter:="other_tags" LIKE '%station"=>"subway"%', expression:="name")) = 'นานา'
+
+# color buildings according to distance from subway station
+ramp_color('Spectral',scale_linear(distance(geometry(get_feature('bangkok_subway_stations','name','นานา')),$geometry),0,1000,0,1))
 ```
 
 Amenities
