@@ -121,6 +121,9 @@ END
 CASE WHEN raster_value('topo15_4320', 1, centroid($geometry)) > 0 THEN ramp_color('wiki-1.02', scale_linear(raster_value('topo15_4320', 1, centroid($geometry)),-1500,2000,0,1))
   ELSE ramp_color('Mako', scale_linear(raster_value('topo15_4320', 1, centroid($geometry)),-6000,0,0,1))
 END
+
+# color from distance
+ramp_color('YlOrRd',scale_linear(distance(aggregate(layer:='bangkok_subway_stations',aggregate:='collect',expression:=$geometry),$geometry),0,500,1,0))
 ```
 
 Intersecting with features
