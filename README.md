@@ -431,6 +431,13 @@ Layout projection to atlas_feature
 
 ### OpenStreetMap
 
+General
+
+```
+# scale transparency from map center
+set_color_part('#000', 'alpha', scale_linear(distance(@map_extent_center,$geometry),0,1000,100,0))
+```
+
 Subways
 
 ```
@@ -445,9 +452,6 @@ array_to_string(overlay_nearest(layer:='bangkok_points', filter:="other_tags" LI
 
 # color buildings according to distance from subway station
 ramp_color('Spectral',scale_linear(distance(geometry(get_feature('bangkok_subway_stations','name','นานา')),$geometry),0,1000,0,1))
-
-# scale transparency from map center
-set_color_part('#000', 'alpha', scale_linear(distance(@map_extent_center,$geometry),0,1000,100,0))
 ```
 
 Amenities
