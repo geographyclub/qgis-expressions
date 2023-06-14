@@ -124,8 +124,6 @@ END
 
 # color from distance
 ramp_color('YlOrRd',scale_linear(distance(aggregate(layer:='bangkok_subway_stations',aggregate:='collect',expression:=$geometry),$geometry),0,500,1,0))
-
-set_color_part('#000', 'alpha', scale_linear(distance(@map_extent_center,$geometry),0,1000,100,0))
 ```
 
 Intersecting with features
@@ -447,6 +445,9 @@ array_to_string(overlay_nearest(layer:='bangkok_points', filter:="other_tags" LI
 
 # color buildings according to distance from subway station
 ramp_color('Spectral',scale_linear(distance(geometry(get_feature('bangkok_subway_stations','name','นานา')),$geometry),0,1000,0,1))
+
+# scale transparency from map center
+set_color_part('#000', 'alpha', scale_linear(distance(@map_extent_center,$geometry),0,1000,100,0))
 ```
 
 Amenities
