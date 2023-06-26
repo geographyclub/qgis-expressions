@@ -13,7 +13,14 @@ My most used QGIS expressions.
 
 Intersection with polygon
 
-`intersection($geometry, make_polygon(geom_from_wkt('LINESTRING(-180,-90 -180,90 180,90 180,-90)')))`
+```
+# extent in epsg:4326
+intersection($geometry, make_polygon(geom_from_wkt('LINESTRING(-180,-90 -180,90 180,90 180,-90)')))
+
+# extent in epsg:3857
+intersection($geometry, make_polygon(geom_from_wkt('LINESTRING(-20037508.34 -20048966.1, -20037508.34 20048966.1,
+20037508.34 20048966.1, 20037508.34 -20048966.1, -20037508.34 -20048966.1)')))
+```
 
 Intersection with geometry
 
