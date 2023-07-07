@@ -169,6 +169,9 @@ x($geometry) > (x(@map_extent_center) + (@map_extent_width*(-0.2))) AND
 x($geometry) < (x(@map_extent_center) + (@map_extent_width*(-0.1))) AND
 y($geometry) > (y(@map_extent_center) + (@map_extent_height*(-0.3))) AND
 y($geometry) < (y(@map_extent_center) + (@map_extent_height*(0.3)))
+
+# preserving grid in any projection
+"left" > x(transform(make_point(x(@map_extent_center) - (@map_extent_width/3),y(@map_extent_center)),@map_crs,'epsg:4326')) AND "right" < x(transform(make_point(x(@map_extent_center) + (@map_extent_width/3),y(@map_extent_center)),@map_crs,'epsg:4326')) AND "bottom" > y(transform(make_point(x(@map_extent_center),y(@map_extent_center) - (@map_extent_height/3)),@map_crs,'epsg:4326')) AND "top" < y(transform(make_point(x(@map_extent_center),y(@map_extent_center) + (@map_extent_height/3)),@map_crs,'epsg:4326'))
 ```
 
 Offset from geometry
