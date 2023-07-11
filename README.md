@@ -22,6 +22,19 @@ intersection($geometry, make_polygon(geom_from_wkt('LINESTRING(-20037508.34 -200
 20037508.34 20048966.1, 20037508.34 -20048966.1, -20037508.34 -20048966.1)')))
 ```
 
+Make polygon
+
+```
+# make polygon from map extent in any projection 
+make_polygon(make_line(
+make_point(x(transform(make_point(x(@map_extent_center) - (@map_extent_width/3),y(@map_extent_center)),@map_crs,'epsg:4326')),y(transform(make_point(x(@map_extent_center),y(@map_extent_center) - (@map_extent_height/3)),@map_crs,'epsg:4326'))),
+make_point(x(transform(make_point(x(@map_extent_center) - (@map_extent_width/3),y(@map_extent_center)),@map_crs,'epsg:4326')),y(transform(make_point(x(@map_extent_center),y(@map_extent_center) + (@map_extent_height/3)),@map_crs,'epsg:4326'))),
+make_point(x(transform(make_point(x(@map_extent_center) + (@map_extent_width/3),y(@map_extent_center)),@map_crs,'epsg:4326')),y(transform(make_point(x(@map_extent_center),y(@map_extent_center) + (@map_extent_height/3)),@map_crs,'epsg:4326'))),
+make_point(x(transform(make_point(x(@map_extent_center) + (@map_extent_width/3),y(@map_extent_center)),@map_crs,'epsg:4326')),y(transform(make_point(x(@map_extent_center),y(@map_extent_center) - (@map_extent_height/3)),@map_crs,'epsg:4326'))),
+make_point(x(transform(make_point(x(@map_extent_center) - (@map_extent_width/3),y(@map_extent_center)),@map_crs,'epsg:4326')),y(transform(make_point(x(@map_extent_center),y(@map_extent_center) - (@map_extent_height/3)),@map_crs,'epsg:4326')))
+))
+```
+
 Intersection with geometry
 
 `intersection($geometry,aggregate('ne_110m_land','collect',$geometry))`
@@ -131,6 +144,11 @@ END
 
 # color from distance
 ramp_color('YlOrRd',scale_linear(distance(aggregate(layer:='bangkok_subway_stations',aggregate:='collect',expression:=$geometry),$geometry),0,500,1,0))
+
+# color features in map extent
+CASE WHEN intersects($geometry,@map_extent) THEN ramp_color('Spectral',scale_linear((array_find(array_agg("hybas_id",filter:=intersects($geometry,@map_extent)),"hybas_id") + 1),1,array_length(array_agg("hybas_id",filter:=intersects($geometry,@map_extent))),0,1))
+  ELSE '255,255,255'
+END
 ```
 
 Intersecting with features
