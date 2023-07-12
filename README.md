@@ -11,41 +11,6 @@ My most used QGIS expressions.
 
 ## Make
 
-Intersection with polygon
-
-```
-# extent in epsg:4326
-intersection($geometry, make_polygon(geom_from_wkt('LINESTRING(-180,-90 -180,90 180,90 180,-90)')))
-
-# extent in epsg:3857
-intersection($geometry, make_polygon(geom_from_wkt('LINESTRING(-20037508.34 -20048966.1, -20037508.34 20048966.1,
-20037508.34 20048966.1, 20037508.34 -20048966.1, -20037508.34 -20048966.1)')))
-```
-
-Make polygon
-
-```
-# make polygon from map extent
-intersection($geometry, bounds(make_line(make_point(x(@map_extent_center) - (@map_extent_width/3), y(@map_extent_center) - (@map_extent_height/3)), make_point(x(@map_extent_center) + (@map_extent_width/3), y(@map_extent_center) + (@map_extent_height/3)))))
-
-# make polygon from map extent in any projection 
-make_polygon(make_line(
-make_point(x(transform(make_point(x(@map_extent_center) - (@map_extent_width/3),y(@map_extent_center)),@map_crs,'epsg:4326')),y(transform(make_point(x(@map_extent_center),y(@map_extent_center) - (@map_extent_height/3)),@map_crs,'epsg:4326'))),
-make_point(x(transform(make_point(x(@map_extent_center) - (@map_extent_width/3),y(@map_extent_center)),@map_crs,'epsg:4326')),y(transform(make_point(x(@map_extent_center),y(@map_extent_center) + (@map_extent_height/3)),@map_crs,'epsg:4326'))),
-make_point(x(transform(make_point(x(@map_extent_center) + (@map_extent_width/3),y(@map_extent_center)),@map_crs,'epsg:4326')),y(transform(make_point(x(@map_extent_center),y(@map_extent_center) + (@map_extent_height/3)),@map_crs,'epsg:4326'))),
-make_point(x(transform(make_point(x(@map_extent_center) + (@map_extent_width/3),y(@map_extent_center)),@map_crs,'epsg:4326')),y(transform(make_point(x(@map_extent_center),y(@map_extent_center) - (@map_extent_height/3)),@map_crs,'epsg:4326'))),
-make_point(x(transform(make_point(x(@map_extent_center) - (@map_extent_width/3),y(@map_extent_center)),@map_crs,'epsg:4326')),y(transform(make_point(x(@map_extent_center),y(@map_extent_center) - (@map_extent_height/3)),@map_crs,'epsg:4326')))
-))
-```
-
-Intersection with geometry
-
-`intersection($geometry,aggregate('ne_110m_land','collect',$geometry))`
-
-Splitscreen
-
-`translate(intersection($geometry, @map_extent), (@map_extent_width/2), 0)`
-
 Make snapped points by rounding
 
 `make_point(round($x/100)*100,round($y/100)*100)`
@@ -81,7 +46,7 @@ CASE WHEN $x > x(@map_extent_center) THEN make_line($geometry,make_point((x(@map
 END
 ```
 
-Make point/line from map center
+Make line from map center
 
 `make_line($geometry,project($geometry,2,radians(angle_at_vertex(make_line(@map_extent_center,$geometry),0))))
 closest_point(exterior_ring(buffer(@map_extent_center,2)),$geometry)`
@@ -89,11 +54,46 @@ closest_point(exterior_ring(buffer(@map_extent_center,2)),$geometry)`
 `make_line(closest_point(exterior_ring(buffer(transform(@map_extent_center,'EPSG:4326','EPSG:53029'),2)),$geometry),$geometry)
 closest_point(boundary(buffer(@map_extent_center,(@map_extent_width/2.5))),$geometry)`
 
-Make point/line from geometry
+Make line from geometry
 
 `line_interpolate_point((make_line($geometry,closest_point((boundary(buffer(geometry(get_feature(@mylayer1,@myfield1,@myvalue1)),3))),$geometry))),(length(make_line($geometry,closest_point((boundary(buffer(geometry(get_feature(@mylayer1,@myfield1,@myvalue1)),3))),$geometry)))/2))`
 
 `make_line($geometry,line_interpolate_point((make_line($geometry,closest_point((boundary(buffer(geometry(get_feature(@mylayer1,@myfield1,@myvalue1)),3))),$geometry))),(length(make_line($geometry,closest_point((boundary(buffer(geometry(get_feature(@mylayer1,@myfield1,@myvalue1)),3))),$geometry)))/2)))`
+
+Make polygon
+
+```
+# make polygon from map extent
+intersection($geometry, bounds(make_line(make_point(x(@map_extent_center) - (@map_extent_width/3), y(@map_extent_center) - (@map_extent_height/3)), make_point(x(@map_extent_center) + (@map_extent_width/3), y(@map_extent_center) + (@map_extent_height/3)))))
+
+# make polygon from map extent in any projection 
+make_polygon(make_line(
+make_point(x(transform(make_point(x(@map_extent_center) - (@map_extent_width/3),y(@map_extent_center)),@map_crs,'epsg:4326')),y(transform(make_point(x(@map_extent_center),y(@map_extent_center) - (@map_extent_height/3)),@map_crs,'epsg:4326'))),
+make_point(x(transform(make_point(x(@map_extent_center) - (@map_extent_width/3),y(@map_extent_center)),@map_crs,'epsg:4326')),y(transform(make_point(x(@map_extent_center),y(@map_extent_center) + (@map_extent_height/3)),@map_crs,'epsg:4326'))),
+make_point(x(transform(make_point(x(@map_extent_center) + (@map_extent_width/3),y(@map_extent_center)),@map_crs,'epsg:4326')),y(transform(make_point(x(@map_extent_center),y(@map_extent_center) + (@map_extent_height/3)),@map_crs,'epsg:4326'))),
+make_point(x(transform(make_point(x(@map_extent_center) + (@map_extent_width/3),y(@map_extent_center)),@map_crs,'epsg:4326')),y(transform(make_point(x(@map_extent_center),y(@map_extent_center) - (@map_extent_height/3)),@map_crs,'epsg:4326'))),
+make_point(x(transform(make_point(x(@map_extent_center) - (@map_extent_width/3),y(@map_extent_center)),@map_crs,'epsg:4326')),y(transform(make_point(x(@map_extent_center),y(@map_extent_center) - (@map_extent_height/3)),@map_crs,'epsg:4326')))
+))
+```
+
+Intersection with polygon
+
+```
+# extent in epsg:4326
+intersection($geometry, make_polygon(geom_from_wkt('LINESTRING(-180,-90 -180,90 180,90 180,-90)')))
+
+# extent in epsg:3857
+intersection($geometry, make_polygon(geom_from_wkt('LINESTRING(-20037508.34 -20048966.1, -20037508.34 20048966.1,
+20037508.34 20048966.1, 20037508.34 -20048966.1, -20037508.34 -20048966.1)')))
+```
+
+Intersection with geometry
+
+`intersection($geometry,aggregate('ne_110m_land','collect',$geometry))`
+
+Splitscreen
+
+`translate(intersection($geometry, @map_extent), (@map_extent_width/2), 0)`
 
 Extrude
 
