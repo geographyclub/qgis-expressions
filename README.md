@@ -25,6 +25,9 @@ intersection($geometry, make_polygon(geom_from_wkt('LINESTRING(-20037508.34 -200
 Make polygon
 
 ```
+# make polygon from map extent
+intersection($geometry, bounds(make_line(make_point(x(@map_extent_center) - (@map_extent_width/3), y(@map_extent_center) - (@map_extent_height/3)), make_point(x(@map_extent_center) + (@map_extent_width/3), y(@map_extent_center) + (@map_extent_height/3)))))
+
 # make polygon from map extent in any projection 
 make_polygon(make_line(
 make_point(x(transform(make_point(x(@map_extent_center) - (@map_extent_width/3),y(@map_extent_center)),@map_crs,'epsg:4326')),y(transform(make_point(x(@map_extent_center),y(@map_extent_center) - (@map_extent_height/3)),@map_crs,'epsg:4326'))),
