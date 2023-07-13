@@ -64,10 +64,10 @@ Make polygon
 
 ```
 # make rectangle polygon from map extent
-intersection($geometry, bounds(make_line(make_point(x(@map_extent_center) - (@map_extent_width/3), y(@map_extent_center) - (@map_extent_height/3)), make_point(x(@map_extent_center) + (@map_extent_width/3), y(@map_extent_center) + (@map_extent_height/3)))))
+bounds(make_line(make_point(x(@map_extent_center) - (@map_extent_width/3), y(@map_extent_center) - (@map_extent_height/3)), make_point(x(@map_extent_center) + (@map_extent_width/3), y(@map_extent_center) + (@map_extent_height/3))))
 
 # make circle polygon from map extent
-intersection($geometry,buffer(@map_extent_center,(@map_extent_height/3)))
+buffer(@map_extent_center,(@map_extent_height/3))
 
 # make polygon from map extent in any projection 
 make_polygon(make_line(
@@ -79,7 +79,7 @@ make_point(x(transform(make_point(x(@map_extent_center) - (@map_extent_width/3),
 ))
 ```
 
-Intersection with polygon
+Intersection
 
 ```
 # extent in epsg:4326
@@ -88,19 +88,20 @@ intersection($geometry, make_polygon(geom_from_wkt('LINESTRING(-180,-90 -180,90 
 # extent in epsg:3857
 intersection($geometry, make_polygon(geom_from_wkt('LINESTRING(-20037508.34 -20048966.1, -20037508.34 20048966.1,
 20037508.34 20048966.1, 20037508.34 -20048966.1, -20037508.34 -20048966.1)')))
+
+# frame rectangle from map extent
+intersection($geometry, single_sided_buffer(boundary(@map_extent),(@map_extent_height/10)))
+
+# frame circle from map extent
+intersection($geometry, single_sided_buffer(boundary(buffer(@map_extent_center,(@map_extent_height/2))),-(@map_extent_height/10)))
+
+# with feature geometry
+intersection($geometry,aggregate('ne_110m_land','collect',$geometry))
 ```
-
-Intersection with geometry
-
-`intersection($geometry,aggregate('ne_110m_land','collect',$geometry))`
 
 Multibuffer
 
 `collect_geometries(array_foreach(generate_series(0.1,1,0.01),buffer($geometry,@element)))`
-
-Frame
-
-`intersection($geometry, single_sided_buffer(boundary(@map_extent),(@map_extent_height/10)))`
 
 Extrude
 
