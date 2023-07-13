@@ -63,8 +63,11 @@ Make line from geometry
 Make polygon
 
 ```
-# make polygon from map extent
+# make rectangle polygon from map extent
 intersection($geometry, bounds(make_line(make_point(x(@map_extent_center) - (@map_extent_width/3), y(@map_extent_center) - (@map_extent_height/3)), make_point(x(@map_extent_center) + (@map_extent_width/3), y(@map_extent_center) + (@map_extent_height/3)))))
+
+# make circle polygon from map extent
+intersection($geometry,buffer(@map_extent_center,(@map_extent_height/3)))
 
 # make polygon from map extent in any projection 
 make_polygon(make_line(
@@ -106,15 +109,6 @@ Extrude
 Move by height (order by dem ascending)
 
 `translate(make_point(round(x($geometry),1),round(y($geometry),1)),-clamp(0,"dem"*0.0002,0.5),clamp(0,"dem"*0.0002,0.5))`
-
-Project
-
-`azimuth(transform($geometry,'EPSG:4326','+proj=vandg +lon_0=0 +x_0=0 +y_0=0 +R_A +a=6371000 +b=6371000 +units=m no_defs'), translate(transform($geometry,'EPSG:4326','+proj=vandg +lon_0=0 +x_0=0 +y_0=0 +R_A +a=6371000 +b=6371000 +units=m no_defs'),0,1))`
-
-Rotate
-
-`(((x($geometry) - x(@map_extent_center))*cos(radians(@mydegrees))) - ((y($geometry) - y(@map_extent_center))*sin(radians(@mydegrees)))) + x(@map_extent_center)
-(((x($geometry) - x(@map_extent_center))*sin(radians(@mydegrees))) + ((y($geometry) - y(@map_extent_center))*cos(radians(@mydegrees)))) + y(@map_extent_center)`
 
 ## Calculate
 
@@ -266,6 +260,15 @@ Angle from geometry
 `line_interpolate_angle(make_line(make_point(x($geometry),y($geometry)),make_point((x(@map_extent_center)+(@map_extent_width/2)),y(@map_extent_center))),10)+270`
 
 `angle_at_vertex(intersection(@map_extent,smooth($geometry,1)),(num_points(intersection(@map_extent,smooth($geometry,1)))/2))-90`
+
+Project
+
+`azimuth(transform($geometry,'EPSG:4326','+proj=vandg +lon_0=0 +x_0=0 +y_0=0 +R_A +a=6371000 +b=6371000 +units=m no_defs'), translate(transform($geometry,'EPSG:4326','+proj=vandg +lon_0=0 +x_0=0 +y_0=0 +R_A +a=6371000 +b=6371000 +units=m no_defs'),0,1))`
+
+Rotate
+
+`(((x($geometry) - x(@map_extent_center))*cos(radians(@mydegrees))) - ((y($geometry) - y(@map_extent_center))*sin(radians(@mydegrees)))) + x(@map_extent_center)
+(((x($geometry) - x(@map_extent_center))*sin(radians(@mydegrees))) + ((y($geometry) - y(@map_extent_center))*cos(radians(@mydegrees)))) + y(@map_extent_center)`
 
 Get coordinates from top-left (0,0)
 
