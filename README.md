@@ -94,6 +94,10 @@ Intersection with geometry
 
 `intersection($geometry,aggregate('ne_110m_land','collect',$geometry))`
 
+Multibuffer
+
+`collect_geometries(array_foreach(generate_series(0.1,1,0.01),buffer($geometry,@element)))`
+
 Extrude
 
 `extrude(boundary($geometry),0,0.2)`
