@@ -98,6 +98,10 @@ Multibuffer
 
 `collect_geometries(array_foreach(generate_series(0.1,1,0.01),buffer($geometry,@element)))`
 
+Frame
+
+`intersection($geometry, single_sided_buffer(boundary(@map_extent),(@map_extent_height/10)))`
+
 Extrude
 
 `extrude(boundary($geometry),0,0.2)`
