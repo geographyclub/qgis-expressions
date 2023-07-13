@@ -94,19 +94,24 @@ Intersection with geometry
 
 `intersection($geometry,aggregate('ne_110m_land','collect',$geometry))`
 
-Splitscreen
-
-`translate(intersection($geometry, @map_extent), (@map_extent_width/2), 0)`
-
 Extrude
 
 `extrude(boundary($geometry),0,0.2)`
 
-3D contour lines from 2D
+Translate contour lines
 
-`translate($geometry,0,scale_linear("meters",0,7800,0,2))`
+```
+# one axis
+translate($geometry,0,scale_linear("meters",0,7800,0,2))
 
-Move by height (order by dem ascending)
+# splitscreen
+translate(intersection($geometry, @map_extent), (@map_extent_width/2), 0)
+
+# isometric (use with tranform)
+translate(smooth(simplify_vw($geometry,0),0), scale_linear("amax",0,4000,0,30) * -1, scale_linear("amax",0,4000,0,30) * -1)
+```
+
+Translate points by height (order by dem ascending)
 
 `translate(make_point(round(x($geometry),1),round(y($geometry),1)),-clamp(0,"dem"*0.0002,0.5),clamp(0,"dem"*0.0002,0.5))`
 
