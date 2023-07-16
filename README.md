@@ -67,7 +67,7 @@ Make polygon
 bounds(make_line(make_point(x(@map_extent_center) - (@map_extent_width/3), y(@map_extent_center) - (@map_extent_height/3)), make_point(x(@map_extent_center) + (@map_extent_width/3), y(@map_extent_center) + (@map_extent_height/3))))
 
 # make circle polygon from map extent
-buffer(@map_extent_center,(@map_extent_height/3))
+make_circle(@map_extent_center,(@map_extent_height/3))
 
 # make polygon from map extent in any projection 
 make_polygon(make_line(
