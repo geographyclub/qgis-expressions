@@ -486,6 +486,13 @@ General
 set_color_part('#000', 'alpha', scale_linear(distance(@map_extent_center,$geometry),0,1000,100,0))
 ```
 
+Highways
+
+```
+# color from array
+ramp_color('Spectral',scale_linear(array_find(array('motorway','trunk','primary','secondary','tertiary','residential'),"highway"),0,5,0,1))
+```
+
 Subways
 
 ```
