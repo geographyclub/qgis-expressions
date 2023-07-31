@@ -118,6 +118,9 @@ translate(intersection($geometry, @map_extent), (@map_extent_width/2), 0)
 
 # isometric (use with tranform)
 translate(smooth(simplify_vw($geometry,0),0), scale_linear("amax",0,4000,0,30) * -1, scale_linear("amax",0,4000,0,30) * -1)
+
+# clip & move
+translate(intersection($geometry,bounds(make_line(make_point(x(@map_extent_center) - (@map_extent_width/4), y(@map_extent_center) - (@map_extent_height/4)), make_point(x(@map_extent_center) + (@map_extent_width/4), y(@map_extent_center) + (@map_extent_height/4))))),0,-(@map_extent_height/4))
 ```
 
 Translate points by height (order by dem ascending)
