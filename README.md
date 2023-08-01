@@ -123,7 +123,7 @@ translate(smooth(simplify_vw($geometry,0),0), scale_linear("amax",0,4000,0,30) *
 translate(intersection($geometry,bounds(make_line(make_point(x(@map_extent_center) - (@map_extent_width/4), y(@map_extent_center) - (@map_extent_height/4)), make_point(x(@map_extent_center) + (@map_extent_width/4), y(@map_extent_center) + (@map_extent_height/4))))),0,-(@map_extent_height/4))
 
 # create a geometry stack
-collect_geometries(array_foreach(generate_series(0,to_int(replace(regexp_substr("other_tags",'(building:levels"=>"[0-9]+)'),'building:levels"=>"','')*10),1),translate($geometry,@element,@element)))
+collect_geometries(array_foreach(generate_series(0,to_int(replace(regexp_substr("other_tags",'(building:levels"=>"[0-9]+)'),'building:levels"=>"','')),1),translate($geometry,0,-@element)))
 ```
 
 Translate points by height (order by dem ascending)
