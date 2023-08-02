@@ -492,6 +492,15 @@ General
 set_color_part('#000', 'alpha', scale_linear(distance(@map_extent_center,$geometry),0,1000,100,0))
 ```
 
+Tags
+
+```
+# Label english name if available
+CASE WHEN "other_tags" LIKE '%name:en%' THEN regexp_replace(regexp_replace("other_tags",'^.*"name:en"=>"',''),'".*$','')
+  ELSE "name"
+END
+```
+
 Highways
 
 ```
