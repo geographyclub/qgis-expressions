@@ -99,6 +99,13 @@ intersection($geometry, single_sided_buffer(boundary(buffer(@map_extent_center,(
 intersection($geometry,aggregate('ne_110m_land','collect',$geometry))
 ```
 
+Difference
+
+```
+# make polygon between geometries and map extent
+difference(@map_extent, aggregate(layer:='city_admin_levels', aggregate:='collect', expression:=$geometry, filter:=within($geometry,@map_extent)))
+```
+
 Multibuffer
 
 `collect_geometries(array_foreach(generate_series(0.1,1,0.01),buffer($geometry,@element)))`
