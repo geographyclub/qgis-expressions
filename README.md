@@ -63,6 +63,9 @@ Make line from geometry
 Make polygon
 
 ```
+# make polygon from bounds 
+bounds(make_line(make_point(-180,-90),make_point(180,90)))
+
 # make rectangle polygon from map extent
 bounds(make_line(make_point(x(@map_extent_center) - (@map_extent_width/3), y(@map_extent_center) - (@map_extent_height/3)), make_point(x(@map_extent_center) + (@map_extent_width/3), y(@map_extent_center) + (@map_extent_height/3))))
 
@@ -83,11 +86,10 @@ Intersection
 
 ```
 # extent in epsg:4326
-intersection($geometry, make_polygon(geom_from_wkt('LINESTRING(-180,-90 -180,90 180,90 180,-90)')))
+intersection($geometry, bounds(make_line(make_point(-180,-90),make_point(180,90))))
 
 # extent in epsg:3857
-intersection($geometry, make_polygon(geom_from_wkt('LINESTRING(-20037508.34 -20048966.1, -20037508.34 20048966.1,
-20037508.34 20048966.1, 20037508.34 -20048966.1, -20037508.34 -20048966.1)')))
+intersection($geometry, bounds(make_line(make_point(-20037508.34 -20048966.1),make_point(20037508.34 20048966.1)))
 
 # frame rectangle from map extent
 intersection($geometry, single_sided_buffer(boundary(@map_extent),(@map_extent_height/10)))
