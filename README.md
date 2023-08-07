@@ -492,7 +492,41 @@ Layout projection to atlas_feature
 
 ## Datasets
 
-### OpenStreetMap
+### GeoNames
+
+Stacking symbols
+
+`translate(make_point(round(x($geometry),0),round(y($geometry),0)),0,scale_linear("dem",0,4000,0,4))`
+
+### Global Lithological Map
+
+Labels
+
+```
+CASE WHEN "xx" = 'ad' THEN 'Alluvial Deposits'
+  WHEN "xx" = 'ds' THEN 'Dune Sands'
+  WHEN "xx" = 'ev' THEN 'Evaporites'
+  WHEN "xx" = 'lo' THEN 'Loess'
+  WHEN "xx" = 'su' THEN 'Unconsolidated Sediments'
+  WHEN "xx" = 'sc' THEN 'Carbonate Sedimentary Rocks'
+  WHEN "xx" = 'sm' THEN 'Mixed Sedimentary Rocks'
+  WHEN "xx" = 'ss' THEN 'Siliciclastic Sedimentary Rocks'
+  WHEN "xx" = 'mt' THEN 'Metamorphic Rocks'
+  WHEN "xx" = 'pa' THEN 'Acid Plutonic Rocks'
+  WHEN "xx" = 'pi' THEN 'Intermediate Plutonic Rocks'
+  WHEN "xx" = 'pb' THEN 'Basic Plutonic Rocks'
+  WHEN "xx" = 'va' THEN 'Acid Volcanic Rocks'
+  WHEN "xx" = 'vi' THEN 'Intermediate Volcanic Rocks'
+  WHEN "xx" = 'vb' THEN 'Basic Volcanic Rocks'
+  WHEN "xx" = 'py' THEN 'Pyroclastics'
+  WHEN "xx" = 'wb' THEN 'Water Bodies'
+  WHEN "xx" = 'ig' THEN 'Ice and Glaciers'
+  WHEN "xx" = 'nd' THEN 'No Data'
+  ELSE ''
+END
+```
+
+### OpenStreetMaps
 
 General
 
@@ -540,7 +574,7 @@ Amenities
 other_tags LIKE '%"amenity"=>"parking"%'
 ```
 
-### WWF
+### WWF Ecoregions
 
 ```
 CASE WHEN "REALM" = 'AA' THEN 'Australasia'
@@ -570,32 +604,6 @@ CASE WHEN "BIOME" = 1 THEN 'Tropical & Subtropical Moist Broadleaf Forests'
   WHEN "BIOME" = 12 THEN 'Mediterranean Forests, Woodlands & Scrub'
   WHEN "BIOME" = 13 THEN 'Deserts & Xeric Shrublands'
   WHEN "BIOME" = 14 THEN 'Mangroves'
-  ELSE ''
-END
-```
-
-### Lithology
-
-```
-CASE WHEN "xx" = 'ad' THEN 'Alluvial Deposits'
-  WHEN "xx" = 'ds' THEN 'Dune Sands'
-  WHEN "xx" = 'ev' THEN 'Evaporites'
-  WHEN "xx" = 'lo' THEN 'Loess'
-  WHEN "xx" = 'su' THEN 'Unconsolidated Sediments'
-  WHEN "xx" = 'sc' THEN 'Carbonate Sedimentary Rocks'
-  WHEN "xx" = 'sm' THEN 'Mixed Sedimentary Rocks'
-  WHEN "xx" = 'ss' THEN 'Siliciclastic Sedimentary Rocks'
-  WHEN "xx" = 'mt' THEN 'Metamorphic Rocks'
-  WHEN "xx" = 'pa' THEN 'Acid Plutonic Rocks'
-  WHEN "xx" = 'pi' THEN 'Intermediate Plutonic Rocks'
-  WHEN "xx" = 'pb' THEN 'Basic Plutonic Rocks'
-  WHEN "xx" = 'va' THEN 'Acid Volcanic Rocks'
-  WHEN "xx" = 'vi' THEN 'Intermediate Volcanic Rocks'
-  WHEN "xx" = 'vb' THEN 'Basic Volcanic Rocks'
-  WHEN "xx" = 'py' THEN 'Pyroclastics'
-  WHEN "xx" = 'wb' THEN 'Water Bodies'
-  WHEN "xx" = 'ig' THEN 'Ice and Glaciers'
-  WHEN "xx" = 'nd' THEN 'No Data'
   ELSE ''
 END
 ```
