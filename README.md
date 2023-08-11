@@ -490,6 +490,16 @@ Layout projection to atlas_feature
 
 `'PROJ:+proj=ortho +lat_0="[% attribute(@atlas_feature,LATITUDE) %]" +lon_0="[% attribute(@atlas_feature,LONGITUDE) %]" +ellps=sphere'`
 
+Change font with map id
+
+```
+# map id like 'font_Open Sans Condensed_weight_ExtraBold'
+# font
+regexp_replace(regexp_replace(@map_id,'font_',''),'_weight.*$','')
+# style
+regexp_replace(@map_id,'^.*_weight_','')
+```
+
 ## Datasets
 
 ### GeoNames
