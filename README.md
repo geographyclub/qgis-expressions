@@ -9,7 +9,7 @@ My most used QGIS expressions.
 4. [Print layout](##Print-layout)
 5. [Datasets](##Datasets)
 
-## Make
+##Make
 
 Make snapped points by rounding
 
@@ -139,7 +139,7 @@ Translate points by height (order by dem ascending)
 
 `translate(make_point(round(x($geometry),1),round(y($geometry),1)),-clamp(0,"dem"*0.0002,0.5),clamp(0,"dem"*0.0002,0.5))`
 
-## Calculate
+##Calculate
 
 Case
 
@@ -315,7 +315,7 @@ floor( $id / number_of_columns ) % 2 = 1
 floor( $id / number_of_columns ) % 2 = 0
 ```
 
-## Strings
+##Strings
 
 Delete english characters
 
@@ -453,7 +453,7 @@ HTML labels (check allow html formatting)
 
 `format('<span style="color:#d9d9d9">%1</span> <span style="color:#000">%2</span> <span style="color:#c0cbce">%3</span> <span style="color:#000">%4</span>', '⬛', format_number(minimum(to_real("age_median")),0) || '-' || format_number(q1(to_real("age_median")),0), '⬛', format_number(q1(to_real("age_median")),0) || '-' || format_number(median(to_real("age_median")),0))`
 
-## Print layout
+##Print layout
 
 Variables
 
@@ -502,7 +502,7 @@ regexp_replace(regexp_replace(@map_id,'^.*_style_',''),'_size_.*$','')
 regexp_replace(@map_id,'^.*_size_','')
 ```
 
-## Datasets
+##Datasets
 
 ### GeoNames
 
