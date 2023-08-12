@@ -3,11 +3,11 @@ My most used QGIS expressions.
 
 ## TABLE OF CONTENTS
 
-1. [Make](#Make)
-2. [Calculate](#Calculate)
-3. [Strings](#Strings)
-4. [Print layout](#Print-layout)
-5. [Datasets](#Datasets)
+1. [Make](##Make)
+2. [Calculate](##Calculate)
+3. [Strings](##Strings)
+4. [Print layout](##Print-layout)
+5. [Datasets](##Datasets)
 
 ## Make
 
