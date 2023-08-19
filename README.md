@@ -230,6 +230,10 @@ Percentage from top
 
 `round(((((y(@map_extent_center))+(@map_extent_height/2)-$y))/(@map_extent_height))*100) || '%'`
 
+Curve labels with projection
+
+`smooth(make_line(translate(centroid($geometry),-2,0),centroid($geometry),translate(centroid($geometry),2,0)),3)`
+
 Rotate labels
 
 ```
@@ -620,3 +624,6 @@ CASE WHEN "BIOME" = 1 THEN 'Tropical & Subtropical Moist Broadleaf Forests'
 END
 ```
 
+Control shading with slope
+
+`set_color_part('#000','alpha',scale_linear("slp_dg_sav",0,300,0,100))`
