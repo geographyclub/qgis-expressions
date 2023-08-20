@@ -497,7 +497,7 @@ Layout projection to atlas_feature
 Change font, style, size with map id
 
 ```
-# with map id = 'font_Open Sans Condensed_style_Medium_size_8'
+# with @map_id = 'font_Open Sans Condensed_style_Medium_size_8'
 # font
 regexp_replace(regexp_replace(@map_id,'font_',''),'_style_.*$','')
 # style
