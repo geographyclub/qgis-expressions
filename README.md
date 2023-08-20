@@ -542,7 +542,7 @@ CASE WHEN "xx" = 'ad' THEN 'Alluvial Deposits'
 END
 ```
 
-### OpenStreetMaps
+### OpenStreetMap
 
 General
 
