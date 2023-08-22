@@ -506,6 +506,16 @@ regexp_replace(regexp_replace(@map_id,'^.*_style_',''),'_size_.*$','')
 regexp_replace(@map_id,'^.*_size_','')
 ```
 
+Change page/layout size with atlas geometry (map scale 1:3000000)
+
+```
+# width
+bounds_width(transform(@atlas_geometry,'EPSG:4326','EPSG:3857'))*0.001/3
+
+# height
+bounds_height(transform(@atlas_geometry,'EPSG:4326','EPSG:3857'))*0.001/3
+```
+
 ## Datasets
 
 ### GeoNames
