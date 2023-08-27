@@ -497,13 +497,9 @@ Layout projection to atlas_feature
 Change font, style, size with map id
 
 ```
-# with @map_id = 'font_Open Sans Condensed_style_Medium_size_8'
-# font
-regexp_replace(regexp_replace(@map_id,'font_',''),'_style_.*$','')
-# style
-regexp_replace(regexp_replace(@map_id,'^.*_style_',''),'_size_.*$','')
-# size
-regexp_replace(@map_id,'^.*_size_','')
+# set @map_id to 'font_IBM Plex Sans_style_Regular_size_8_bgx_0_bgy_0.5_'
+# font style
+regexp_replace(regexp_replace(@map_id,'font_',''),'_.*$','')
 ```
 
 Change page/layout size with atlas geometry (map scale 1:3000000)
