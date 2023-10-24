@@ -596,18 +596,6 @@ Amenities
 other_tags LIKE '%"amenity"=>"parking"%'
 ```
 
-Places
-
-```
-# phuket points
-CREATE TABLE phuket_points AS SELECT a.id, a.osm_id, a.name, a.barrier, a.highway, a.ref, a.address, a.is_in, a.place, a.man_made, a.other_tags, ST_Intersection(a.geom, b.geom) geom FROM thailand_points a, thailand_polygons b WHERE b.other_tags LIKE '%Ko Phuket%' AND ST_Intersects(a.geom, b.geom);
-# phuket lines
-CREATE TABLE phuket_lines AS SELECT a.id, a.osm_id, a.name, a.highway, a.waterway, a.aerialway, a.barrier, a.man_made, a.railway, a.z_order, a.other_tags, ST_Intersection(a.geom, b.geom) geom FROM thailand_lines a, thailand_polygons b WHERE b.other_tags LIKE '%Ko Phuket%' AND ST_Intersects(a.geom, b.geom);
-# phuket polygons
-CREATE TABLE phuket_polygons AS WITH b AS (SELECT geom FROM thailand_polygons WHERE other_tags LIKE '%Ko Phuket%') SELECT a.id, a.osm_id, a.osm_way_id, a.name, a.type, a.aeroway, a.amenity, a.admin_level, a.barrier, a.boundary, a.building, a.craft, a.geological, a.historic, a.land_area, a.landuse, a.leisure, a.man_made, a.military, a.natural, a.office, a.place, a.shop, a.sport, a.tourism, a.other_tags, ST_Intersection(a.geom, b.geom) geom FROM thailand_polygons a, b WHERE ST_Intersects(a.geom, b.geom);
-
-```
-
 ### WWF Ecoregions
 
 ```
