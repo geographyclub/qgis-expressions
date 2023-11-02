@@ -2,7 +2,7 @@
 
 My most used QGIS expressions.
 
-<img src="images/ascii_space.png"/>
+<img src="img/ascii_space.png"/>
 
 ## TABLE OF CONTENTS
 
