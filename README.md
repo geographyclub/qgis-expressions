@@ -2,8 +2,6 @@
 
 My most used QGIS expressions.
 
-<img src="img/ascii_space_small.png"/>
-
 ## TABLE OF CONTENTS
 
 1. [Make](#make)
