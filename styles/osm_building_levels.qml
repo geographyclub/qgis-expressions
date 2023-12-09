@@ -1,157 +1,226 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis minScale="100000000" simplifyDrawingHints="1" maxScale="0" simplifyMaxScale="1" symbologyReferenceScale="-1" simplifyLocal="1" simplifyAlgorithm="0" readOnly="0" styleCategories="AllStyleCategories" simplifyDrawingTol="1" hasScaleBasedVisibilityFlag="0" labelsEnabled="1" version="3.22.16-Białowieża">
+<qgis version="3.22.16-Białowieża" labelsEnabled="0" simplifyMaxScale="1" minScale="100000000" styleCategories="AllStyleCategories" maxScale="0" simplifyLocal="1" symbologyReferenceScale="-1" simplifyDrawingHints="1" simplifyAlgorithm="0" readOnly="0" hasScaleBasedVisibilityFlag="0" simplifyDrawingTol="1">
   <flags>
     <Identifiable>1</Identifiable>
     <Removable>1</Removable>
     <Searchable>1</Searchable>
     <Private>0</Private>
   </flags>
-  <temporal accumulate="0" mode="0" fixedDuration="0" durationField="" startField="" startExpression="" limitMode="0" endExpression="" enabled="0" endField="" durationUnit="min">
+  <temporal durationField="" fixedDuration="0" limitMode="0" startField="" enabled="0" mode="0" endField="" accumulate="0" startExpression="" durationUnit="min" endExpression="">
     <fixedRange>
       <start></start>
       <end></end>
     </fixedRange>
   </temporal>
-  <renderer-v2 enableorderby="1" forceraster="0" symbollevels="0" referencescale="-1" type="RuleRenderer">
-    <rules key="{b9b84d1f-37a2-446e-aded-68de9a63934d}">
-      <rule filter="&quot;building&quot; IS NOT NULL" key="{0a1515ff-8b3c-4bb2-86ff-4f3e86d51205}" symbol="0"/>
+  <renderer-v2 referencescale="-1" type="RuleRenderer" symbollevels="0" forceraster="0" enableorderby="1">
+    <rules key="{6be4223e-1c84-4122-b916-686e044dc1c9}">
+      <rule key="{daa72b09-6e55-401a-98d3-8168d1c1094c}" symbol="0"/>
     </rules>
     <symbols>
-      <symbol alpha="1" name="0" force_rhr="0" type="fill" clip_to_extent="1">
+      <symbol force_rhr="0" type="fill" alpha="1" name="0" clip_to_extent="1">
         <data_defined_properties>
           <Option type="Map">
-            <Option name="name" value="" type="QString"/>
+            <Option type="QString" value="" name="name"/>
             <Option name="properties"/>
-            <Option name="type" value="collection" type="QString"/>
+            <Option type="QString" value="collection" name="type"/>
           </Option>
         </data_defined_properties>
-        <layer pass="2" enabled="1" locked="0" class="GeometryGenerator">
+        <layer locked="1" pass="0" enabled="1" class="SimpleFill">
           <Option type="Map">
-            <Option name="SymbolType" value="Fill" type="QString"/>
-            <Option name="geometryModifier" value="order_parts(   extrude(    segments_to_lines( $geometry ),    cos( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height ),    sin( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height )  ),  'distance(  $geometry,  translate(    @map_extent_center,    1000 * @map_extent_width * cos( radians( @qgis_25d_angle + 180 ) ),    1000 * @map_extent_width * sin( radians( @qgis_25d_angle + 180 ) )  ))',  False)" type="QString"/>
-            <Option name="units" value="MapUnit" type="QString"/>
+            <Option type="QString" value="3x:0,0,0,0,0,0" name="border_width_map_unit_scale"/>
+            <Option type="QString" value="0,0,255,255" name="color"/>
+            <Option type="QString" value="bevel" name="joinstyle"/>
+            <Option type="QString" value="0,0" name="offset"/>
+            <Option type="QString" value="3x:0,0,0,0,0,0" name="offset_map_unit_scale"/>
+            <Option type="QString" value="MM" name="offset_unit"/>
+            <Option type="QString" value="35,35,35,255" name="outline_color"/>
+            <Option type="QString" value="solid" name="outline_style"/>
+            <Option type="QString" value="0.26" name="outline_width"/>
+            <Option type="QString" value="MM" name="outline_width_unit"/>
+            <Option type="QString" value="solid" name="style"/>
           </Option>
-          <prop k="SymbolType" v="Fill"/>
-          <prop k="geometryModifier" v="order_parts(   extrude(    segments_to_lines( $geometry ),    cos( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height ),    sin( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height )  ),  'distance(  $geometry,  translate(    @map_extent_center,    1000 * @map_extent_width * cos( radians( @qgis_25d_angle + 180 ) ),    1000 * @map_extent_width * sin( radians( @qgis_25d_angle + 180 ) )  ))',  False)"/>
-          <prop k="units" v="MapUnit"/>
+          <prop v="3x:0,0,0,0,0,0" k="border_width_map_unit_scale"/>
+          <prop v="0,0,255,255" k="color"/>
+          <prop v="bevel" k="joinstyle"/>
+          <prop v="0,0" k="offset"/>
+          <prop v="3x:0,0,0,0,0,0" k="offset_map_unit_scale"/>
+          <prop v="MM" k="offset_unit"/>
+          <prop v="35,35,35,255" k="outline_color"/>
+          <prop v="solid" k="outline_style"/>
+          <prop v="0.26" k="outline_width"/>
+          <prop v="MM" k="outline_width_unit"/>
+          <prop v="solid" k="style"/>
+          <effect type="effectStack" enabled="1">
+            <effect type="outerGlow">
+              <Option type="Map">
+                <Option type="QString" value="0" name="blend_mode"/>
+                <Option type="QString" value="5" name="blur_level"/>
+                <Option type="QString" value="MM" name="blur_unit"/>
+                <Option type="QString" value="3x:0,0,0,0,0,0" name="blur_unit_scale"/>
+                <Option type="QString" value="69,116,40,255" name="color1"/>
+                <Option type="QString" value="188,220,60,255" name="color2"/>
+                <Option type="QString" value="0" name="color_type"/>
+                <Option type="QString" value="0" name="discrete"/>
+                <Option type="QString" value="2" name="draw_mode"/>
+                <Option type="QString" value="0" name="enabled"/>
+                <Option type="QString" value="0.5" name="opacity"/>
+                <Option type="QString" value="gradient" name="rampType"/>
+                <Option type="QString" value="17,17,17,255" name="single_color"/>
+                <Option type="QString" value="4" name="spread"/>
+                <Option type="QString" value="MapUnit" name="spread_unit"/>
+                <Option type="QString" value="3x:0,0,0,0,0,0" name="spread_unit_scale"/>
+              </Option>
+              <prop v="0" k="blend_mode"/>
+              <prop v="5" k="blur_level"/>
+              <prop v="MM" k="blur_unit"/>
+              <prop v="3x:0,0,0,0,0,0" k="blur_unit_scale"/>
+              <prop v="69,116,40,255" k="color1"/>
+              <prop v="188,220,60,255" k="color2"/>
+              <prop v="0" k="color_type"/>
+              <prop v="0" k="discrete"/>
+              <prop v="2" k="draw_mode"/>
+              <prop v="0" k="enabled"/>
+              <prop v="0.5" k="opacity"/>
+              <prop v="gradient" k="rampType"/>
+              <prop v="17,17,17,255" k="single_color"/>
+              <prop v="4" k="spread"/>
+              <prop v="MapUnit" k="spread_unit"/>
+              <prop v="3x:0,0,0,0,0,0" k="spread_unit_scale"/>
+            </effect>
+          </effect>
           <data_defined_properties>
             <Option type="Map">
-              <Option name="name" value="" type="QString"/>
+              <Option type="QString" value="" name="name"/>
               <Option name="properties"/>
-              <Option name="type" value="collection" type="QString"/>
+              <Option type="QString" value="collection" name="type"/>
             </Option>
           </data_defined_properties>
-          <symbol alpha="1" name="@0@0" force_rhr="0" type="fill" clip_to_extent="1">
+        </layer>
+        <layer locked="0" pass="0" enabled="1" class="GeometryGenerator">
+          <Option type="Map">
+            <Option type="QString" value="Fill" name="SymbolType"/>
+            <Option type="QString" value="order_parts(   extrude(    segments_to_lines( $geometry ),    cos( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height ),    sin( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height )  ),  'distance(  $geometry,  translate(    @map_extent_center,    1000 * @map_extent_width * cos( radians( @qgis_25d_angle + 180 ) ),    1000 * @map_extent_width * sin( radians( @qgis_25d_angle + 180 ) )  ))',  False)" name="geometryModifier"/>
+            <Option type="QString" value="MapUnit" name="units"/>
+          </Option>
+          <prop v="Fill" k="SymbolType"/>
+          <prop v="order_parts(   extrude(    segments_to_lines( $geometry ),    cos( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height ),    sin( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height )  ),  'distance(  $geometry,  translate(    @map_extent_center,    1000 * @map_extent_width * cos( radians( @qgis_25d_angle + 180 ) ),    1000 * @map_extent_width * sin( radians( @qgis_25d_angle + 180 ) )  ))',  False)" k="geometryModifier"/>
+          <prop v="MapUnit" k="units"/>
+          <data_defined_properties>
+            <Option type="Map">
+              <Option type="QString" value="" name="name"/>
+              <Option name="properties"/>
+              <Option type="QString" value="collection" name="type"/>
+            </Option>
+          </data_defined_properties>
+          <symbol force_rhr="0" type="fill" alpha="1" name="@0@1" clip_to_extent="1">
             <data_defined_properties>
               <Option type="Map">
-                <Option name="name" value="" type="QString"/>
+                <Option type="QString" value="" name="name"/>
                 <Option name="properties"/>
-                <Option name="type" value="collection" type="QString"/>
+                <Option type="QString" value="collection" name="type"/>
               </Option>
             </data_defined_properties>
-            <layer pass="0" enabled="1" locked="0" class="GradientFill">
+            <layer locked="0" pass="0" enabled="1" class="SimpleFill">
               <Option type="Map">
-                <Option name="angle" value="0" type="QString"/>
-                <Option name="color" value="77,77,77,128" type="QString"/>
-                <Option name="color1" value="69,116,40,255" type="QString"/>
-                <Option name="color2" value="188,220,60,255" type="QString"/>
-                <Option name="color_type" value="0" type="QString"/>
-                <Option name="coordinate_mode" value="0" type="QString"/>
-                <Option name="discrete" value="0" type="QString"/>
-                <Option name="gradient_color2" value="77,77,77,0" type="QString"/>
-                <Option name="offset" value="0,0" type="QString"/>
-                <Option name="offset_map_unit_scale" value="3x:0,0,0,0,0,0" type="QString"/>
-                <Option name="offset_unit" value="MM" type="QString"/>
-                <Option name="rampType" value="gradient" type="QString"/>
-                <Option name="reference_point1" value="0.5,0" type="QString"/>
-                <Option name="reference_point1_iscentroid" value="0" type="QString"/>
-                <Option name="reference_point2" value="0.5,1" type="QString"/>
-                <Option name="reference_point2_iscentroid" value="0" type="QString"/>
-                <Option name="spread" value="0" type="QString"/>
-                <Option name="type" value="0" type="QString"/>
+                <Option type="QString" value="3x:0,0,0,0,0,0" name="border_width_map_unit_scale"/>
+                <Option type="QString" value="0,0,0,26" name="color"/>
+                <Option type="QString" value="bevel" name="joinstyle"/>
+                <Option type="QString" value="0,0" name="offset"/>
+                <Option type="QString" value="3x:0,0,0,0,0,0" name="offset_map_unit_scale"/>
+                <Option type="QString" value="MM" name="offset_unit"/>
+                <Option type="QString" value="0,0,0,255" name="outline_color"/>
+                <Option type="QString" value="no" name="outline_style"/>
+                <Option type="QString" value="0.26" name="outline_width"/>
+                <Option type="QString" value="MM" name="outline_width_unit"/>
+                <Option type="QString" value="solid" name="style"/>
               </Option>
-              <prop k="angle" v="0"/>
-              <prop k="color" v="77,77,77,128"/>
-              <prop k="color1" v="69,116,40,255"/>
-              <prop k="color2" v="188,220,60,255"/>
-              <prop k="color_type" v="0"/>
-              <prop k="coordinate_mode" v="0"/>
-              <prop k="discrete" v="0"/>
-              <prop k="gradient_color2" v="77,77,77,0"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="3x:0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="rampType" v="gradient"/>
-              <prop k="reference_point1" v="0.5,0"/>
-              <prop k="reference_point1_iscentroid" v="0"/>
-              <prop k="reference_point2" v="0.5,1"/>
-              <prop k="reference_point2_iscentroid" v="0"/>
-              <prop k="spread" v="0"/>
-              <prop k="type" v="0"/>
+              <prop v="3x:0,0,0,0,0,0" k="border_width_map_unit_scale"/>
+              <prop v="0,0,0,26" k="color"/>
+              <prop v="bevel" k="joinstyle"/>
+              <prop v="0,0" k="offset"/>
+              <prop v="3x:0,0,0,0,0,0" k="offset_map_unit_scale"/>
+              <prop v="MM" k="offset_unit"/>
+              <prop v="0,0,0,255" k="outline_color"/>
+              <prop v="no" k="outline_style"/>
+              <prop v="0.26" k="outline_width"/>
+              <prop v="MM" k="outline_width_unit"/>
+              <prop v="solid" k="style"/>
               <data_defined_properties>
                 <Option type="Map">
-                  <Option name="name" value="" type="QString"/>
-                  <Option name="properties"/>
-                  <Option name="type" value="collection" type="QString"/>
+                  <Option type="QString" value="" name="name"/>
+                  <Option type="Map" name="properties">
+                    <Option type="Map" name="fillColor">
+                      <Option type="bool" value="false" name="active"/>
+                      <Option type="QString" value="set_color_part('#000', 'alpha', scale_linear(distance(@map_extent_center,$geometry),0,1000,50,0))" name="expression"/>
+                      <Option type="int" value="3" name="type"/>
+                    </Option>
+                  </Option>
+                  <Option type="QString" value="collection" name="type"/>
                 </Option>
               </data_defined_properties>
             </layer>
           </symbol>
         </layer>
-        <layer pass="2" enabled="1" locked="0" class="GeometryGenerator">
+        <layer locked="0" pass="0" enabled="1" class="GeometryGenerator">
           <Option type="Map">
-            <Option name="SymbolType" value="Fill" type="QString"/>
-            <Option name="geometryModifier" value="translate(  $geometry,  cos( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height ),  sin( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height ))" type="QString"/>
-            <Option name="units" value="MapUnit" type="QString"/>
+            <Option type="QString" value="Fill" name="SymbolType"/>
+            <Option type="QString" value="translate(  $geometry,  cos( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height ),  sin( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height ))" name="geometryModifier"/>
+            <Option type="QString" value="MapUnit" name="units"/>
           </Option>
-          <prop k="SymbolType" v="Fill"/>
-          <prop k="geometryModifier" v="translate(  $geometry,  cos( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height ),  sin( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height ))"/>
-          <prop k="units" v="MapUnit"/>
+          <prop v="Fill" k="SymbolType"/>
+          <prop v="translate(  $geometry,  cos( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height ),  sin( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height ))" k="geometryModifier"/>
+          <prop v="MapUnit" k="units"/>
           <data_defined_properties>
             <Option type="Map">
-              <Option name="name" value="" type="QString"/>
+              <Option type="QString" value="" name="name"/>
               <Option name="properties"/>
-              <Option name="type" value="collection" type="QString"/>
+              <Option type="QString" value="collection" name="type"/>
             </Option>
           </data_defined_properties>
-          <symbol alpha="1" name="@0@1" force_rhr="0" type="fill" clip_to_extent="1">
+          <symbol force_rhr="0" type="fill" alpha="1" name="@0@2" clip_to_extent="1">
             <data_defined_properties>
               <Option type="Map">
-                <Option name="name" value="" type="QString"/>
+                <Option type="QString" value="" name="name"/>
                 <Option name="properties"/>
-                <Option name="type" value="collection" type="QString"/>
+                <Option type="QString" value="collection" name="type"/>
               </Option>
             </data_defined_properties>
-            <layer pass="0" enabled="1" locked="0" class="SimpleFill">
+            <layer locked="0" pass="0" enabled="1" class="SimpleFill">
               <Option type="Map">
-                <Option name="border_width_map_unit_scale" value="3x:0,0,0,0,0,0" type="QString"/>
-                <Option name="color" value="255,255,255,255" type="QString"/>
-                <Option name="joinstyle" value="bevel" type="QString"/>
-                <Option name="offset" value="0,0" type="QString"/>
-                <Option name="offset_map_unit_scale" value="3x:0,0,0,0,0,0" type="QString"/>
-                <Option name="offset_unit" value="MM" type="QString"/>
-                <Option name="outline_color" value="77,77,77,255" type="QString"/>
-                <Option name="outline_style" value="solid" type="QString"/>
-                <Option name="outline_width" value="0.1" type="QString"/>
-                <Option name="outline_width_unit" value="MM" type="QString"/>
-                <Option name="style" value="solid" type="QString"/>
+                <Option type="QString" value="3x:0,0,0,0,0,0" name="border_width_map_unit_scale"/>
+                <Option type="QString" value="255,255,255,255" name="color"/>
+                <Option type="QString" value="bevel" name="joinstyle"/>
+                <Option type="QString" value="0,0" name="offset"/>
+                <Option type="QString" value="3x:0,0,0,0,0,0" name="offset_map_unit_scale"/>
+                <Option type="QString" value="MM" name="offset_unit"/>
+                <Option type="QString" value="0,0,0,255" name="outline_color"/>
+                <Option type="QString" value="no" name="outline_style"/>
+                <Option type="QString" value="0.26" name="outline_width"/>
+                <Option type="QString" value="MM" name="outline_width_unit"/>
+                <Option type="QString" value="solid" name="style"/>
               </Option>
-              <prop k="border_width_map_unit_scale" v="3x:0,0,0,0,0,0"/>
-              <prop k="color" v="255,255,255,255"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="3x:0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="77,77,77,255"/>
-              <prop k="outline_style" v="solid"/>
-              <prop k="outline_width" v="0.1"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="style" v="solid"/>
+              <prop v="3x:0,0,0,0,0,0" k="border_width_map_unit_scale"/>
+              <prop v="255,255,255,255" k="color"/>
+              <prop v="bevel" k="joinstyle"/>
+              <prop v="0,0" k="offset"/>
+              <prop v="3x:0,0,0,0,0,0" k="offset_map_unit_scale"/>
+              <prop v="MM" k="offset_unit"/>
+              <prop v="0,0,0,255" k="outline_color"/>
+              <prop v="no" k="outline_style"/>
+              <prop v="0.26" k="outline_width"/>
+              <prop v="MM" k="outline_width_unit"/>
+              <prop v="solid" k="style"/>
               <data_defined_properties>
                 <Option type="Map">
-                  <Option name="name" value="" type="QString"/>
-                  <Option name="properties"/>
-                  <Option name="type" value="collection" type="QString"/>
+                  <Option type="QString" value="" name="name"/>
+                  <Option type="Map" name="properties">
+                    <Option type="Map" name="fillColor">
+                      <Option type="bool" value="false" name="active"/>
+                      <Option type="QString" value="set_color_part('#000', 'alpha', scale_linear(distance(@map_extent_center,$geometry),0,1000,50,0))" name="expression"/>
+                      <Option type="int" value="3" name="type"/>
+                    </Option>
+                  </Option>
+                  <Option type="QString" value="collection" name="type"/>
                 </Option>
               </data_defined_properties>
             </layer>
@@ -159,264 +228,261 @@
         </layer>
       </symbol>
     </symbols>
-    <effect enabled="1" type="effectStack">
+    <effect type="effectStack" enabled="1">
       <effect type="dropShadow">
         <Option type="Map">
-          <Option name="blend_mode" value="13" type="QString"/>
-          <Option name="blur_level" value="2.645" type="QString"/>
-          <Option name="blur_unit" value="MM" type="QString"/>
-          <Option name="blur_unit_scale" value="3x:0,0,0,0,0,0" type="QString"/>
-          <Option name="color" value="0,0,0,255" type="QString"/>
-          <Option name="draw_mode" value="2" type="QString"/>
-          <Option name="enabled" value="0" type="QString"/>
-          <Option name="offset_angle" value="135" type="QString"/>
-          <Option name="offset_distance" value="2" type="QString"/>
-          <Option name="offset_unit" value="MM" type="QString"/>
-          <Option name="offset_unit_scale" value="3x:0,0,0,0,0,0" type="QString"/>
-          <Option name="opacity" value="1" type="QString"/>
+          <Option type="QString" value="13" name="blend_mode"/>
+          <Option type="QString" value="2.645" name="blur_level"/>
+          <Option type="QString" value="MM" name="blur_unit"/>
+          <Option type="QString" value="3x:0,0,0,0,0,0" name="blur_unit_scale"/>
+          <Option type="QString" value="0,0,0,255" name="color"/>
+          <Option type="QString" value="2" name="draw_mode"/>
+          <Option type="QString" value="0" name="enabled"/>
+          <Option type="QString" value="135" name="offset_angle"/>
+          <Option type="QString" value="2" name="offset_distance"/>
+          <Option type="QString" value="MM" name="offset_unit"/>
+          <Option type="QString" value="3x:0,0,0,0,0,0" name="offset_unit_scale"/>
+          <Option type="QString" value="1" name="opacity"/>
         </Option>
-        <prop k="blend_mode" v="13"/>
-        <prop k="blur_level" v="2.645"/>
-        <prop k="blur_unit" v="MM"/>
-        <prop k="blur_unit_scale" v="3x:0,0,0,0,0,0"/>
-        <prop k="color" v="0,0,0,255"/>
-        <prop k="draw_mode" v="2"/>
-        <prop k="enabled" v="0"/>
-        <prop k="offset_angle" v="135"/>
-        <prop k="offset_distance" v="2"/>
-        <prop k="offset_unit" v="MM"/>
-        <prop k="offset_unit_scale" v="3x:0,0,0,0,0,0"/>
-        <prop k="opacity" v="1"/>
+        <prop v="13" k="blend_mode"/>
+        <prop v="2.645" k="blur_level"/>
+        <prop v="MM" k="blur_unit"/>
+        <prop v="3x:0,0,0,0,0,0" k="blur_unit_scale"/>
+        <prop v="0,0,0,255" k="color"/>
+        <prop v="2" k="draw_mode"/>
+        <prop v="0" k="enabled"/>
+        <prop v="135" k="offset_angle"/>
+        <prop v="2" k="offset_distance"/>
+        <prop v="MM" k="offset_unit"/>
+        <prop v="3x:0,0,0,0,0,0" k="offset_unit_scale"/>
+        <prop v="1" k="opacity"/>
       </effect>
       <effect type="outerGlow">
         <Option type="Map">
-          <Option name="blend_mode" value="0" type="QString"/>
-          <Option name="blur_level" value="2.645" type="QString"/>
-          <Option name="blur_unit" value="MM" type="QString"/>
-          <Option name="blur_unit_scale" value="3x:0,0,0,0,0,0" type="QString"/>
-          <Option name="color1" value="69,116,40,255" type="QString"/>
-          <Option name="color2" value="188,220,60,255" type="QString"/>
-          <Option name="color_type" value="0" type="QString"/>
-          <Option name="discrete" value="0" type="QString"/>
-          <Option name="draw_mode" value="2" type="QString"/>
-          <Option name="enabled" value="0" type="QString"/>
-          <Option name="opacity" value="0.5" type="QString"/>
-          <Option name="rampType" value="gradient" type="QString"/>
-          <Option name="single_color" value="255,255,255,255" type="QString"/>
-          <Option name="spread" value="2" type="QString"/>
-          <Option name="spread_unit" value="MM" type="QString"/>
-          <Option name="spread_unit_scale" value="3x:0,0,0,0,0,0" type="QString"/>
+          <Option type="QString" value="0" name="blend_mode"/>
+          <Option type="QString" value="2.645" name="blur_level"/>
+          <Option type="QString" value="MM" name="blur_unit"/>
+          <Option type="QString" value="3x:0,0,0,0,0,0" name="blur_unit_scale"/>
+          <Option type="QString" value="69,116,40,255" name="color1"/>
+          <Option type="QString" value="188,220,60,255" name="color2"/>
+          <Option type="QString" value="0" name="color_type"/>
+          <Option type="QString" value="0" name="discrete"/>
+          <Option type="QString" value="2" name="draw_mode"/>
+          <Option type="QString" value="0" name="enabled"/>
+          <Option type="QString" value="0.5" name="opacity"/>
+          <Option type="QString" value="gradient" name="rampType"/>
+          <Option type="QString" value="255,255,255,255" name="single_color"/>
+          <Option type="QString" value="2" name="spread"/>
+          <Option type="QString" value="MM" name="spread_unit"/>
+          <Option type="QString" value="3x:0,0,0,0,0,0" name="spread_unit_scale"/>
         </Option>
-        <prop k="blend_mode" v="0"/>
-        <prop k="blur_level" v="2.645"/>
-        <prop k="blur_unit" v="MM"/>
-        <prop k="blur_unit_scale" v="3x:0,0,0,0,0,0"/>
-        <prop k="color1" v="69,116,40,255"/>
-        <prop k="color2" v="188,220,60,255"/>
-        <prop k="color_type" v="0"/>
-        <prop k="discrete" v="0"/>
-        <prop k="draw_mode" v="2"/>
-        <prop k="enabled" v="0"/>
-        <prop k="opacity" v="0.5"/>
-        <prop k="rampType" v="gradient"/>
-        <prop k="single_color" v="255,255,255,255"/>
-        <prop k="spread" v="2"/>
-        <prop k="spread_unit" v="MM"/>
-        <prop k="spread_unit_scale" v="3x:0,0,0,0,0,0"/>
+        <prop v="0" k="blend_mode"/>
+        <prop v="2.645" k="blur_level"/>
+        <prop v="MM" k="blur_unit"/>
+        <prop v="3x:0,0,0,0,0,0" k="blur_unit_scale"/>
+        <prop v="69,116,40,255" k="color1"/>
+        <prop v="188,220,60,255" k="color2"/>
+        <prop v="0" k="color_type"/>
+        <prop v="0" k="discrete"/>
+        <prop v="2" k="draw_mode"/>
+        <prop v="0" k="enabled"/>
+        <prop v="0.5" k="opacity"/>
+        <prop v="gradient" k="rampType"/>
+        <prop v="255,255,255,255" k="single_color"/>
+        <prop v="2" k="spread"/>
+        <prop v="MM" k="spread_unit"/>
+        <prop v="3x:0,0,0,0,0,0" k="spread_unit_scale"/>
       </effect>
       <effect type="transform">
         <Option type="Map">
-          <Option name="draw_mode" value="2" type="QString"/>
-          <Option name="enabled" value="1" type="QString"/>
-          <Option name="reflect_x" value="0" type="QString"/>
-          <Option name="reflect_y" value="0" type="QString"/>
-          <Option name="rotation" value="45" type="QString"/>
-          <Option name="scale_x" value="1" type="QString"/>
-          <Option name="scale_y" value="1" type="QString"/>
-          <Option name="shear_x" value="-0.15" type="QString"/>
-          <Option name="shear_y" value="-0.15" type="QString"/>
-          <Option name="translate_unit" value="MM" type="QString"/>
-          <Option name="translate_unit_scale" value="3x:0,0,0,0,0,0" type="QString"/>
-          <Option name="translate_x" value="0" type="QString"/>
-          <Option name="translate_y" value="0" type="QString"/>
+          <Option type="QString" value="2" name="draw_mode"/>
+          <Option type="QString" value="1" name="enabled"/>
+          <Option type="QString" value="0" name="reflect_x"/>
+          <Option type="QString" value="0" name="reflect_y"/>
+          <Option type="QString" value="45" name="rotation"/>
+          <Option type="QString" value="1" name="scale_x"/>
+          <Option type="QString" value="1" name="scale_y"/>
+          <Option type="QString" value="-0.2" name="shear_x"/>
+          <Option type="QString" value="-0.2" name="shear_y"/>
+          <Option type="QString" value="MM" name="translate_unit"/>
+          <Option type="QString" value="3x:0,0,0,0,0,0" name="translate_unit_scale"/>
+          <Option type="QString" value="0" name="translate_x"/>
+          <Option type="QString" value="0" name="translate_y"/>
         </Option>
-        <prop k="draw_mode" v="2"/>
-        <prop k="enabled" v="1"/>
-        <prop k="reflect_x" v="0"/>
-        <prop k="reflect_y" v="0"/>
-        <prop k="rotation" v="45"/>
-        <prop k="scale_x" v="1"/>
-        <prop k="scale_y" v="1"/>
-        <prop k="shear_x" v="-0.15"/>
-        <prop k="shear_y" v="-0.15"/>
-        <prop k="translate_unit" v="MM"/>
-        <prop k="translate_unit_scale" v="3x:0,0,0,0,0,0"/>
-        <prop k="translate_x" v="0"/>
-        <prop k="translate_y" v="0"/>
+        <prop v="2" k="draw_mode"/>
+        <prop v="1" k="enabled"/>
+        <prop v="0" k="reflect_x"/>
+        <prop v="0" k="reflect_y"/>
+        <prop v="45" k="rotation"/>
+        <prop v="1" k="scale_x"/>
+        <prop v="1" k="scale_y"/>
+        <prop v="-0.2" k="shear_x"/>
+        <prop v="-0.2" k="shear_y"/>
+        <prop v="MM" k="translate_unit"/>
+        <prop v="3x:0,0,0,0,0,0" k="translate_unit_scale"/>
+        <prop v="0" k="translate_x"/>
+        <prop v="0" k="translate_y"/>
       </effect>
       <effect type="innerShadow">
         <Option type="Map">
-          <Option name="blend_mode" value="13" type="QString"/>
-          <Option name="blur_level" value="2.645" type="QString"/>
-          <Option name="blur_unit" value="MM" type="QString"/>
-          <Option name="blur_unit_scale" value="3x:0,0,0,0,0,0" type="QString"/>
-          <Option name="color" value="0,0,0,255" type="QString"/>
-          <Option name="draw_mode" value="2" type="QString"/>
-          <Option name="enabled" value="0" type="QString"/>
-          <Option name="offset_angle" value="135" type="QString"/>
-          <Option name="offset_distance" value="2" type="QString"/>
-          <Option name="offset_unit" value="MM" type="QString"/>
-          <Option name="offset_unit_scale" value="3x:0,0,0,0,0,0" type="QString"/>
-          <Option name="opacity" value="1" type="QString"/>
+          <Option type="QString" value="13" name="blend_mode"/>
+          <Option type="QString" value="2.645" name="blur_level"/>
+          <Option type="QString" value="MM" name="blur_unit"/>
+          <Option type="QString" value="3x:0,0,0,0,0,0" name="blur_unit_scale"/>
+          <Option type="QString" value="0,0,0,255" name="color"/>
+          <Option type="QString" value="2" name="draw_mode"/>
+          <Option type="QString" value="0" name="enabled"/>
+          <Option type="QString" value="135" name="offset_angle"/>
+          <Option type="QString" value="2" name="offset_distance"/>
+          <Option type="QString" value="MM" name="offset_unit"/>
+          <Option type="QString" value="3x:0,0,0,0,0,0" name="offset_unit_scale"/>
+          <Option type="QString" value="1" name="opacity"/>
         </Option>
-        <prop k="blend_mode" v="13"/>
-        <prop k="blur_level" v="2.645"/>
-        <prop k="blur_unit" v="MM"/>
-        <prop k="blur_unit_scale" v="3x:0,0,0,0,0,0"/>
-        <prop k="color" v="0,0,0,255"/>
-        <prop k="draw_mode" v="2"/>
-        <prop k="enabled" v="0"/>
-        <prop k="offset_angle" v="135"/>
-        <prop k="offset_distance" v="2"/>
-        <prop k="offset_unit" v="MM"/>
-        <prop k="offset_unit_scale" v="3x:0,0,0,0,0,0"/>
-        <prop k="opacity" v="1"/>
+        <prop v="13" k="blend_mode"/>
+        <prop v="2.645" k="blur_level"/>
+        <prop v="MM" k="blur_unit"/>
+        <prop v="3x:0,0,0,0,0,0" k="blur_unit_scale"/>
+        <prop v="0,0,0,255" k="color"/>
+        <prop v="2" k="draw_mode"/>
+        <prop v="0" k="enabled"/>
+        <prop v="135" k="offset_angle"/>
+        <prop v="2" k="offset_distance"/>
+        <prop v="MM" k="offset_unit"/>
+        <prop v="3x:0,0,0,0,0,0" k="offset_unit_scale"/>
+        <prop v="1" k="opacity"/>
       </effect>
       <effect type="innerGlow">
         <Option type="Map">
-          <Option name="blend_mode" value="0" type="QString"/>
-          <Option name="blur_level" value="2.645" type="QString"/>
-          <Option name="blur_unit" value="MM" type="QString"/>
-          <Option name="blur_unit_scale" value="3x:0,0,0,0,0,0" type="QString"/>
-          <Option name="color1" value="69,116,40,255" type="QString"/>
-          <Option name="color2" value="188,220,60,255" type="QString"/>
-          <Option name="color_type" value="0" type="QString"/>
-          <Option name="discrete" value="0" type="QString"/>
-          <Option name="draw_mode" value="2" type="QString"/>
-          <Option name="enabled" value="0" type="QString"/>
-          <Option name="opacity" value="0.5" type="QString"/>
-          <Option name="rampType" value="gradient" type="QString"/>
-          <Option name="single_color" value="255,255,255,255" type="QString"/>
-          <Option name="spread" value="2" type="QString"/>
-          <Option name="spread_unit" value="MM" type="QString"/>
-          <Option name="spread_unit_scale" value="3x:0,0,0,0,0,0" type="QString"/>
+          <Option type="QString" value="0" name="blend_mode"/>
+          <Option type="QString" value="2.645" name="blur_level"/>
+          <Option type="QString" value="MM" name="blur_unit"/>
+          <Option type="QString" value="3x:0,0,0,0,0,0" name="blur_unit_scale"/>
+          <Option type="QString" value="69,116,40,255" name="color1"/>
+          <Option type="QString" value="188,220,60,255" name="color2"/>
+          <Option type="QString" value="0" name="color_type"/>
+          <Option type="QString" value="0" name="discrete"/>
+          <Option type="QString" value="2" name="draw_mode"/>
+          <Option type="QString" value="0" name="enabled"/>
+          <Option type="QString" value="0.5" name="opacity"/>
+          <Option type="QString" value="gradient" name="rampType"/>
+          <Option type="QString" value="255,255,255,255" name="single_color"/>
+          <Option type="QString" value="2" name="spread"/>
+          <Option type="QString" value="MM" name="spread_unit"/>
+          <Option type="QString" value="3x:0,0,0,0,0,0" name="spread_unit_scale"/>
         </Option>
-        <prop k="blend_mode" v="0"/>
-        <prop k="blur_level" v="2.645"/>
-        <prop k="blur_unit" v="MM"/>
-        <prop k="blur_unit_scale" v="3x:0,0,0,0,0,0"/>
-        <prop k="color1" v="69,116,40,255"/>
-        <prop k="color2" v="188,220,60,255"/>
-        <prop k="color_type" v="0"/>
-        <prop k="discrete" v="0"/>
-        <prop k="draw_mode" v="2"/>
-        <prop k="enabled" v="0"/>
-        <prop k="opacity" v="0.5"/>
-        <prop k="rampType" v="gradient"/>
-        <prop k="single_color" v="255,255,255,255"/>
-        <prop k="spread" v="2"/>
-        <prop k="spread_unit" v="MM"/>
-        <prop k="spread_unit_scale" v="3x:0,0,0,0,0,0"/>
+        <prop v="0" k="blend_mode"/>
+        <prop v="2.645" k="blur_level"/>
+        <prop v="MM" k="blur_unit"/>
+        <prop v="3x:0,0,0,0,0,0" k="blur_unit_scale"/>
+        <prop v="69,116,40,255" k="color1"/>
+        <prop v="188,220,60,255" k="color2"/>
+        <prop v="0" k="color_type"/>
+        <prop v="0" k="discrete"/>
+        <prop v="2" k="draw_mode"/>
+        <prop v="0" k="enabled"/>
+        <prop v="0.5" k="opacity"/>
+        <prop v="gradient" k="rampType"/>
+        <prop v="255,255,255,255" k="single_color"/>
+        <prop v="2" k="spread"/>
+        <prop v="MM" k="spread_unit"/>
+        <prop v="3x:0,0,0,0,0,0" k="spread_unit_scale"/>
       </effect>
     </effect>
     <orderby>
-      <orderByClause asc="0" nullsFirst="1">distance(  $geometry,  translate(    @map_extent_center,    1000 * @map_extent_width * cos( radians( @qgis_25d_angle + 180 ) ),    1000 * @map_extent_width * sin( radians( @qgis_25d_angle + 180 ) )  ))</orderByClause>
+      <orderByClause nullsFirst="1" asc="0">distance(  $geometry,  translate(    @map_extent_center,    1000 * @map_extent_width * cos( radians( @qgis_25d_angle + 180 ) ),    1000 * @map_extent_width * sin( radians( @qgis_25d_angle + 180 ) )  ))</orderByClause>
     </orderby>
   </renderer-v2>
-  <labeling type="rule-based">
-    <rules key="{9fa02d5b-df31-49dd-948f-eaf901378e82}"/>
-  </labeling>
   <customproperties>
     <Option type="Map">
-      <Option name="embeddedWidgets/count" value="0" type="int"/>
-      <Option name="variableNames" type="StringList">
-        <Option value="qgis_25d_angle" type="QString"/>
-        <Option value="qgis_25d_height" type="QString"/>
+      <Option type="int" value="0" name="embeddedWidgets/count"/>
+      <Option type="StringList" name="variableNames">
+        <Option type="QString" value="qgis_25d_angle"/>
+        <Option type="QString" value="qgis_25d_height"/>
       </Option>
-      <Option name="variableValues" type="StringList">
-        <Option value="135" type="QString"/>
-        <Option value="replace(regexp_substr(&quot;other_tags&quot;,'(building:levels&quot;=>&quot;[0-9]+)'),'building:levels&quot;=>&quot;','')*10" type="QString"/>
+      <Option type="StringList" name="variableValues">
+        <Option type="QString" value="135"/>
+        <Option type="QString" value="replace(regexp_substr(&quot;other_tags&quot;,'(building:levels&quot;=>&quot;[0-9]+)'),'building:levels&quot;=>&quot;','')*10"/>
       </Option>
     </Option>
   </customproperties>
   <blendMode>0</blendMode>
   <featureBlendMode>0</featureBlendMode>
   <layerOpacity>1</layerOpacity>
-  <SingleCategoryDiagramRenderer diagramType="Histogram" attributeLegend="1">
-    <DiagramCategory scaleDependency="Area" scaleBasedVisibility="0" barWidth="5" sizeScale="3x:0,0,0,0,0,0" backgroundColor="#ffffff" maxScaleDenominator="1e+08" penColor="#000000" rotationOffset="270" lineSizeScale="3x:0,0,0,0,0,0" backgroundAlpha="255" enabled="0" minScaleDenominator="0" width="15" opacity="1" diagramOrientation="Up" penAlpha="255" spacingUnitScale="3x:0,0,0,0,0,0" minimumSize="0" height="15" labelPlacementMethod="XHeight" showAxis="1" direction="0" spacing="5" penWidth="0" lineSizeType="MM" spacingUnit="MM" sizeType="MM">
-      <fontProperties style="" description="Sans Serif,9,-1,5,50,0,0,0,0,0"/>
-      <attribute colorOpacity="1" label="" color="#000000" field=""/>
+  <SingleCategoryDiagramRenderer attributeLegend="1" diagramType="Histogram">
+    <DiagramCategory penColor="#000000" opacity="1" showAxis="1" labelPlacementMethod="XHeight" spacingUnit="MM" minimumSize="0" spacing="5" minScaleDenominator="0" penWidth="0" lineSizeScale="3x:0,0,0,0,0,0" barWidth="5" enabled="0" sizeType="MM" height="15" scaleDependency="Area" direction="0" sizeScale="3x:0,0,0,0,0,0" diagramOrientation="Up" maxScaleDenominator="1e+08" rotationOffset="270" scaleBasedVisibility="0" width="15" penAlpha="255" backgroundColor="#ffffff" spacingUnitScale="3x:0,0,0,0,0,0" lineSizeType="MM" backgroundAlpha="255">
+      <fontProperties description="Sans Serif,9,-1,5,50,0,0,0,0,0" style=""/>
+      <attribute color="#000000" colorOpacity="1" field="" label=""/>
       <axisSymbol>
-        <symbol alpha="1" name="" force_rhr="0" type="line" clip_to_extent="1">
+        <symbol force_rhr="0" type="line" alpha="1" name="" clip_to_extent="1">
           <data_defined_properties>
             <Option type="Map">
-              <Option name="name" value="" type="QString"/>
+              <Option type="QString" value="" name="name"/>
               <Option name="properties"/>
-              <Option name="type" value="collection" type="QString"/>
+              <Option type="QString" value="collection" name="type"/>
             </Option>
           </data_defined_properties>
-          <layer pass="0" enabled="1" locked="0" class="SimpleLine">
+          <layer locked="0" pass="0" enabled="1" class="SimpleLine">
             <Option type="Map">
-              <Option name="align_dash_pattern" value="0" type="QString"/>
-              <Option name="capstyle" value="square" type="QString"/>
-              <Option name="customdash" value="5;2" type="QString"/>
-              <Option name="customdash_map_unit_scale" value="3x:0,0,0,0,0,0" type="QString"/>
-              <Option name="customdash_unit" value="MM" type="QString"/>
-              <Option name="dash_pattern_offset" value="0" type="QString"/>
-              <Option name="dash_pattern_offset_map_unit_scale" value="3x:0,0,0,0,0,0" type="QString"/>
-              <Option name="dash_pattern_offset_unit" value="MM" type="QString"/>
-              <Option name="draw_inside_polygon" value="0" type="QString"/>
-              <Option name="joinstyle" value="bevel" type="QString"/>
-              <Option name="line_color" value="35,35,35,255" type="QString"/>
-              <Option name="line_style" value="solid" type="QString"/>
-              <Option name="line_width" value="0.26" type="QString"/>
-              <Option name="line_width_unit" value="MM" type="QString"/>
-              <Option name="offset" value="0" type="QString"/>
-              <Option name="offset_map_unit_scale" value="3x:0,0,0,0,0,0" type="QString"/>
-              <Option name="offset_unit" value="MM" type="QString"/>
-              <Option name="ring_filter" value="0" type="QString"/>
-              <Option name="trim_distance_end" value="0" type="QString"/>
-              <Option name="trim_distance_end_map_unit_scale" value="3x:0,0,0,0,0,0" type="QString"/>
-              <Option name="trim_distance_end_unit" value="MM" type="QString"/>
-              <Option name="trim_distance_start" value="0" type="QString"/>
-              <Option name="trim_distance_start_map_unit_scale" value="3x:0,0,0,0,0,0" type="QString"/>
-              <Option name="trim_distance_start_unit" value="MM" type="QString"/>
-              <Option name="tweak_dash_pattern_on_corners" value="0" type="QString"/>
-              <Option name="use_custom_dash" value="0" type="QString"/>
-              <Option name="width_map_unit_scale" value="3x:0,0,0,0,0,0" type="QString"/>
+              <Option type="QString" value="0" name="align_dash_pattern"/>
+              <Option type="QString" value="square" name="capstyle"/>
+              <Option type="QString" value="5;2" name="customdash"/>
+              <Option type="QString" value="3x:0,0,0,0,0,0" name="customdash_map_unit_scale"/>
+              <Option type="QString" value="MM" name="customdash_unit"/>
+              <Option type="QString" value="0" name="dash_pattern_offset"/>
+              <Option type="QString" value="3x:0,0,0,0,0,0" name="dash_pattern_offset_map_unit_scale"/>
+              <Option type="QString" value="MM" name="dash_pattern_offset_unit"/>
+              <Option type="QString" value="0" name="draw_inside_polygon"/>
+              <Option type="QString" value="bevel" name="joinstyle"/>
+              <Option type="QString" value="35,35,35,255" name="line_color"/>
+              <Option type="QString" value="solid" name="line_style"/>
+              <Option type="QString" value="0.26" name="line_width"/>
+              <Option type="QString" value="MM" name="line_width_unit"/>
+              <Option type="QString" value="0" name="offset"/>
+              <Option type="QString" value="3x:0,0,0,0,0,0" name="offset_map_unit_scale"/>
+              <Option type="QString" value="MM" name="offset_unit"/>
+              <Option type="QString" value="0" name="ring_filter"/>
+              <Option type="QString" value="0" name="trim_distance_end"/>
+              <Option type="QString" value="3x:0,0,0,0,0,0" name="trim_distance_end_map_unit_scale"/>
+              <Option type="QString" value="MM" name="trim_distance_end_unit"/>
+              <Option type="QString" value="0" name="trim_distance_start"/>
+              <Option type="QString" value="3x:0,0,0,0,0,0" name="trim_distance_start_map_unit_scale"/>
+              <Option type="QString" value="MM" name="trim_distance_start_unit"/>
+              <Option type="QString" value="0" name="tweak_dash_pattern_on_corners"/>
+              <Option type="QString" value="0" name="use_custom_dash"/>
+              <Option type="QString" value="3x:0,0,0,0,0,0" name="width_map_unit_scale"/>
             </Option>
-            <prop k="align_dash_pattern" v="0"/>
-            <prop k="capstyle" v="square"/>
-            <prop k="customdash" v="5;2"/>
-            <prop k="customdash_map_unit_scale" v="3x:0,0,0,0,0,0"/>
-            <prop k="customdash_unit" v="MM"/>
-            <prop k="dash_pattern_offset" v="0"/>
-            <prop k="dash_pattern_offset_map_unit_scale" v="3x:0,0,0,0,0,0"/>
-            <prop k="dash_pattern_offset_unit" v="MM"/>
-            <prop k="draw_inside_polygon" v="0"/>
-            <prop k="joinstyle" v="bevel"/>
-            <prop k="line_color" v="35,35,35,255"/>
-            <prop k="line_style" v="solid"/>
-            <prop k="line_width" v="0.26"/>
-            <prop k="line_width_unit" v="MM"/>
-            <prop k="offset" v="0"/>
-            <prop k="offset_map_unit_scale" v="3x:0,0,0,0,0,0"/>
-            <prop k="offset_unit" v="MM"/>
-            <prop k="ring_filter" v="0"/>
-            <prop k="trim_distance_end" v="0"/>
-            <prop k="trim_distance_end_map_unit_scale" v="3x:0,0,0,0,0,0"/>
-            <prop k="trim_distance_end_unit" v="MM"/>
-            <prop k="trim_distance_start" v="0"/>
-            <prop k="trim_distance_start_map_unit_scale" v="3x:0,0,0,0,0,0"/>
-            <prop k="trim_distance_start_unit" v="MM"/>
-            <prop k="tweak_dash_pattern_on_corners" v="0"/>
-            <prop k="use_custom_dash" v="0"/>
-            <prop k="width_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+            <prop v="0" k="align_dash_pattern"/>
+            <prop v="square" k="capstyle"/>
+            <prop v="5;2" k="customdash"/>
+            <prop v="3x:0,0,0,0,0,0" k="customdash_map_unit_scale"/>
+            <prop v="MM" k="customdash_unit"/>
+            <prop v="0" k="dash_pattern_offset"/>
+            <prop v="3x:0,0,0,0,0,0" k="dash_pattern_offset_map_unit_scale"/>
+            <prop v="MM" k="dash_pattern_offset_unit"/>
+            <prop v="0" k="draw_inside_polygon"/>
+            <prop v="bevel" k="joinstyle"/>
+            <prop v="35,35,35,255" k="line_color"/>
+            <prop v="solid" k="line_style"/>
+            <prop v="0.26" k="line_width"/>
+            <prop v="MM" k="line_width_unit"/>
+            <prop v="0" k="offset"/>
+            <prop v="3x:0,0,0,0,0,0" k="offset_map_unit_scale"/>
+            <prop v="MM" k="offset_unit"/>
+            <prop v="0" k="ring_filter"/>
+            <prop v="0" k="trim_distance_end"/>
+            <prop v="3x:0,0,0,0,0,0" k="trim_distance_end_map_unit_scale"/>
+            <prop v="MM" k="trim_distance_end_unit"/>
+            <prop v="0" k="trim_distance_start"/>
+            <prop v="3x:0,0,0,0,0,0" k="trim_distance_start_map_unit_scale"/>
+            <prop v="MM" k="trim_distance_start_unit"/>
+            <prop v="0" k="tweak_dash_pattern_on_corners"/>
+            <prop v="0" k="use_custom_dash"/>
+            <prop v="3x:0,0,0,0,0,0" k="width_map_unit_scale"/>
             <data_defined_properties>
               <Option type="Map">
-                <Option name="name" value="" type="QString"/>
+                <Option type="QString" value="" name="name"/>
                 <Option name="properties"/>
-                <Option name="type" value="collection" type="QString"/>
+                <Option type="QString" value="collection" name="type"/>
               </Option>
             </data_defined_properties>
           </layer>
@@ -424,204 +490,204 @@
       </axisSymbol>
     </DiagramCategory>
   </SingleCategoryDiagramRenderer>
-  <DiagramLayerSettings obstacle="0" placement="1" showAll="1" linePlacementFlags="18" zIndex="0" dist="0" priority="0">
+  <DiagramLayerSettings placement="1" linePlacementFlags="18" dist="0" zIndex="0" priority="0" showAll="1" obstacle="0">
     <properties>
       <Option type="Map">
-        <Option name="name" value="" type="QString"/>
+        <Option type="QString" value="" name="name"/>
         <Option name="properties"/>
-        <Option name="type" value="collection" type="QString"/>
+        <Option type="QString" value="collection" name="type"/>
       </Option>
     </properties>
   </DiagramLayerSettings>
   <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
     <activeChecks/>
     <checkConfiguration type="Map">
-      <Option name="QgsGeometryGapCheck" type="Map">
-        <Option name="allowedGapsBuffer" value="0" type="double"/>
-        <Option name="allowedGapsEnabled" value="false" type="bool"/>
-        <Option name="allowedGapsLayer" value="" type="QString"/>
+      <Option type="Map" name="QgsGeometryGapCheck">
+        <Option type="double" value="0" name="allowedGapsBuffer"/>
+        <Option type="bool" value="false" name="allowedGapsEnabled"/>
+        <Option type="QString" value="" name="allowedGapsLayer"/>
       </Option>
     </checkConfiguration>
   </geometryOptions>
-  <legend showLabelLegend="0" type="default-vector"/>
+  <legend type="default-vector" showLabelLegend="0"/>
   <referencedLayers/>
   <fieldConfiguration>
-    <field name="ogc_fid" configurationFlags="None">
-      <editWidget type="Range">
-        <config>
-          <Option/>
-        </config>
-      </editWidget>
-    </field>
-    <field name="osm_id" configurationFlags="None">
+    <field configurationFlags="None" name="ogc_fid">
       <editWidget type="TextEdit">
         <config>
           <Option/>
         </config>
       </editWidget>
     </field>
-    <field name="osm_way_id" configurationFlags="None">
+    <field configurationFlags="None" name="osm_id">
       <editWidget type="TextEdit">
         <config>
           <Option/>
         </config>
       </editWidget>
     </field>
-    <field name="name" configurationFlags="None">
+    <field configurationFlags="None" name="osm_way_id">
       <editWidget type="TextEdit">
         <config>
           <Option/>
         </config>
       </editWidget>
     </field>
-    <field name="type" configurationFlags="None">
+    <field configurationFlags="None" name="name">
       <editWidget type="TextEdit">
         <config>
           <Option/>
         </config>
       </editWidget>
     </field>
-    <field name="aeroway" configurationFlags="None">
+    <field configurationFlags="None" name="type">
       <editWidget type="TextEdit">
         <config>
           <Option/>
         </config>
       </editWidget>
     </field>
-    <field name="amenity" configurationFlags="None">
+    <field configurationFlags="None" name="aeroway">
       <editWidget type="TextEdit">
         <config>
           <Option/>
         </config>
       </editWidget>
     </field>
-    <field name="admin_level" configurationFlags="None">
+    <field configurationFlags="None" name="amenity">
       <editWidget type="TextEdit">
         <config>
           <Option/>
         </config>
       </editWidget>
     </field>
-    <field name="barrier" configurationFlags="None">
+    <field configurationFlags="None" name="admin_level">
       <editWidget type="TextEdit">
         <config>
           <Option/>
         </config>
       </editWidget>
     </field>
-    <field name="boundary" configurationFlags="None">
+    <field configurationFlags="None" name="barrier">
       <editWidget type="TextEdit">
         <config>
           <Option/>
         </config>
       </editWidget>
     </field>
-    <field name="building" configurationFlags="None">
+    <field configurationFlags="None" name="boundary">
       <editWidget type="TextEdit">
         <config>
           <Option/>
         </config>
       </editWidget>
     </field>
-    <field name="craft" configurationFlags="None">
+    <field configurationFlags="None" name="building">
       <editWidget type="TextEdit">
         <config>
           <Option/>
         </config>
       </editWidget>
     </field>
-    <field name="geological" configurationFlags="None">
+    <field configurationFlags="None" name="craft">
       <editWidget type="TextEdit">
         <config>
           <Option/>
         </config>
       </editWidget>
     </field>
-    <field name="historic" configurationFlags="None">
+    <field configurationFlags="None" name="geological">
       <editWidget type="TextEdit">
         <config>
           <Option/>
         </config>
       </editWidget>
     </field>
-    <field name="land_area" configurationFlags="None">
+    <field configurationFlags="None" name="historic">
       <editWidget type="TextEdit">
         <config>
           <Option/>
         </config>
       </editWidget>
     </field>
-    <field name="landuse" configurationFlags="None">
+    <field configurationFlags="None" name="land_area">
       <editWidget type="TextEdit">
         <config>
           <Option/>
         </config>
       </editWidget>
     </field>
-    <field name="leisure" configurationFlags="None">
+    <field configurationFlags="None" name="landuse">
       <editWidget type="TextEdit">
         <config>
           <Option/>
         </config>
       </editWidget>
     </field>
-    <field name="man_made" configurationFlags="None">
+    <field configurationFlags="None" name="leisure">
       <editWidget type="TextEdit">
         <config>
           <Option/>
         </config>
       </editWidget>
     </field>
-    <field name="military" configurationFlags="None">
+    <field configurationFlags="None" name="man_made">
       <editWidget type="TextEdit">
         <config>
           <Option/>
         </config>
       </editWidget>
     </field>
-    <field name="natural" configurationFlags="None">
+    <field configurationFlags="None" name="military">
       <editWidget type="TextEdit">
         <config>
           <Option/>
         </config>
       </editWidget>
     </field>
-    <field name="office" configurationFlags="None">
+    <field configurationFlags="None" name="natural">
       <editWidget type="TextEdit">
         <config>
           <Option/>
         </config>
       </editWidget>
     </field>
-    <field name="place" configurationFlags="None">
+    <field configurationFlags="None" name="office">
       <editWidget type="TextEdit">
         <config>
           <Option/>
         </config>
       </editWidget>
     </field>
-    <field name="shop" configurationFlags="None">
+    <field configurationFlags="None" name="place">
       <editWidget type="TextEdit">
         <config>
           <Option/>
         </config>
       </editWidget>
     </field>
-    <field name="sport" configurationFlags="None">
+    <field configurationFlags="None" name="shop">
       <editWidget type="TextEdit">
         <config>
           <Option/>
         </config>
       </editWidget>
     </field>
-    <field name="tourism" configurationFlags="None">
+    <field configurationFlags="None" name="sport">
       <editWidget type="TextEdit">
         <config>
           <Option/>
         </config>
       </editWidget>
     </field>
-    <field name="other_tags" configurationFlags="None">
+    <field configurationFlags="None" name="tourism">
+      <editWidget type="TextEdit">
+        <config>
+          <Option/>
+        </config>
+      </editWidget>
+    </field>
+    <field configurationFlags="None" name="other_tags">
       <editWidget type="TextEdit">
         <config>
           <Option/>
@@ -630,150 +696,150 @@
     </field>
   </fieldConfiguration>
   <aliases>
-    <alias name="" index="0" field="ogc_fid"/>
-    <alias name="" index="1" field="osm_id"/>
-    <alias name="" index="2" field="osm_way_id"/>
-    <alias name="" index="3" field="name"/>
-    <alias name="" index="4" field="type"/>
-    <alias name="" index="5" field="aeroway"/>
-    <alias name="" index="6" field="amenity"/>
-    <alias name="" index="7" field="admin_level"/>
-    <alias name="" index="8" field="barrier"/>
-    <alias name="" index="9" field="boundary"/>
-    <alias name="" index="10" field="building"/>
-    <alias name="" index="11" field="craft"/>
-    <alias name="" index="12" field="geological"/>
-    <alias name="" index="13" field="historic"/>
-    <alias name="" index="14" field="land_area"/>
-    <alias name="" index="15" field="landuse"/>
-    <alias name="" index="16" field="leisure"/>
-    <alias name="" index="17" field="man_made"/>
-    <alias name="" index="18" field="military"/>
-    <alias name="" index="19" field="natural"/>
-    <alias name="" index="20" field="office"/>
-    <alias name="" index="21" field="place"/>
-    <alias name="" index="22" field="shop"/>
-    <alias name="" index="23" field="sport"/>
-    <alias name="" index="24" field="tourism"/>
-    <alias name="" index="25" field="other_tags"/>
+    <alias index="0" field="ogc_fid" name=""/>
+    <alias index="1" field="osm_id" name=""/>
+    <alias index="2" field="osm_way_id" name=""/>
+    <alias index="3" field="name" name=""/>
+    <alias index="4" field="type" name=""/>
+    <alias index="5" field="aeroway" name=""/>
+    <alias index="6" field="amenity" name=""/>
+    <alias index="7" field="admin_level" name=""/>
+    <alias index="8" field="barrier" name=""/>
+    <alias index="9" field="boundary" name=""/>
+    <alias index="10" field="building" name=""/>
+    <alias index="11" field="craft" name=""/>
+    <alias index="12" field="geological" name=""/>
+    <alias index="13" field="historic" name=""/>
+    <alias index="14" field="land_area" name=""/>
+    <alias index="15" field="landuse" name=""/>
+    <alias index="16" field="leisure" name=""/>
+    <alias index="17" field="man_made" name=""/>
+    <alias index="18" field="military" name=""/>
+    <alias index="19" field="natural" name=""/>
+    <alias index="20" field="office" name=""/>
+    <alias index="21" field="place" name=""/>
+    <alias index="22" field="shop" name=""/>
+    <alias index="23" field="sport" name=""/>
+    <alias index="24" field="tourism" name=""/>
+    <alias index="25" field="other_tags" name=""/>
   </aliases>
   <defaults>
-    <default expression="" field="ogc_fid" applyOnUpdate="0"/>
-    <default expression="" field="osm_id" applyOnUpdate="0"/>
-    <default expression="" field="osm_way_id" applyOnUpdate="0"/>
-    <default expression="" field="name" applyOnUpdate="0"/>
-    <default expression="" field="type" applyOnUpdate="0"/>
-    <default expression="" field="aeroway" applyOnUpdate="0"/>
-    <default expression="" field="amenity" applyOnUpdate="0"/>
-    <default expression="" field="admin_level" applyOnUpdate="0"/>
-    <default expression="" field="barrier" applyOnUpdate="0"/>
-    <default expression="" field="boundary" applyOnUpdate="0"/>
-    <default expression="" field="building" applyOnUpdate="0"/>
-    <default expression="" field="craft" applyOnUpdate="0"/>
-    <default expression="" field="geological" applyOnUpdate="0"/>
-    <default expression="" field="historic" applyOnUpdate="0"/>
-    <default expression="" field="land_area" applyOnUpdate="0"/>
-    <default expression="" field="landuse" applyOnUpdate="0"/>
-    <default expression="" field="leisure" applyOnUpdate="0"/>
-    <default expression="" field="man_made" applyOnUpdate="0"/>
-    <default expression="" field="military" applyOnUpdate="0"/>
-    <default expression="" field="natural" applyOnUpdate="0"/>
-    <default expression="" field="office" applyOnUpdate="0"/>
-    <default expression="" field="place" applyOnUpdate="0"/>
-    <default expression="" field="shop" applyOnUpdate="0"/>
-    <default expression="" field="sport" applyOnUpdate="0"/>
-    <default expression="" field="tourism" applyOnUpdate="0"/>
-    <default expression="" field="other_tags" applyOnUpdate="0"/>
+    <default applyOnUpdate="0" field="ogc_fid" expression=""/>
+    <default applyOnUpdate="0" field="osm_id" expression=""/>
+    <default applyOnUpdate="0" field="osm_way_id" expression=""/>
+    <default applyOnUpdate="0" field="name" expression=""/>
+    <default applyOnUpdate="0" field="type" expression=""/>
+    <default applyOnUpdate="0" field="aeroway" expression=""/>
+    <default applyOnUpdate="0" field="amenity" expression=""/>
+    <default applyOnUpdate="0" field="admin_level" expression=""/>
+    <default applyOnUpdate="0" field="barrier" expression=""/>
+    <default applyOnUpdate="0" field="boundary" expression=""/>
+    <default applyOnUpdate="0" field="building" expression=""/>
+    <default applyOnUpdate="0" field="craft" expression=""/>
+    <default applyOnUpdate="0" field="geological" expression=""/>
+    <default applyOnUpdate="0" field="historic" expression=""/>
+    <default applyOnUpdate="0" field="land_area" expression=""/>
+    <default applyOnUpdate="0" field="landuse" expression=""/>
+    <default applyOnUpdate="0" field="leisure" expression=""/>
+    <default applyOnUpdate="0" field="man_made" expression=""/>
+    <default applyOnUpdate="0" field="military" expression=""/>
+    <default applyOnUpdate="0" field="natural" expression=""/>
+    <default applyOnUpdate="0" field="office" expression=""/>
+    <default applyOnUpdate="0" field="place" expression=""/>
+    <default applyOnUpdate="0" field="shop" expression=""/>
+    <default applyOnUpdate="0" field="sport" expression=""/>
+    <default applyOnUpdate="0" field="tourism" expression=""/>
+    <default applyOnUpdate="0" field="other_tags" expression=""/>
   </defaults>
   <constraints>
-    <constraint exp_strength="0" notnull_strength="0" constraints="0" unique_strength="0" field="ogc_fid"/>
-    <constraint exp_strength="0" notnull_strength="0" constraints="0" unique_strength="0" field="osm_id"/>
-    <constraint exp_strength="0" notnull_strength="0" constraints="0" unique_strength="0" field="osm_way_id"/>
-    <constraint exp_strength="0" notnull_strength="0" constraints="0" unique_strength="0" field="name"/>
-    <constraint exp_strength="0" notnull_strength="0" constraints="0" unique_strength="0" field="type"/>
-    <constraint exp_strength="0" notnull_strength="0" constraints="0" unique_strength="0" field="aeroway"/>
-    <constraint exp_strength="0" notnull_strength="0" constraints="0" unique_strength="0" field="amenity"/>
-    <constraint exp_strength="0" notnull_strength="0" constraints="0" unique_strength="0" field="admin_level"/>
-    <constraint exp_strength="0" notnull_strength="0" constraints="0" unique_strength="0" field="barrier"/>
-    <constraint exp_strength="0" notnull_strength="0" constraints="0" unique_strength="0" field="boundary"/>
-    <constraint exp_strength="0" notnull_strength="0" constraints="0" unique_strength="0" field="building"/>
-    <constraint exp_strength="0" notnull_strength="0" constraints="0" unique_strength="0" field="craft"/>
-    <constraint exp_strength="0" notnull_strength="0" constraints="0" unique_strength="0" field="geological"/>
-    <constraint exp_strength="0" notnull_strength="0" constraints="0" unique_strength="0" field="historic"/>
-    <constraint exp_strength="0" notnull_strength="0" constraints="0" unique_strength="0" field="land_area"/>
-    <constraint exp_strength="0" notnull_strength="0" constraints="0" unique_strength="0" field="landuse"/>
-    <constraint exp_strength="0" notnull_strength="0" constraints="0" unique_strength="0" field="leisure"/>
-    <constraint exp_strength="0" notnull_strength="0" constraints="0" unique_strength="0" field="man_made"/>
-    <constraint exp_strength="0" notnull_strength="0" constraints="0" unique_strength="0" field="military"/>
-    <constraint exp_strength="0" notnull_strength="0" constraints="0" unique_strength="0" field="natural"/>
-    <constraint exp_strength="0" notnull_strength="0" constraints="0" unique_strength="0" field="office"/>
-    <constraint exp_strength="0" notnull_strength="0" constraints="0" unique_strength="0" field="place"/>
-    <constraint exp_strength="0" notnull_strength="0" constraints="0" unique_strength="0" field="shop"/>
-    <constraint exp_strength="0" notnull_strength="0" constraints="0" unique_strength="0" field="sport"/>
-    <constraint exp_strength="0" notnull_strength="0" constraints="0" unique_strength="0" field="tourism"/>
-    <constraint exp_strength="0" notnull_strength="0" constraints="0" unique_strength="0" field="other_tags"/>
+    <constraint field="ogc_fid" notnull_strength="1" constraints="3" unique_strength="1" exp_strength="0"/>
+    <constraint field="osm_id" notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0"/>
+    <constraint field="osm_way_id" notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0"/>
+    <constraint field="name" notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0"/>
+    <constraint field="type" notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0"/>
+    <constraint field="aeroway" notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0"/>
+    <constraint field="amenity" notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0"/>
+    <constraint field="admin_level" notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0"/>
+    <constraint field="barrier" notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0"/>
+    <constraint field="boundary" notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0"/>
+    <constraint field="building" notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0"/>
+    <constraint field="craft" notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0"/>
+    <constraint field="geological" notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0"/>
+    <constraint field="historic" notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0"/>
+    <constraint field="land_area" notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0"/>
+    <constraint field="landuse" notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0"/>
+    <constraint field="leisure" notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0"/>
+    <constraint field="man_made" notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0"/>
+    <constraint field="military" notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0"/>
+    <constraint field="natural" notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0"/>
+    <constraint field="office" notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0"/>
+    <constraint field="place" notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0"/>
+    <constraint field="shop" notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0"/>
+    <constraint field="sport" notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0"/>
+    <constraint field="tourism" notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0"/>
+    <constraint field="other_tags" notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0"/>
   </constraints>
   <constraintExpressions>
-    <constraint field="ogc_fid" desc="" exp=""/>
-    <constraint field="osm_id" desc="" exp=""/>
-    <constraint field="osm_way_id" desc="" exp=""/>
-    <constraint field="name" desc="" exp=""/>
-    <constraint field="type" desc="" exp=""/>
-    <constraint field="aeroway" desc="" exp=""/>
-    <constraint field="amenity" desc="" exp=""/>
-    <constraint field="admin_level" desc="" exp=""/>
-    <constraint field="barrier" desc="" exp=""/>
-    <constraint field="boundary" desc="" exp=""/>
-    <constraint field="building" desc="" exp=""/>
-    <constraint field="craft" desc="" exp=""/>
-    <constraint field="geological" desc="" exp=""/>
-    <constraint field="historic" desc="" exp=""/>
-    <constraint field="land_area" desc="" exp=""/>
-    <constraint field="landuse" desc="" exp=""/>
-    <constraint field="leisure" desc="" exp=""/>
-    <constraint field="man_made" desc="" exp=""/>
-    <constraint field="military" desc="" exp=""/>
-    <constraint field="natural" desc="" exp=""/>
-    <constraint field="office" desc="" exp=""/>
-    <constraint field="place" desc="" exp=""/>
-    <constraint field="shop" desc="" exp=""/>
-    <constraint field="sport" desc="" exp=""/>
-    <constraint field="tourism" desc="" exp=""/>
-    <constraint field="other_tags" desc="" exp=""/>
+    <constraint desc="" field="ogc_fid" exp=""/>
+    <constraint desc="" field="osm_id" exp=""/>
+    <constraint desc="" field="osm_way_id" exp=""/>
+    <constraint desc="" field="name" exp=""/>
+    <constraint desc="" field="type" exp=""/>
+    <constraint desc="" field="aeroway" exp=""/>
+    <constraint desc="" field="amenity" exp=""/>
+    <constraint desc="" field="admin_level" exp=""/>
+    <constraint desc="" field="barrier" exp=""/>
+    <constraint desc="" field="boundary" exp=""/>
+    <constraint desc="" field="building" exp=""/>
+    <constraint desc="" field="craft" exp=""/>
+    <constraint desc="" field="geological" exp=""/>
+    <constraint desc="" field="historic" exp=""/>
+    <constraint desc="" field="land_area" exp=""/>
+    <constraint desc="" field="landuse" exp=""/>
+    <constraint desc="" field="leisure" exp=""/>
+    <constraint desc="" field="man_made" exp=""/>
+    <constraint desc="" field="military" exp=""/>
+    <constraint desc="" field="natural" exp=""/>
+    <constraint desc="" field="office" exp=""/>
+    <constraint desc="" field="place" exp=""/>
+    <constraint desc="" field="shop" exp=""/>
+    <constraint desc="" field="sport" exp=""/>
+    <constraint desc="" field="tourism" exp=""/>
+    <constraint desc="" field="other_tags" exp=""/>
   </constraintExpressions>
   <expressionfields/>
   <attributeactions>
     <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
   </attributeactions>
-  <attributetableconfig sortOrder="0" actionWidgetStyle="dropDown" sortExpression="">
+  <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="0">
     <columns>
-      <column hidden="0" width="-1" name="ogc_fid" type="field"/>
-      <column hidden="0" width="-1" name="osm_id" type="field"/>
-      <column hidden="0" width="-1" name="osm_way_id" type="field"/>
-      <column hidden="0" width="-1" name="name" type="field"/>
-      <column hidden="0" width="-1" name="type" type="field"/>
-      <column hidden="0" width="-1" name="aeroway" type="field"/>
-      <column hidden="0" width="-1" name="amenity" type="field"/>
-      <column hidden="0" width="-1" name="admin_level" type="field"/>
-      <column hidden="0" width="-1" name="barrier" type="field"/>
-      <column hidden="0" width="-1" name="boundary" type="field"/>
-      <column hidden="0" width="-1" name="building" type="field"/>
-      <column hidden="0" width="-1" name="craft" type="field"/>
-      <column hidden="0" width="-1" name="geological" type="field"/>
-      <column hidden="0" width="-1" name="historic" type="field"/>
-      <column hidden="0" width="-1" name="land_area" type="field"/>
-      <column hidden="0" width="-1" name="landuse" type="field"/>
-      <column hidden="0" width="-1" name="leisure" type="field"/>
-      <column hidden="0" width="-1" name="man_made" type="field"/>
-      <column hidden="0" width="-1" name="military" type="field"/>
-      <column hidden="0" width="-1" name="natural" type="field"/>
-      <column hidden="0" width="-1" name="office" type="field"/>
-      <column hidden="0" width="-1" name="place" type="field"/>
-      <column hidden="0" width="-1" name="shop" type="field"/>
-      <column hidden="0" width="-1" name="sport" type="field"/>
-      <column hidden="0" width="-1" name="tourism" type="field"/>
-      <column hidden="0" width="-1" name="other_tags" type="field"/>
-      <column hidden="1" width="-1" type="actions"/>
+      <column width="-1" type="field" hidden="0" name="ogc_fid"/>
+      <column width="-1" type="field" hidden="0" name="osm_id"/>
+      <column width="-1" type="field" hidden="0" name="osm_way_id"/>
+      <column width="-1" type="field" hidden="0" name="name"/>
+      <column width="-1" type="field" hidden="0" name="type"/>
+      <column width="-1" type="field" hidden="0" name="aeroway"/>
+      <column width="-1" type="field" hidden="0" name="amenity"/>
+      <column width="-1" type="field" hidden="0" name="admin_level"/>
+      <column width="-1" type="field" hidden="0" name="barrier"/>
+      <column width="-1" type="field" hidden="0" name="boundary"/>
+      <column width="-1" type="field" hidden="0" name="building"/>
+      <column width="-1" type="field" hidden="0" name="craft"/>
+      <column width="-1" type="field" hidden="0" name="geological"/>
+      <column width="-1" type="field" hidden="0" name="historic"/>
+      <column width="-1" type="field" hidden="0" name="land_area"/>
+      <column width="-1" type="field" hidden="0" name="landuse"/>
+      <column width="-1" type="field" hidden="0" name="leisure"/>
+      <column width="-1" type="field" hidden="0" name="man_made"/>
+      <column width="-1" type="field" hidden="0" name="military"/>
+      <column width="-1" type="field" hidden="0" name="natural"/>
+      <column width="-1" type="field" hidden="0" name="office"/>
+      <column width="-1" type="field" hidden="0" name="place"/>
+      <column width="-1" type="field" hidden="0" name="shop"/>
+      <column width="-1" type="field" hidden="0" name="sport"/>
+      <column width="-1" type="field" hidden="0" name="tourism"/>
+      <column width="-1" type="field" hidden="0" name="other_tags"/>
+      <column width="-1" type="actions" hidden="1"/>
     </columns>
   </attributetableconfig>
   <conditionalstyles>
@@ -861,32 +927,32 @@ def my_form_open(dialog, layer, feature):
     <field labelOnTop="0" name="type"/>
   </labelOnTop>
   <reuseLastValue>
-    <field name="admin_level" reuseLastValue="0"/>
-    <field name="aeroway" reuseLastValue="0"/>
-    <field name="amenity" reuseLastValue="0"/>
-    <field name="barrier" reuseLastValue="0"/>
-    <field name="boundary" reuseLastValue="0"/>
-    <field name="building" reuseLastValue="0"/>
-    <field name="craft" reuseLastValue="0"/>
-    <field name="geological" reuseLastValue="0"/>
-    <field name="historic" reuseLastValue="0"/>
-    <field name="land_area" reuseLastValue="0"/>
-    <field name="landuse" reuseLastValue="0"/>
-    <field name="leisure" reuseLastValue="0"/>
-    <field name="man_made" reuseLastValue="0"/>
-    <field name="military" reuseLastValue="0"/>
-    <field name="name" reuseLastValue="0"/>
-    <field name="natural" reuseLastValue="0"/>
-    <field name="office" reuseLastValue="0"/>
-    <field name="ogc_fid" reuseLastValue="0"/>
-    <field name="osm_id" reuseLastValue="0"/>
-    <field name="osm_way_id" reuseLastValue="0"/>
-    <field name="other_tags" reuseLastValue="0"/>
-    <field name="place" reuseLastValue="0"/>
-    <field name="shop" reuseLastValue="0"/>
-    <field name="sport" reuseLastValue="0"/>
-    <field name="tourism" reuseLastValue="0"/>
-    <field name="type" reuseLastValue="0"/>
+    <field reuseLastValue="0" name="admin_level"/>
+    <field reuseLastValue="0" name="aeroway"/>
+    <field reuseLastValue="0" name="amenity"/>
+    <field reuseLastValue="0" name="barrier"/>
+    <field reuseLastValue="0" name="boundary"/>
+    <field reuseLastValue="0" name="building"/>
+    <field reuseLastValue="0" name="craft"/>
+    <field reuseLastValue="0" name="geological"/>
+    <field reuseLastValue="0" name="historic"/>
+    <field reuseLastValue="0" name="land_area"/>
+    <field reuseLastValue="0" name="landuse"/>
+    <field reuseLastValue="0" name="leisure"/>
+    <field reuseLastValue="0" name="man_made"/>
+    <field reuseLastValue="0" name="military"/>
+    <field reuseLastValue="0" name="name"/>
+    <field reuseLastValue="0" name="natural"/>
+    <field reuseLastValue="0" name="office"/>
+    <field reuseLastValue="0" name="ogc_fid"/>
+    <field reuseLastValue="0" name="osm_id"/>
+    <field reuseLastValue="0" name="osm_way_id"/>
+    <field reuseLastValue="0" name="other_tags"/>
+    <field reuseLastValue="0" name="place"/>
+    <field reuseLastValue="0" name="shop"/>
+    <field reuseLastValue="0" name="sport"/>
+    <field reuseLastValue="0" name="tourism"/>
+    <field reuseLastValue="0" name="type"/>
   </reuseLastValue>
   <dataDefinedFieldProperties/>
   <widgets/>
