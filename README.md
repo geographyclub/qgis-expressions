@@ -480,20 +480,48 @@ HTML labels
 
 `<p style="font-family:'Montserrat Thin';letter-spacing:10">WORLD MAP</p>`
 
-Layout projection
+Layout projection  
+```bash
+# by atlas feature
+'PROJ:+proj=ortho +lat_0=' || y(centroid(buffer(@atlas_geometry,0))) || ' +lon_0=' || x(centroid(buffer(@atlas_geometry,0))) || ' +ellps=sphere'
 
-```
+# continent
 CASE WHEN attribute(@atlas_feature,'CONTINENT') IN ('Africa') THEN 'PROJ:+proj=ortho +lat_0="7" +lon_0="18" +ellps=sphere'
   WHEN attribute(@atlas_feature,'CONTINENT') IN ('Asia','Oceania') THEN 'PROJ:+proj=ortho +lat_0="20" +lon_0="100" +ellps=sphere'
   WHEN attribute(@atlas_feature,'CONTINENT') IN ('Europe') THEN 'PROJ:+proj=ortho +lat_0="30" +lon_0="30" +ellps=sphere'
   WHEN attribute(@atlas_feature,'CONTINENT') IN ('North America') THEN 'PROJ:+proj=ortho +lat_0="68" +lon_0="-84" +ellps=sphere'
   WHEN attribute(@atlas_feature,'CONTINENT') IN ('South America') THEN 'PROJ:+proj=ortho +lat_0="-18" +lon_0="-61" +ellps=sphere'
+  ELSE 'PROJ:+proj=ortho +lat_0=0 +lon_0=0 +ellps=sphere'
+END
+
+# subregion
+CASE WHEN attribute(@atlas_feature,'subregion') IN ('Caribbean') THEN 'PROJ:+proj=ortho +lat_0=20 +lon_0=-75 +ellps=sphere'
+WHEN attribute(@atlas_feature,'subregion') IN ('Southern Europe') THEN 'PROJ:+proj=ortho +lat_0=41 +lon_0=7 +ellps=sphere'
+WHEN attribute(@atlas_feature,'subregion') IN ('Eastern Africa') THEN 'PROJ:+proj=ortho +lat_0=-4 +lon_0=37 +ellps=sphere'
+WHEN attribute(@atlas_feature,'subregion') IN ('Eastern Asia') THEN 'PROJ:+proj=ortho +lat_0=38 +lon_0=105 +ellps=sphere'
+WHEN attribute(@atlas_feature,'subregion') IN ('South America') THEN 'PROJ:+proj=ortho +lat_0=-15 +lon_0=-61 +ellps=sphere'
+WHEN attribute(@atlas_feature,'subregion') IN ('Australia and New Zealand') THEN 'PROJ:+proj=ortho +lat_0=-26 +lon_0=136 +ellps=sphere'
+WHEN attribute(@atlas_feature,'subregion') IN ('Antarctica') THEN 'PROJ:+proj=ortho +lat_0=-81 +lon_0=20 +ellps=sphere'
+WHEN attribute(@atlas_feature,'subregion') IN ('Western Africa') THEN 'PROJ:+proj=ortho +lat_0=15 +lon_0=-1 +ellps=sphere'
+WHEN attribute(@atlas_feature,'subregion') IN ('Melanesia') THEN 'PROJ:+proj=ortho +lat_0=-8 +lon_0=148 +ellps=sphere'
+WHEN attribute(@atlas_feature,'subregion') IN ('Southern Asia') THEN 'PROJ:+proj=ortho +lat_0=27 +lon_0=71 +ellps=sphere'
+WHEN attribute(@atlas_feature,'subregion') IN ('Eastern Europe') THEN 'PROJ:+proj=ortho +lat_0=61 +lon_0=92 +ellps=sphere'
+WHEN attribute(@atlas_feature,'subregion') IN ('Middle Africa') THEN 'PROJ:+proj=ortho +lat_0=1 +lon_0=19 +ellps=sphere'
+WHEN attribute(@atlas_feature,'subregion') IN ('Polynesia') THEN 'PROJ:+proj=ortho +lat_0=-15 +lon_0=-159 +ellps=sphere'
+WHEN attribute(@atlas_feature,'subregion') IN ('Central America') THEN 'PROJ:+proj=ortho +lat_0=22 +lon_0=-99 +ellps=sphere'
+WHEN attribute(@atlas_feature,'subregion') IN ('Northern Africa') THEN 'PROJ:+proj=ortho +lat_0=25 +lon_0=15 +ellps=sphere'
+WHEN attribute(@atlas_feature,'subregion') IN ('Central Asia') THEN 'PROJ:+proj=ortho +lat_0=46 +lon_0=66 +ellps=sphere'
+WHEN attribute(@atlas_feature,'subregion') IN ('Western Europe') THEN 'PROJ:+proj=ortho +lat_0=66 +lon_0=4 +ellps=sphere'
+WHEN attribute(@atlas_feature,'subregion') IN ('Western Asia') THEN 'PROJ:+proj=ortho +lat_0=28 +lon_0=43 +ellps=sphere'
+WHEN attribute(@atlas_feature,'subregion') IN ('Northern America') THEN 'PROJ:+proj=ortho +lat_0=59 +lon_0=-92 +ellps=sphere'
+WHEN attribute(@atlas_feature,'subregion') IN ('Northern Europe') THEN 'PROJ:+proj=ortho +lat_0=63 +lon_0=14 +ellps=sphere'
+WHEN attribute(@atlas_feature,'subregion') IN ('South-Eastern Asia') THEN 'PROJ:+proj=ortho +lat_0=8 +lon_0=110 +ellps=sphere'
+WHEN attribute(@atlas_feature,'subregion') IN ('Southern Africa') THEN 'PROJ:+proj=ortho +lat_0=-25 +lon_0=23 +ellps=sphere'
+WHEN attribute(@atlas_feature,'subregion') IN ('Seven seas (open ocean)') THEN 'PROJ:+proj=ortho +lat_0=-51 +lon_0=31 +ellps=sphere'
+WHEN attribute(@atlas_feature,'subregion') IN ('Micronesia') THEN 'PROJ:+proj=ortho +lat_0=8 +lon_0=93 +ellps=sphere'
+ELSE 'PROJ:+proj=ortho +lat_0=0 +lon_0=0 +ellps=sphere'
 END
 ```
-
-Layout projection to atlas_feature
-
-`'PROJ:+proj=ortho +lat_0="[% attribute(@atlas_feature,LATITUDE) %]" +lon_0="[% attribute(@atlas_feature,LONGITUDE) %]" +ellps=sphere'`
 
 Change font, style, size with map id
 
