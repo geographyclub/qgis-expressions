@@ -232,8 +232,12 @@ Percentage from top
 `round(((((y(@map_extent_center))+(@map_extent_height/2)-$y))/(@map_extent_height))*100) || '%'`
 
 Curve labels with projection
+```bash
+smooth(make_line(translate(centroid($geometry),-2,0),centroid($geometry),translate(centroid($geometry),2,0)),3)
 
-`smooth(make_line(translate(centroid($geometry),-2,0),centroid($geometry),translate(centroid($geometry),2,0)),3)`
+# intersection with @map_extent (for marine polys)
+make_line(translate(centroid(intersection($geometry,@map_extent)),-20,0), translate(centroid(intersection($geometry,@map_extent)),0,0), translate(centroid(intersection($geometry,@map_extent)),20,0))
+```
 
 Rotate labels
 
@@ -299,20 +303,20 @@ Project
 
 `azimuth(transform($geometry,'EPSG:4326','+proj=vandg +lon_0=0 +x_0=0 +y_0=0 +R_A +a=6371000 +b=6371000 +units=m no_defs'), translate(transform($geometry,'EPSG:4326','+proj=vandg +lon_0=0 +x_0=0 +y_0=0 +R_A +a=6371000 +b=6371000 +units=m no_defs'),0,1))`
 
-Rotate
+Rotate  
 
 `(((x($geometry) - x(@map_extent_center))*cos(radians(@mydegrees))) - ((y($geometry) - y(@map_extent_center))*sin(radians(@mydegrees)))) + x(@map_extent_center)
 (((x($geometry) - x(@map_extent_center))*sin(radians(@mydegrees))) + ((y($geometry) - y(@map_extent_center))*cos(radians(@mydegrees)))) + y(@map_extent_center)`
 
-Get coordinates from top-left (0,0)
+Get coordinates from top-left (0,0)  
 
 `round(((((x(@map_extent_center))-(@map_extent_width/2)-$x))/(-@map_extent_width))*100) || '|' ||`
 
 `round(((((y(@map_extent_center))+(@map_extent_height/2)-$y))/(@map_extent_height))*100) || '|'`
 
-Odd & even fields
+Odd & even fields  
 
-```
+```bash
 # odd columns
 floor( $id / number_of_columns ) % 2 = 1
 
@@ -457,6 +461,8 @@ END
 HTML labels (check allow html formatting)
 
 `format('<span style="color:#d9d9d9">%1</span> <span style="color:#000">%2</span> <span style="color:#c0cbce">%3</span> <span style="color:#000">%4</span>', '⬛', format_number(minimum(to_real("age_median")),0) || '-' || format_number(q1(to_real("age_median")),0), '⬛', format_number(q1(to_real("age_median")),0) || '-' || format_number(median(to_real("age_median")),0))`
+
+`'<span style="font-family: Arial; font-size:10pt; font-weight: bold; color: #ff0000;">' || 'foo' || '</span> <span style="font-family: Arial; font-size:10pt; font-weight: bold; color: #000;">' || 'bar' || '</span>'`
 
 ## Print layout
 
