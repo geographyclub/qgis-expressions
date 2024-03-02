@@ -55,15 +55,16 @@ closest_point(exterior_ring(buffer(@map_extent_center,2)),$geometry)`
 `make_line(closest_point(exterior_ring(buffer(transform(@map_extent_center,'EPSG:4326','EPSG:53029'),2)),$geometry),$geometry)
 closest_point(boundary(buffer(@map_extent_center,(@map_extent_width/2.5))),$geometry)`
 
-Make line from geometry
-
+Make line from geometry  
 `line_interpolate_point((make_line($geometry,closest_point((boundary(buffer(geometry(get_feature(@mylayer1,@myfield1,@myvalue1)),3))),$geometry))),(length(make_line($geometry,closest_point((boundary(buffer(geometry(get_feature(@mylayer1,@myfield1,@myvalue1)),3))),$geometry)))/2))`
 
 `make_line($geometry,line_interpolate_point((make_line($geometry,closest_point((boundary(buffer(geometry(get_feature(@mylayer1,@myfield1,@myvalue1)),3))),$geometry))),(length(make_line($geometry,closest_point((boundary(buffer(geometry(get_feature(@mylayer1,@myfield1,@myvalue1)),3))),$geometry)))/2)))`
 
-Make polygon
+Make dynamic triangle  
+`make_triangle(translate(centroid($geometry),-30000,0),translate(centroid($geometry),0,scale_linear("worship_count"/("pop"/10000),0,1000,30000,500000)),translate(centroid($geometry),30000,0))`
 
-```
+Make polygon  
+```bash
 # make polygon from bounds 
 bounds(make_line(make_point(-180,-90),make_point(180,90)))
 
@@ -83,9 +84,8 @@ make_point(x(transform(make_point(x(@map_extent_center) - (@map_extent_width/3),
 ))
 ```
 
-Intersection
-
-```
+Intersection  
+```bash
 # extent in epsg:4326
 intersection($geometry, bounds(make_line(make_point(-180,-90),make_point(180,90))))
 
