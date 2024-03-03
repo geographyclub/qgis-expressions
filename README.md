@@ -61,7 +61,7 @@ Make line from geometry
 `make_line($geometry,line_interpolate_point((make_line($geometry,closest_point((boundary(buffer(geometry(get_feature(@mylayer1,@myfield1,@myvalue1)),3))),$geometry))),(length(make_line($geometry,closest_point((boundary(buffer(geometry(get_feature(@mylayer1,@myfield1,@myvalue1)),3))),$geometry)))/2)))`
 
 Make dynamic triangle  
-`make_triangle(translate(centroid($geometry),-30000,0),translate(centroid($geometry),0,scale_linear("worship_count"/("pop"/10000),0,1000,30000,500000)),translate(centroid($geometry),30000,0))`
+`make_triangle(translate(centroid($geometry),-2.5,0),translate(centroid($geometry),0,scale_linear("dem_mean",-1500,1500,0,5)),translate(centroid($geometry),2.5,0))`
 
 Make polygon  
 ```bash
