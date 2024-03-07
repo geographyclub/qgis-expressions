@@ -39,6 +39,8 @@ attribute($currentfeature,'geonameid'))))`
 
 `make_line($geometry,project($geometry,("wind_sp"*0.1),(radians("wind_dir"))))`
 
+`make_line($geometry,overlay_nearest('metars',$geometry))`
+
 Make conditional line
 
 ```
