@@ -59,7 +59,8 @@ closest_point(boundary(buffer(@map_extent_center,(@map_extent_width/2.5))),$geom
 ```
 
 Make line from geometry  
-```line_interpolate_point((make_line($geometry,closest_point((boundary(buffer(geometry(get_feature(@mylayer1,@myfield1,@myvalue1)),3))),$geometry))),(length(make_line($geometry,closest_point((boundary(buffer(geometry(get_feature(@mylayer1,@myfield1,@myvalue1)),3))),$geometry)))/2))
+```
+line_interpolate_point((make_line($geometry,closest_point((boundary(buffer(geometry(get_feature(@mylayer1,@myfield1,@myvalue1)),3))),$geometry))),(length(make_line($geometry,closest_point((boundary(buffer(geometry(get_feature(@mylayer1,@myfield1,@myvalue1)),3))),$geometry)))/2))
 
 make_line($geometry,line_interpolate_point((make_line($geometry,closest_point((boundary(buffer(geometry(get_feature(@mylayer1,@myfield1,@myvalue1)),3))),$geometry))),(length(make_line($geometry,closest_point((boundary(buffer(geometry(get_feature(@mylayer1,@myfield1,@myvalue1)),3))),$geometry)))/2)))
 ```
@@ -239,6 +240,7 @@ round(((((y(@map_extent_center))+(@map_extent_height/2)-$y))/(@map_extent_height
 
 Curve labels with projection
 ```
+# regular
 smooth(make_line(translate(centroid($geometry),-2,0),centroid($geometry),translate(centroid($geometry),2,0)),3)
 
 # intersection with @map_extent (for marine polys)
@@ -282,7 +284,8 @@ transform(smooth(make_line(make_point(scale_linear("row",1,52,-66,-127),50), mak
 ```
 
 Calculate angle
-```(atan((xat(-1)-xat(0))/(yat(-1)-yat(0)))) * 180/3.14159 + (180 *(((yat(-1)-yat(0)) < 0) + (((xat(-1)-xat(0)) < 0 AND (yat(-1) - yat(0)) >0)*2)))
+```
+(atan((xat(-1)-xat(0))/(yat(-1)-yat(0)))) * 180/3.14159 + (180 *(((yat(-1)-yat(0)) < 0) + (((xat(-1)-xat(0)) < 0 AND (yat(-1) - yat(0)) >0)*2)))
 ```
 
 Conditional angles
