@@ -264,6 +264,19 @@ difference(@map_extent,$geometry)
 intersection($geometry,minimal_circle(@atlas_geometry))
 ```
 
+Make marker lines for labels
+```
+# aligned left or right
+CASE WHEN x($geometry) >= x(@map_extent_center) THEN make_line($geometry,make_point(x(@map_extent_center)+(@map_extent_width/3),y($geometry)))
+  ELSE make_line($geometry,make_point(x(@map_extent_center)-(@map_extent_width/3),y($geometry)))
+END
+
+# variable line length
+CASE WHEN x($geometry) >= x(@map_extent_center) THEN make_line($geometry,make_point(x($geometry)+(@map_extent_width/5),y($geometry)))
+  ELSE make_line($geometry,make_point(x($geometry)-(@map_extent_width/5),y($geometry)))
+END
+```
+
 Distribute graticule labels around map
 ```
 "degrees" LIKE '%0' AND "direction" IN ('N','S') AND
