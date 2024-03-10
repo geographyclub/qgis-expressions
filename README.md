@@ -1,6 +1,6 @@
 # qgis-expressions
 
-My most used QGIS expressions, plus style files and example screenshots.
+My most used QGIS expressions, plus style files and screenshots.
 
 ## TABLE OF CONTENTS
 
