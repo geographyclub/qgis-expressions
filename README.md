@@ -240,7 +240,7 @@ round(((((y(@map_extent_center))+(@map_extent_height/2)-$y))/(@map_extent_height
 
 Curve labels with projection
 ```
-# handle edge geometries
+# use when x <= -160 or x >= 160
 CASE WHEN x($geometry) >= 160 THEN smooth(make_line(translate($geometry,-20,0),translate($geometry,-10,0),$geometry),3)
   WHEN x($geometry) <= -160 THEN smooth(make_line($geometry,translate($geometry,10,0),translate($geometry,20,0)),3)
   ELSE smooth(make_line(translate($geometry,-10,0),$geometry,translate($geometry,10,0)),3)
