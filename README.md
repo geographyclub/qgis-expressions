@@ -240,11 +240,14 @@ round(((((y(@map_extent_center))+(@map_extent_height/2)-$y))/(@map_extent_height
 
 Curve labels with projection
 ```
-# regular
-smooth(make_line(translate(centroid($geometry),-2,0),centroid($geometry),translate(centroid($geometry),2,0)),3)
+# handle edge geometries
+CASE WHEN x($geometry) >= 160 THEN smooth(make_line(translate($geometry,-20,0),translate($geometry,-10,0),$geometry),3)
+  WHEN x($geometry) <= -160 THEN smooth(make_line($geometry,translate($geometry,10,0),translate($geometry,20,0)),3)
+  ELSE smooth(make_line(translate($geometry,-10,0),$geometry,translate($geometry,10,0)),3)
+END
 
-# intersection with @map_extent (for marine polys)
-make_line(translate(centroid(intersection($geometry,@map_extent)),-20,0), translate(centroid(intersection($geometry,@map_extent)),0,0), translate(centroid(intersection($geometry,@map_extent)),20,0))
+# intersection with map extent
+smooth(make_line(translate(centroid(intersection($geometry,@map_extent)),-20,0), translate(centroid(intersection($geometry,@map_extent)),0,0), translate(centroid(intersection($geometry,@map_extent)),20,0)),3)
 ```
 
 Rotate labels
