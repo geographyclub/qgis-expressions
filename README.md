@@ -665,6 +665,12 @@ Amenities
 other_tags LIKE '%"amenity"=>"parking"%'
 ```
 
+Buildings  
+```
+# conditional height for 2.5d
+CASE WHEN "other_tags" LIKE '%building:levels%' THEN replace(regexp_substr("other_tags",'(building:levels"=>"[0-9]+)'),'building:levels"=>"','')*10 ELSE 20 END
+```
+
 ### WWF Ecoregions
 
 Realms  
