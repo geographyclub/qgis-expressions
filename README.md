@@ -269,14 +269,14 @@ intersection($geometry,minimal_circle(@atlas_geometry))
 
 Make marker lines for labels
 ```
-# aligned left or right
+# align left or right
 CASE WHEN x($geometry) >= x(@map_extent_center) THEN make_line($geometry,make_point(x(@map_extent_center)+(@map_extent_width/3),y($geometry)))
   ELSE make_line($geometry,make_point(x(@map_extent_center)-(@map_extent_width/3),y($geometry)))
 END
 
-# variable line length
-CASE WHEN x($geometry) >= x(@map_extent_center) THEN make_line($geometry,make_point(x($geometry)+(@map_extent_width/5),y($geometry)))
-  ELSE make_line($geometry,make_point(x($geometry)-(@map_extent_width/5),y($geometry)))
+# align left or right and spread along y
+CASE WHEN x($geometry) >= x(@map_extent_center) THEN make_line($geometry,make_point(x(@map_extent_center)+(@map_extent_width/6),y($geometry)),make_point(x(@map_extent_center) + (@map_extent_width/4),scale_linear(y($geometry),(y(@map_extent_center)-(@map_extent_height/3)),(y(@map_extent_center)+(@map_extent_height)/3),(y(@map_extent_center)-(@map_extent_height/2.5)),(y(@map_extent_center)+(@map_extent_height/2.5)))))
+  ELSE make_line($geometry,make_point(x(@map_extent_center)-(@map_extent_width/6),y($geometry)),make_point(x(@map_extent_center) - (@map_extent_width/4),scale_linear(y($geometry),(y(@map_extent_center)-(@map_extent_height/3)),(y(@map_extent_center)+(@map_extent_height)/3),(y(@map_extent_center)-(@map_extent_height/2.5)),(y(@map_extent_center)+(@map_extent_height/2.5)))))
 END
 ```
 
@@ -285,11 +285,6 @@ Distribute graticule labels around map
 "degrees" LIKE '%0' AND "direction" IN ('N','S') AND
 (x($geometry) > (x(@map_extent_center) + (@map_extent_width/2.5)) OR x($geometry) < (x(@map_extent_center) - (@map_extent_width/2.5))) AND
 (y($geometry) > (y(@map_extent_center) - (@map_extent_height/2.5)) AND y($geometry) < (y(@map_extent_center) + (@map_extent_height/2.5)))
-```
-
-Distribute labels evenly in map window
-```
-scale_linear(y($geometry),(y(@map_extent_center)-(@map_extent_height)),(y(@map_extent_center)+(@map_extent_height)),(y(@map_extent_center)-(@map_extent_height/1)),(y(@map_extent_center)+(@map_extent_height/3)))
 ```
 
 Distribute ranked labels evenly
