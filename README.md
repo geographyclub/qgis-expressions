@@ -661,8 +661,7 @@ other_tags LIKE '%"amenity"=>"parking"%'
 Buildings  
 ```
 # qgis_25d_height variable based on height, levels
-CASE WHEN "other_tags" LIKE '%building:levels%' THEN replace(regexp_substr("other_tags",'(building:levels"=>"[0-9]+)'),'building:levels"=>"','')*10 WHEN "other_tags" LIKE 'height%' THEN replace(regexp_substr("other_tags",'(height"=>"[0-9]+)'),'height"=>"','')*5 ELSE 20 END
-
+CASE WHEN "other_tags" LIKE '%building:levels%' THEN replace(regexp_substr("other_tags",'(building:levels"=>"[0-9]+)'),'building:levels"=>"','')*10 WHEN "other_tags" LIKE '%height%' THEN replace(regexp_substr("other_tags",'(height"=>"[0-9]+)'),'height"=>"','')*5 ELSE 20 END
 ```
 
 ### WWF Ecoregions
