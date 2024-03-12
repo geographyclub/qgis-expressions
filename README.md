@@ -491,9 +491,7 @@ END
 
 HTML labels (check allow html formatting)
 ```
-format('<span style="color:#d9d9d9">%1</span> <span style="color:#000">%2</span> <span style="color:#c0cbce">%3</span> <span style="color:#000">%4</span>', '⬛', format_number(minimum(to_real("age_median")),0) || '-' || format_number(q1(to_real("age_median")),0), '⬛', format_number(q1(to_real("age_median")),0) || '-' || format_number(median(to_real("age_median")),0))
-
-<span style="font-family: Arial; font-size:10pt; font-weight: bold; color: #ff0000;">' || 'foo' || '</span> <span style="font-family: Arial; font-size:10pt; font-weight: bold; color: #000;">' || 'bar' || '</span>'
+'<p style="font-family:Montserrat; font-size:12pt; font-weight:600; color: #333;">' || "name" || '</p><p style="font-family:Montserrat; font-weight:300; font-size:10pt; color: #666;">' || format_number("elevation",0)  || 'm</span>'
 ```
 
 ## Print layout
