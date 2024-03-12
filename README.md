@@ -489,10 +489,18 @@ CASE WHEN length("pop_max") = 4 THEN left("pop_max",1) || 'k'
 END
 ```
 
-HTML labels (check allow html formatting)
+HTML labels (check allow html formatting)  
 ```
 '<p style="font-family:Montserrat; font-size:12pt; font-weight:600; color: #333;">' || "name" || '</p><p style="font-family:Montserrat; font-weight:300; font-size:10pt; color: #666;">' || format_number("elevation",0)  || 'm</span>'
 ```
+
+Make your own legend with HTML  
+```
+'<p style="font-size:8pt; font-weight:500;">MEDIAN AGE BY COUNTY</p><p><span style="color:#D9D9D9;">⬛</span> <span>21 - 38 </span></p>
+<p><span style="color:#C2CBCD;">⬛</span> <span>39 - 41</span></p>
+<p><span style="color:#9CB4B7;">⬛</span> <span>42 - 44</span></p>
+<p><span style="color:#76938E;">⬛</span> <span>45 - 68</span></p>'
+```  
 
 ## Print layout
 
