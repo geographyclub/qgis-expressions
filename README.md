@@ -589,6 +589,13 @@ bounds_height(transform(@atlas_geometry,'EPSG:4326','EPSG:3857'))*0.001/3
 
 ## Datasets
 
+### GEM
+
+Grid 2.5d height from cloud cover raster  
+```
+scale_linear(raster_value('CMC_glb_TCDC_SFC_0_latlon.15x.15_2024031500_P075', 1, centroid($geometry)),0,100,0,1)
+```
+
 ### GeoNames
 
 Stacking symbols
@@ -672,7 +679,7 @@ Buildings
 CASE WHEN "other_tags" LIKE '%building:levels%' THEN replace(regexp_substr("other_tags",'(building:levels"=>"[0-9]+)'),'building:levels"=>"','')*10 WHEN "other_tags" LIKE '%height%' THEN replace(regexp_substr("other_tags",'(height"=>"[0-9]+)'),'height"=>"','')*5 ELSE 20 END
 ```
 
-GLAM/GLEAM map  
+GLAM/GLEAM map with light beam  
 ```
 # filter by glam tags
 (other_tags LIKE '%"gallery"%' OR other_tags LIKE '%"library"%' OR '%"archive"%' OR other_tags LIKE '%"museum"%') AND name IS NOT NULL;
