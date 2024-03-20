@@ -672,6 +672,21 @@ Buildings
 CASE WHEN "other_tags" LIKE '%building:levels%' THEN replace(regexp_substr("other_tags",'(building:levels"=>"[0-9]+)'),'building:levels"=>"','')*10 WHEN "other_tags" LIKE '%height%' THEN replace(regexp_substr("other_tags",'(height"=>"[0-9]+)'),'height"=>"','')*5 ELSE 20 END
 ```
 
+GLAM/GLEAM map  
+```
+# filter by glam tags
+(other_tags LIKE '%"gallery"%' OR other_tags LIKE '%"library"%' OR '%"archive"%' OR other_tags LIKE '%"museum"%') AND name IS NOT NULL;
+
+# create a layer variable 'beam_of_light' with this value
+@map_extent_height - y($geometry)
+
+# use this expression on 2.5d top face
+translate(  $geometry,  cos( radians( eval( @qgis_25d_angle ) ) ) * eval( @beam_of_light ),  sin( radians( eval( @qgis_25d_angle ) ) ) * eval( @beam_of_light ))
+
+# use this expression on 2.5d side face
+order_parts(   extrude(    segments_to_lines( $geometry ),    cos( radians( eval( @qgis_25d_angle ) ) ) * eval( @beam_of_light ),    sin( radians( eval( @qgis_25d_angle ) ) ) * eval( @beam_of_light )  ),  'distance(  $geometry,  translate(    @map_extent_center,    1000 * @map_extent_width * cos( radians( @qgis_25d_angle + 180 ) ),    1000 * @map_extent_width * sin( radians( @qgis_25d_angle + 180 ) )  ))',  False)
+```
+
 ### WWF Ecoregions
 
 Realms  
