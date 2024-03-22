@@ -734,3 +734,9 @@ Control shading with slope
 ```
 set_color_part('#000','alpha',scale_linear("slp_dg_sav",0,300,0,100))
 ```
+
+US Census
+```
+# calculate statistics
+
+```
