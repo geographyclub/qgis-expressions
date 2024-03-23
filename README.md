@@ -249,8 +249,12 @@ END
 # intersection with map extent
 smooth(make_line(translate(centroid(intersection($geometry,@map_extent)),-20,0), translate(centroid(intersection($geometry,@map_extent)),0,0), translate(centroid(intersection($geometry,@map_extent)),20,0)),3)
 
-# center of map
+# use make_line
+smooth(make_line(translate(make_point(x(@map_extent_center),y(@map_extent_center)-(@map_extent_height/3)),-(@map_extent_height/3),(@map_extent_height/3)), translate(make_point(x(@map_extent_center),y(@map_extent_center)-(@map_extent_height/4)),-(@map_extent_height/3),(@map_extent_height/4)), make_point(x(@map_extent_center),y(@map_extent_center)-(@map_extent_height/3)), translate(make_point(x(@map_extent_center),y(@map_extent_center)-(@map_extent_height/4)),(@map_extent_height/3),(@map_extent_height/4)), translate(make_point(x(@map_extent_center),y(@map_extent_center)-(@map_extent_height/3)),(@map_extent_height/3),(@map_extent_height/3))),10)
+
+# center of map (reverse for labels on the bottom)
 boundary(make_circle(@map_extent_center,(@map_extent_height/3)))
+reverse(boundary(make_circle(@map_extent_center,(@map_extent_height/3))))
 ```
 
 Rotate labels
