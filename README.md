@@ -248,6 +248,9 @@ END
 
 # intersection with map extent
 smooth(make_line(translate(centroid(intersection($geometry,@map_extent)),-20,0), translate(centroid(intersection($geometry,@map_extent)),0,0), translate(centroid(intersection($geometry,@map_extent)),20,0)),3)
+
+# center of map
+boundary(make_circle(@map_extent_center,(@map_extent_height/3)))
 ```
 
 Rotate labels
