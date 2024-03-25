@@ -2,6 +2,8 @@
 
 My most used QGIS expressions, plus style files and screenshots.
 
+See the full list of qgis expressions: https://docs.qgis.org/3.34/en/docs/user_manual/expressions/functions_list.html.
+
 ## TABLE OF CONTENTS
 
 1. [Make](#make)
@@ -89,6 +91,11 @@ make_point(x(transform(make_point(x(@map_extent_center) + (@map_extent_width/3),
 make_point(x(transform(make_point(x(@map_extent_center) + (@map_extent_width/3),y(@map_extent_center)),@map_crs,'epsg:4326')),y(transform(make_point(x(@map_extent_center),y(@map_extent_center) - (@map_extent_height/3)),@map_crs,'epsg:4326'))),
 make_point(x(transform(make_point(x(@map_extent_center) - (@map_extent_width/3),y(@map_extent_center)),@map_crs,'epsg:4326')),y(transform(make_point(x(@map_extent_center),y(@map_extent_center) - (@map_extent_height/3)),@map_crs,'epsg:4326')))
 ))
+```
+
+Make wave  
+```
+wave_randomized($geometry,1,3,0.03,0.1)
 ```
 
 Intersection  
@@ -238,7 +245,7 @@ Percentage from top
 round(((((y(@map_extent_center))+(@map_extent_height/2)-$y))/(@map_extent_height))*100) || '%'
 ```
 
-Curve labels with projection
+Labels from make_line() for projections or curves
 ```
 # use when x <= -160 or x >= 160
 CASE WHEN x($geometry) >= 160 THEN smooth(make_line(translate($geometry,-20,0),translate($geometry,-10,0),$geometry),3)
@@ -254,6 +261,7 @@ smooth(make_line(translate(make_point(x(@map_extent_center),y(@map_extent_center
 
 # center of map (reverse for labels on the bottom)
 boundary(make_circle(@map_extent_center,(@map_extent_height/3)))
+
 reverse(boundary(make_circle(@map_extent_center,(@map_extent_height/3))))
 ```
 
