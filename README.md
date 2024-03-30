@@ -196,6 +196,10 @@ ramp_color('YlOrRd',scale_linear(distance(aggregate(layer:='bangkok_subway_stati
 CASE WHEN intersects($geometry,@map_extent) THEN ramp_color('Spectral',scale_linear((array_find(array_agg("hybas_id",filter:=intersects($geometry,@map_extent)),"hybas_id") + 1),1,array_length(array_agg("hybas_id",filter:=intersects($geometry,@map_extent))),0,1))
   ELSE '255,255,255'
 END
+
+# make your own color ramp
+ramp_color(
+create_ramp(map(0,'0,0,0',1,'53,123,163')),scale_linear("upland_skm",0,1000,0,1))
 ```
 
 Intersecting with features
