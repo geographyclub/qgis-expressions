@@ -73,6 +73,12 @@ Make dynamic triangle
 make_triangle(translate(centroid($geometry),-2.5,0),translate(centroid($geometry),0,scale_linear("dem_mean",-1500,1500,0,5)),translate(centroid($geometry),2.5,0))
 ```
 
+Make circle  
+```
+# circle from map extent
+make_circle(@map_extent_center,(@map_extent_height/3))
+```
+
 Make polygon  
 ```
 # make polygon from bounds 
@@ -80,9 +86,6 @@ bounds(make_line(make_point(-180,-90),make_point(180,90)))
 
 # make rectangle polygon from map extent
 bounds(make_line(make_point(x(@map_extent_center) - (@map_extent_width/3), y(@map_extent_center) - (@map_extent_height/3)), make_point(x(@map_extent_center) + (@map_extent_width/3), y(@map_extent_center) + (@map_extent_height/3))))
-
-# make circle polygon from map extent
-make_circle(@map_extent_center,(@map_extent_height/3))
 
 # make polygon from map extent in any projection 
 make_polygon(make_line(
@@ -115,6 +118,9 @@ intersection($geometry, single_sided_buffer(boundary(buffer(@map_extent_center,(
 
 # with feature geometry
 intersection($geometry,aggregate('ne_110m_land','collect',$geometry))
+
+# with hemispheres  
+intersection($geometry,make_polygon(make_line(make_point(-180,90),make_point(180,90),make_point(180,0),make_point(-180,0),make_point(-180,90))))
 ```
 
 Difference
@@ -371,6 +377,11 @@ Delete english characters
 regexp_replace("name", '[0-9A-Za-z;.,\\?\\/\\-\\(\\)ºçàèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸěǎāīū]' , '' )
 
 regexp_replace("name", '[0-9A-Za-z;\\?\\/\\-\\(\\)]' , '' )
+```
+
+Multiple replace  
+```
+replace(replace(replace(replace(replace(replace(replace("namelsad", ' Urban Cluster', ''), ' Urbanized Area', ''), '--', '_'), '-', '_'), ' ', '_'), ',', ''), '/', '_')
 ```
 
 Translate by replace
