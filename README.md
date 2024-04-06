@@ -219,6 +219,9 @@ Intersecting with map window
 # using buffer
 intersects($geometry,buffer(@map_extent_center,0.5))
 
+# using line
+intersects($geometry, bounds(make_line(make_point(x_min(@map_extent),y_min(@map_extent)),make_point(x_max(@map_extent),y_max(@map_extent)))))
+
 # using rectangle
 x($geometry) > (x(@map_extent_center) - (@map_extent_width/4)) AND
 x($geometry) < (x(@map_extent_center) + (@map_extent_width/4)) AND
