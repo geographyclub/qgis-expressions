@@ -493,6 +493,11 @@ Get array
 replace(replace(array_to_string(array_slice(string_to_array(attribute(@atlas_feature,'geonames_mt')),0,9)),'{',''),'"','')
 ```
 
+Generate series and check array
+```
+array_contains(generate_series(1,maximum("fid"),(maximum("fid")/10)),"fid")
+```
+
 Get attribute matching name
 ```
 attribute(get_feature('puma2020_nyc','name',"name"), 'pop2020')
