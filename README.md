@@ -377,6 +377,11 @@ floor( $id / number_of_columns ) % 2 = 1
 floor( $id / number_of_columns ) % 2 = 0
 ```
 
+Scale based on vertex number  
+```
+scale_linear(@geometry_point_num,1,10,0.5,0.1)
+```
+
 ## Strings
 
 Delete english characters
@@ -717,7 +722,7 @@ other_tags LIKE '%"amenity"=>"parking"%'
 
 Buildings  
 ```
-# qgis_25d_height variable based on height, levels
+# qgis_25d_height variable based on height or levels
 CASE WHEN "other_tags" LIKE '%building:levels%' THEN replace(regexp_substr("other_tags",'(building:levels"=>"[0-9]+)'),'building:levels"=>"','')*10 WHEN "other_tags" LIKE '%height%' THEN replace(regexp_substr("other_tags",'(height"=>"[0-9]+)'),'height"=>"','')*5 ELSE 20 END
 ```
 
