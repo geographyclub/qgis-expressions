@@ -353,6 +353,8 @@ angle_at_vertex(intersection(@map_extent,smooth($geometry,1)),(num_points(inters
 Project
 ```
 azimuth(transform($geometry,'EPSG:4326','+proj=vandg +lon_0=0 +x_0=0 +y_0=0 +R_A +a=6371000 +b=6371000 +units=m no_defs'), translate(transform($geometry,'EPSG:4326','+proj=vandg +lon_0=0 +x_0=0 +y_0=0 +R_A +a=6371000 +b=6371000 +units=m no_defs'),0,1))
+
+make_line($geometry, project($geometry,1,radians("wind_dir_degrees")))
 ```
 
 Rotate  
