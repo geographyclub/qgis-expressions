@@ -164,6 +164,12 @@ translate(make_point(round(x($geometry),1),round(y($geometry),1)),-clamp(0,"dem"
 
 ## Calculate
 
+rand
+```
+rand(0,1) = 0
+rand(0,2) IN (0,1)
+```
+
 Case conditional  
 ```
 CASE WHEN other_tags LIKE '%"amenity"=>"parking"%' THEN 1
@@ -548,6 +554,11 @@ Make your own legend with HTML
 <p><span style="color:#76938E;">⬛</span> <span>45 - 68</span></p>'
 ```  
 
+Dynamic image source for raster fill  
+```
+'/home/steve/base-maps/hillshade/places/' || "name" || '.png'
+```
+
 ## Print layout
 
 Variables
@@ -557,6 +568,11 @@ Variables
 replace("_CONTINENT" || '_x_' || round("longitude") || '_y_' || round("latitude") || '_width_' || round(map_get(item_variables('Map 1'),'map_extent_width')) || '_height_' || round(map_get(item_variables('Map 1'),'map_extent_height')),' ','_')
 
 replace(replace("_CONTINENT" || '@' || "biome" || '@' || "adm0name" || '_x_' || round("longitude",2) || '_y_' || round("latitude",2) || '_width_' || round(map_get(item_variables('Map 1'),'map_extent_width'),2) || '_height_' || round(map_get(item_variables('Map 1'),'map_extent_height'),2),' ','_'),'/','_')
+```
+
+Example of variables in filename  
+```
+lower(replace(replace("name",' ','_'),'.','')) || '_' || round(x_min(map_get(item_variables('Map 1'),'map_extent'))) || '_' || round(x_max(map_get(item_variables('Map 1'),'map_extent'))) || '_' || round(y_min(map_get(item_variables('Map 1'),'map_extent'))) || '_' || round(y_max(map_get(item_variables('Map 1'),'map_extent')))
 ```
 
 Scale with map id
