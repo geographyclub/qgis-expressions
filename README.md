@@ -102,6 +102,11 @@ Make wave
 wave_randomized($geometry,1,3,0.03,0.1)
 ```
 
+Make curved line using wave function  
+```
+wave($geometry,length($geometry),-length($geometry)/10,strict:=true)
+```
+
 Intersection  
 ```
 # extent in epsg:4326
