@@ -13,7 +13,7 @@ See the full list of qgis expressions: https://docs.qgis.org/3.34/en/docs/user_m
 5. [Misc](#misc)
 6. [Datasets](#datasets)
 
-## Make
+### make_point
 
 Make snapped points by rounding  
 ```
@@ -114,6 +114,12 @@ intersection($geometry, bounds(make_line(make_point(-180,-90),make_point(180,90)
 
 # extent in epsg:3857
 intersection($geometry, bounds(make_line(make_point(-20037508.34 -20048966.1),make_point(20037508.34 20048966.1)))
+
+# map extent using buffer
+intersection($geometry,buffer(@map_extent,-(@map_extent_height/4)))
+
+# map extent using bounds
+intersection($geometry,bounds(make_line(make_point(x(@map_extent_center) - (@map_extent_width/6), y(@map_extent_center) - (@map_extent_height/3)), make_point(x(@map_extent_center) + (@map_extent_width/6), y(@map_extent_center) + (@map_extent_height/3)))))
 
 # frame rectangle from map extent
 intersection($geometry, single_sided_buffer(boundary(@map_extent),(@map_extent_height/10)))
