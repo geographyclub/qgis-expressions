@@ -184,8 +184,11 @@ order_parts(   extrude(    segments_to_lines( $geometry ),    cos( radians( eval
 # shade
 set_color_part(   @symbol_color, 'value',  40 + 19 * abs( $pi - azimuth(     point_n( geometry_n($geometry, @geometry_part_num) , 1 ),     point_n( geometry_n($geometry, @geometry_part_num) , 2 )  ) ) )
 
-# render order
+# render order (descending)
 distance(  $geometry,  translate(    @map_extent_center,    1000 * @map_extent_width * cos( radians( @qgis_25d_angle + 180 ) ),    1000 * @map_extent_width * sin( radians( @qgis_25d_angle + 180 ) )  ))
+
+# fix overlapping polygon bug using y_max (not perfect)
+distance(  make_point(x($geometry), y_max($geometry)),  translate(    @map_extent_center,    1000 * @map_extent_width * cos( radians( @qgis_25d_angle + 180 ) ),    1000 * @map_extent_width * sin( radians( @qgis_25d_angle + 180 ) )  ))
 ```
 
 ## Calculate
