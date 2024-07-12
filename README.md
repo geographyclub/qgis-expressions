@@ -173,6 +173,21 @@ Translate points by height (order by dem ascending)
 translate(make_point(round(x($geometry),1),round(y($geometry),1)),-clamp(0,"dem"*0.0002,0.5),clamp(0,"dem"*0.0002,0.5))
 ```
 
+Make 2.5d polygons (automatically filled in by qgis)  
+```
+# top
+translate(  $geometry,  cos( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height ),  sin( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height ))
+
+# sides
+order_parts(   extrude(    segments_to_lines( $geometry ),    cos( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height ),    sin( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height )  ),  'distance(  $geometry,  translate(    @map_extent_center,    1000 * @map_extent_width * cos( radians( @qgis_25d_angle + 180 ) ),    1000 * @map_extent_width * sin( radians( @qgis_25d_angle + 180 ) )  ))',  False)
+
+# shade
+set_color_part(   @symbol_color, 'value',  40 + 19 * abs( $pi - azimuth(     point_n( geometry_n($geometry, @geometry_part_num) , 1 ),     point_n( geometry_n($geometry, @geometry_part_num) , 2 )  ) ) )
+
+# render order
+distance(  $geometry,  translate(    @map_extent_center,    1000 * @map_extent_width * cos( radians( @qgis_25d_angle + 180 ) ),    1000 * @map_extent_width * sin( radians( @qgis_25d_angle + 180 ) )  ))
+```
+
 ## Calculate
 
 rand
@@ -767,12 +782,6 @@ GLAM/GLEAM map with light beam
 
 # create a layer variable 'beam_of_light' with this value
 @map_extent_height - y($geometry)
-
-# use this expression on 2.5d top face
-translate(  $geometry,  cos( radians( eval( @qgis_25d_angle ) ) ) * eval( @beam_of_light ),  sin( radians( eval( @qgis_25d_angle ) ) ) * eval( @beam_of_light ))
-
-# use this expression on 2.5d side face
-order_parts(   extrude(    segments_to_lines( $geometry ),    cos( radians( eval( @qgis_25d_angle ) ) ) * eval( @beam_of_light ),    sin( radians( eval( @qgis_25d_angle ) ) ) * eval( @beam_of_light )  ),  'distance(  $geometry,  translate(    @map_extent_center,    1000 * @map_extent_width * cos( radians( @qgis_25d_angle + 180 ) ),    1000 * @map_extent_width * sin( radians( @qgis_25d_angle + 180 ) )  ))',  False)
 ```
 
 ### WWF Ecoregions
