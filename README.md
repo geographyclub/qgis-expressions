@@ -187,7 +187,7 @@ set_color_part(   @symbol_color, 'value',  40 + 19 * abs( $pi - azimuth(     poi
 # render order (descending)
 distance(  $geometry,  translate(    @map_extent_center,    1000 * @map_extent_width * cos( radians( @qgis_25d_angle + 180 ) ),    1000 * @map_extent_width * sin( radians( @qgis_25d_angle + 180 ) )  ))
 
-# fix overlapping polygon bug using y_max (not perfect)
+# fix render order using y_max (not perfect)
 distance(  make_point(x($geometry), y_max($geometry)),  translate(    @map_extent_center,    1000 * @map_extent_width * cos( radians( @qgis_25d_angle + 180 ) ),    1000 * @map_extent_width * sin( radians( @qgis_25d_angle + 180 ) )  ))
 ```
 
@@ -602,6 +602,11 @@ replace(replace("_CONTINENT" || '@' || "biome" || '@' || "adm0name" || '_x_' || 
 Example of variables in filename  
 ```
 lower(replace(replace("name",' ','_'),'.','')) || '_' || round(x_min(map_get(item_variables('Map 1'),'map_extent'))) || '_' || round(x_max(map_get(item_variables('Map 1'),'map_extent'))) || '_' || round(y_min(map_get(item_variables('Map 1'),'map_extent'))) || '_' || round(y_max(map_get(item_variables('Map 1'),'map_extent')))
+```
+
+leading zeroes in filename  
+```
+'frame_' || lpad(@atlas_featurenumber, 4, '0')
 ```
 
 Scale with map id
