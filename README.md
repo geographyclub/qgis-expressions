@@ -68,6 +68,11 @@ line_interpolate_point((make_line($geometry,closest_point((boundary(buffer(geome
 make_line($geometry,line_interpolate_point((make_line($geometry,closest_point((boundary(buffer(geometry(get_feature(@mylayer1,@myfield1,@myvalue1)),3))),$geometry))),(length(make_line($geometry,closest_point((boundary(buffer(geometry(get_feature(@mylayer1,@myfield1,@myvalue1)),3))),$geometry)))/2)))
 ```
 
+Make line from array  
+```
+make_line(array_agg(translate($geometry, 0, raster_value('topo15_432', 1, $geometry) * 0.001), group_by:=$y))
+```
+
 Make dynamic triangle  
 ```
 make_triangle(translate(centroid($geometry),-2.5,0),translate(centroid($geometry),0,scale_linear("dem_mean",-1500,1500,0,5)),translate(centroid($geometry),2.5,0))
@@ -95,6 +100,11 @@ make_point(x(transform(make_point(x(@map_extent_center) + (@map_extent_width/3),
 make_point(x(transform(make_point(x(@map_extent_center) + (@map_extent_width/3),y(@map_extent_center)),@map_crs,'epsg:4326')),y(transform(make_point(x(@map_extent_center),y(@map_extent_center) - (@map_extent_height/3)),@map_crs,'epsg:4326'))),
 make_point(x(transform(make_point(x(@map_extent_center) - (@map_extent_width/3),y(@map_extent_center)),@map_crs,'epsg:4326')),y(transform(make_point(x(@map_extent_center),y(@map_extent_center) - (@map_extent_height/3)),@map_crs,'epsg:4326')))
 ))
+```
+
+Make polygon from points (wave plot)  
+```
+make_polygon(make_line(make_point(x_min(@map_extent),y_min(@map_extent)), array_agg(translate($geometry, 0, raster_value('topo15_432', 1, $geometry) * 0.001), group_by:=$y), make_point(x_max(@map_extent),y_min(@map_extent))))
 ```
 
 Make wave  
@@ -599,8 +609,9 @@ replace("_CONTINENT" || '_x_' || round("longitude") || '_y_' || round("latitude"
 replace(replace("_CONTINENT" || '@' || "biome" || '@' || "adm0name" || '_x_' || round("longitude",2) || '_y_' || round("latitude",2) || '_width_' || round(map_get(item_variables('Map 1'),'map_extent_width'),2) || '_height_' || round(map_get(item_variables('Map 1'),'map_extent_height'),2),' ','_'),'/','_')
 ```
 
-Example of variables in filename  
+Example of map variables in filename  
 ```
+# get extent
 lower(replace(replace("name",' ','_'),'.','')) || '_' || round(x_min(map_get(item_variables('Map 1'),'map_extent'))) || '_' || round(x_max(map_get(item_variables('Map 1'),'map_extent'))) || '_' || round(y_min(map_get(item_variables('Map 1'),'map_extent'))) || '_' || round(y_max(map_get(item_variables('Map 1'),'map_extent')))
 ```
 
