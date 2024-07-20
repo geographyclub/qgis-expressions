@@ -102,7 +102,7 @@ make_point(x(transform(make_point(x(@map_extent_center) - (@map_extent_width/3),
 ))
 ```
 
-Make polygon from points (wave plot)  
+Make polygon from grid of points (wave plot, ridge plot, seismic plot)  
 ```
 make_polygon(make_line(make_point(x_min(@map_extent),y_min(@map_extent)), array_agg(translate($geometry, 0, raster_value('topo15_432', 1, $geometry) * 0.001), group_by:=$y), make_point(x_max(@map_extent),y_min(@map_extent))))
 ```
