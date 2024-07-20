@@ -702,6 +702,13 @@ XYZ Tiles
 https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}
 ```
 
+Python set skew variables  
+```
+from qgis.core import QgsExpressionContextUtils
+QgsExpressionContextUtils.setProjectVariable(QgsProject.instance(), 'skewx', 0.5)
+QgsExpressionContextUtils.setProjectVariable(QgsProject.instance(), 'skewy', 0.5)
+```
+
 ## Datasets
 
 ### GEM
