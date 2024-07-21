@@ -234,8 +234,14 @@ CASE WHEN raster_value('topo15_4320', 1, centroid($geometry)) > 0 THEN ramp_colo
   ELSE ramp_color('Mako', scale_linear(raster_value('topo15_4320', 1, centroid($geometry)),-6000,0,0,1))
 END
 
-# color from distance
+# color by distance
 ramp_color('YlOrRd',scale_linear(distance(aggregate(layer:='bangkok_subway_stations',aggregate:='collect',expression:=$geometry),$geometry),0,500,1,0))
+
+# color by distance from center
+ramp_color('Spectral', scale_linear(distance(@geometry, @map_extent_center), 0, @map_extent_width / 6, 0, 1))
+
+# scale transparency from map center to edge
+set_color_part('#000', 'alpha', scale_exp(distance(@map_extent_center,$geometry),0,distance(@map_extent_center,make_point(x_max(@map_extent),y_max(@map_extent))),50,0,2))
 
 # color features in map extent
 CASE WHEN intersects($geometry,@map_extent) THEN ramp_color('Spectral',scale_linear((array_find(array_agg("hybas_id",filter:=intersects($geometry,@map_extent)),"hybas_id") + 1),1,array_length(array_agg("hybas_id",filter:=intersects($geometry,@map_extent))),0,1))
@@ -256,7 +262,7 @@ CASE WHEN intersects($geometry,geometry(get_feature('ne_10m_land','featurecla','
 END
 ```
 
-Intersecting with map window
+Intersecting with map extent
 ```
 # using distance
 (@map_extent_width/3) > distance(centroid($geometry),@map_extent_center)
@@ -753,12 +759,6 @@ END
 ```
 
 ### OpenStreetMap
-
-General
-```
-# scale transparency from map center
-set_color_part('#000', 'alpha', scale_linear(distance(@map_extent_center,$geometry),0,1000,100,0))
-```
 
 Tags
 ```
