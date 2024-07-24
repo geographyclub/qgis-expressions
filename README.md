@@ -176,6 +176,9 @@ translate(intersection($geometry,bounds(make_line(make_point(x(@map_extent_cente
 
 # create a geometry stack
 collect_geometries(array_foreach(generate_series(0,to_int(replace(regexp_substr("other_tags",'(building:levels"=>"[0-9]+)'),'building:levels"=>"','')),1),translate($geometry,0,-@element)))
+
+# create geometries at intervals using generate_series
+collect_geometries(array_foreach(generate_series(0, eval(@qgis_25d_height), 1), translate(  $geometry,  cos( radians( eval( @qgis_25d_angle ) ) ) * @element,  sin( radians( eval( @qgis_25d_angle ) ) ) * @element )))
 ```
 
 Translate points by height (order by dem ascending)
@@ -806,8 +809,11 @@ extend(make_line(centroid(@geometry), translate(  centroid(@geometry),  cos( rad
 # make line from roof to label (200m)
 line_substring(extend(make_line(centroid(@geometry), translate(  centroid(@geometry),  cos( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height ),  sin( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height ))), 0, 200), eval(@qgis_25d_height), eval(@qgis_25d_height) + 200)
 
-# make line to distribute 2.5d labels based on y-axis
-make_line(centroid(@geometry), translate(  centroid(@geometry),  cos( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height ) - scale_linear(y(@geometry),(y(@map_extent_center)-(@map_extent_height/4)),(y(@map_extent_center)+(@map_extent_height/4)),0,100),  sin( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height ) + scale_linear(y(@geometry),(y(@map_extent_center)-(@map_extent_height/4)),(y(@map_extent_center)+(@map_extent_height/4)),0,100)))
+# make line to distribute 2.5d labels based on y-axis (from 0 to 200m as you move farther back)
+make_line(centroid(@geometry), translate(  centroid(@geometry),  cos( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height ) - scale_linear(y(@geometry),(y(@map_extent_center)-(@map_extent_height/4)),(y(@map_extent_center)+(@map_extent_height/4)),0,200),  sin( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height ) + scale_linear(y(@geometry),(y(@map_extent_center)-(@map_extent_height/4)),(y(@map_extent_center)+(@map_extent_height/4)),0,200)))
+
+# make building floors
+collect_geometries(array_foreach(generate_series(0, eval(@qgis_25d_height), 1), translate(  $geometry,  cos( radians( eval( @qgis_25d_angle ) ) ) * @element,  sin( radians( eval( @qgis_25d_angle ) ) ) * @element )))
 ```
 
 GLAM/GLEAM map with light beam  
