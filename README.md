@@ -194,8 +194,11 @@ translate(  $geometry,  cos( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_
 # sides
 order_parts(   extrude(    segments_to_lines( $geometry ),    cos( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height ),    sin( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height )  ),  'distance(  $geometry,  translate(    @map_extent_center,    1000 * @map_extent_width * cos( radians( @qgis_25d_angle + 180 ) ),    1000 * @map_extent_width * sin( radians( @qgis_25d_angle + 180 ) )  ))',  False)
 
-# shade
+# shade sides
 set_color_part(   @symbol_color, 'value',  40 + 19 * abs( $pi - azimuth(     point_n( geometry_n($geometry, @geometry_part_num) , 1 ),     point_n( geometry_n($geometry, @geometry_part_num) , 2 )  ) ) )
+
+# color sides by ramp
+set_color_part(ramp_color(@color, scale_linear(azimuth(     point_n( geometry_n($geometry, @geometry_part_num) , 1 ),     point_n( geometry_n($geometry, @geometry_part_num) , 2 )  ) / $pi, 0, 2, 0, 1)), 'alpha', 50)
 
 # render order (descending)
 distance(  $geometry,  translate(    @map_extent_center,    1000 * @map_extent_width * cos( radians( @qgis_25d_angle + 180 ) ),    1000 * @map_extent_width * sin( radians( @qgis_25d_angle + 180 ) )  ))
@@ -238,7 +241,7 @@ CASE WHEN raster_value('topo15_4320', 1, centroid($geometry)) > 0 THEN ramp_colo
 END
 
 # color by distance
-ramp_color('YlOrRd',scale_linear(distance(aggregate(layer:='bangkok_subway_stations',aggregate:='collect',expression:=$geometry),$geometry),0,500,1,0))
+ramp_color('YlOrRd',scale_linear(distance(aggregate(layer:='bangkok_lines',aggregate:='collect',expression:=$geometry),$geometry),0,500,1,0))
 
 # color by distance from center
 ramp_color('Spectral', scale_linear(distance(@geometry, @map_extent_center), 0, @map_extent_width / 6, 0, 1))
@@ -648,6 +651,9 @@ Layout projection
 ```
 # by atlas feature
 'PROJ:+proj=ortho +lat_0=' || y(centroid(buffer(@atlas_geometry,0))) || ' +lon_0=' || x(centroid(buffer(@atlas_geometry,0))) || ' +ellps=sphere'
+
+# example of tilted perspective
+'PROJ:+proj=tpers +tilt=0 +azi=10 +h=1000000000 +lon_0=0 +lat_0=-40 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs'
 
 # continent
 CASE WHEN attribute(@atlas_feature,'CONTINENT') IN ('Africa') THEN 'PROJ:+proj=ortho +lat_0="7" +lon_0="18" +ellps=sphere'
