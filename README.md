@@ -168,7 +168,7 @@ translate($geometry,0,scale_linear("meters",0,7800,0,2))
 # splitscreen
 translate(intersection($geometry, @map_extent), (@map_extent_width/2), 0)
 
-# isometric (use with tranform)
+# isometric (use with transform)
 translate(smooth(simplify_vw($geometry,0),0), scale_linear("amax",0,4000,0,30) * -1, scale_linear("amax",0,4000,0,30) * -1)
 
 # clip & move
@@ -197,7 +197,7 @@ order_parts(   extrude(    segments_to_lines( $geometry ),    cos( radians( eval
 # shade sides
 set_color_part(   @symbol_color, 'value',  40 + 19 * abs( $pi - azimuth(     point_n( geometry_n($geometry, @geometry_part_num) , 1 ),     point_n( geometry_n($geometry, @geometry_part_num) , 2 )  ) ) )
 
-# color sides by ramp
+# color sides by azimuth
 set_color_part(ramp_color(@color, scale_linear(azimuth(     point_n( geometry_n($geometry, @geometry_part_num) , 1 ),     point_n( geometry_n($geometry, @geometry_part_num) , 2 )  ) / $pi, 0, 2, 0, 1)), 'alpha', 50)
 
 # render order (descending)
@@ -205,6 +205,11 @@ distance(  $geometry,  translate(    @map_extent_center,    1000 * @map_extent_w
 
 # fix render order using y_max (not perfect)
 distance(  make_point(x($geometry), y_max($geometry)),  translate(    @map_extent_center,    1000 * @map_extent_width * cos( radians( @qgis_25d_angle + 180 ) ),    1000 * @map_extent_width * sin( radians( @qgis_25d_angle + 180 ) )  ))
+```
+
+Make progressively simpler/smoother geometries  
+```
+collect_geometries(array_foreach(generate_series(0,5), smooth(simplify_vw($geometry,@element),3)))
 ```
 
 ## Calculate
@@ -274,7 +279,7 @@ Intersecting with map extent
 (@map_extent_width/3) > distance(centroid($geometry),@map_extent_center)
 
 # using buffer
-intersects($geometry,buffer(@map_extent_center,0.5))
+intersects($geometry,buffer(@map_extent_center,@map_extent_width/4))
 
 # using line
 intersects($geometry, bounds(make_line(make_point(x_min(@map_extent),y_min(@map_extent)),make_point(x_max(@map_extent),y_max(@map_extent)))))
@@ -353,7 +358,7 @@ difference(@map_extent,$geometry)
 intersection($geometry,minimal_circle(@atlas_geometry))
 ```
 
-Make marker lines for labels
+Make callout lines for labels
 ```
 # align left or right
 CASE WHEN x($geometry) >= x(@map_extent_center) THEN make_line($geometry,make_point(x(@map_extent_center)+(@map_extent_width/3),y($geometry)))
@@ -439,6 +444,15 @@ floor( $id / number_of_columns ) % 2 = 0
 Scale based on vertex number  
 ```
 scale_linear(@geometry_point_num,1,10,0.5,0.1)
+```
+
+Aspect coloring (hillshade from north)  
+```
+CASE WHEN "aspect_mean" < 90 THEN ramp_color(@color_aspect,scale_linear("aspect_mean",0,89,0,0.5))
+  WHEN "aspect_mean" >= 90 AND "aspect_mean" < 180 THEN ramp_color(@color_aspect,scale_linear("aspect_mean",90,179,0.5,1))
+  WHEN "aspect_mean" >= 180 AND "aspect_mean" < 270 THEN ramp_color(@color_aspect,scale_linear("aspect_mean",180,269,1,0.5))
+  WHEN "aspect_mean" >= 270 THEN ramp_color(@color_aspect,scale_linear("aspect_mean",270,359,0.5,0))
+END
 ```
 
 ## Strings
