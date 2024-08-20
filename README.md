@@ -455,6 +455,11 @@ CASE WHEN "aspect_mean" < 90 THEN ramp_color(@color_aspect,scale_linear("aspect_
 END
 ```
 
+Dynamic image source for raster fill  
+```
+'/home/steve/base-maps/hillshade/places/' || "name" || '.png'
+```
+
 ## Strings
 
 Delete english characters
@@ -566,6 +571,11 @@ Get array
 replace(replace(array_to_string(array_slice(string_to_array(attribute(@atlas_feature,'geonames_mt')),0,9)),'{',''),'"','')
 ```
 
+Get random character from array  
+```
+array_get(array('□','▢','▣','▤','▥','▦','▧','▨','▩','▪','▫','◯','◉','◌','◍','◎','◐','◑','◒','◓','◔','◕','◖','◗','◘','◙','◚','◛','◜','◝','◞','◟','◠','◡','◢','◣','◤','◥','◦','◧','◨','◩','◪','◫','◬','◭','◮','◯','◰','◱','◲','◳','◴','◵','◶','◷','◸','◹','◺','◻','◼','◽','◾','◿'),rand(0,63))
+```
+
 Generate series and check array
 ```
 array_contains(generate_series(1,maximum("fid"),(maximum("fid")/10)),"fid")
@@ -619,11 +629,6 @@ Make your own legend with HTML
 <p><span style="color:#76938E;">⬛</span> <span>45 - 68</span></p>'
 ```  
 
-Dynamic image source for raster fill  
-```
-'/home/steve/base-maps/hillshade/places/' || "name" || '.png'
-```
-
 ## Print layout
 
 Variables
@@ -639,6 +644,9 @@ Example of map variables in filename
 ```
 # get extent
 lower(replace(replace("name",' ','_'),'.','')) || '_' || round(x_min(map_get(item_variables('Map 1'),'map_extent'))) || '_' || round(x_max(map_get(item_variables('Map 1'),'map_extent'))) || '_' || round(y_min(map_get(item_variables('Map 1'),'map_extent'))) || '_' || round(y_max(map_get(item_variables('Map 1'),'map_extent')))
+
+# variable names
+lower(replace(replace("name",' ','_'),'.','')) || '-' || lower(replace(replace("adm0name",' ','_'),'.','')) 
 ```
 
 leading zeroes in filename  
@@ -884,10 +892,4 @@ END
 Control shading with slope
 ```
 set_color_part('#000','alpha',scale_linear("slp_dg_sav",0,300,0,100))
-```
-
-US Census
-```
-# calculate statistics
-
 ```
