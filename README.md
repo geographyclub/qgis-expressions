@@ -207,7 +207,12 @@ distance(  $geometry,  translate(    @map_extent_center,    1000 * @map_extent_w
 distance(  make_point(x($geometry), y_max($geometry)),  translate(    @map_extent_center,    1000 * @map_extent_width * cos( radians( @qgis_25d_angle + 180 ) ),    1000 * @map_extent_width * sin( radians( @qgis_25d_angle + 180 ) )  ))
 ```
 
-Make progressively simpler/smoother geometries  
+Randomly choose one side of 2.5d geometry  
+```
+geometry_n(order_parts(   extrude(    segments_to_lines( $geometry ),    cos( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height ),    sin( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height )  ),  'distance(  $geometry,  translate(    @map_extent_center,    1000 * @map_extent_width * cos( radians( @qgis_25d_angle + 180 ) ),    1000 * @map_extent_width * sin( radians( @qgis_25d_angle + 180 ) )  ))',  False), rand(0,num_geometries(@geometry)))
+```
+
+Make progressively simpler/smoother geometries in an array  
 ```
 collect_geometries(array_foreach(generate_series(0,5), smooth(simplify_vw($geometry,@element),3)))
 ```
@@ -760,6 +765,20 @@ scale_linear(raster_value('CMC_glb_TCDC_SFC_0_latlon.15x.15_2024031500_P075', 1,
 Stacking symbols
 ```
 translate(make_point(round(x($geometry),0),round(y($geometry),0)),0,scale_linear("dem",0,4000,0,4))
+```
+
+Rotate labels with aspect_lev06  
+```
+CASE WHEN "aspect_lev06" >= 0 AND "aspect_lev06" < 45 THEN 10
+  WHEN "aspect_lev06" >= 45 AND "aspect_lev06" < 90 THEN 5
+  WHEN "aspect_lev06" >= 90 AND "aspect_lev06" < 135 THEN 355
+  WHEN "aspect_lev06" >= 135 AND "aspect_lev06" < 180 THEN 350
+  WHEN "aspect_lev06" >= 180 AND "aspect_lev06" < 225 THEN 10
+  WHEN "aspect_lev06" >= 225 AND "aspect_lev06" < 270 THEN 5
+  WHEN "aspect_lev06" >= 270 AND "aspect_lev06" < 315 THEN 355
+  WHEN "aspect_lev06" >= 315 AND "aspect_lev06" < 360 THEN 350
+  ELSE 0
+END
 ```
 
 ### Global Lithological Map
