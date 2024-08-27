@@ -769,14 +769,14 @@ translate(make_point(round(x($geometry),0),round(y($geometry),0)),0,scale_linear
 
 Rotate labels with aspect_lev06  
 ```
-CASE WHEN "aspect_lev06" >= 0 AND "aspect_lev06" < 45 THEN 10
-  WHEN "aspect_lev06" >= 45 AND "aspect_lev06" < 90 THEN 5
-  WHEN "aspect_lev06" >= 90 AND "aspect_lev06" < 135 THEN 355
-  WHEN "aspect_lev06" >= 135 AND "aspect_lev06" < 180 THEN 350
-  WHEN "aspect_lev06" >= 180 AND "aspect_lev06" < 225 THEN 10
-  WHEN "aspect_lev06" >= 225 AND "aspect_lev06" < 270 THEN 5
-  WHEN "aspect_lev06" >= 270 AND "aspect_lev06" < 315 THEN 355
-  WHEN "aspect_lev06" >= 315 AND "aspect_lev06" < 360 THEN 350
+CASE WHEN "aspect_lev06" >= 0 AND "aspect_lev06" < 45 THEN 350
+  WHEN "aspect_lev06" >= 45 AND "aspect_lev06" < 90 THEN 355
+  WHEN "aspect_lev06" >= 90 AND "aspect_lev06" < 135 THEN 5
+  WHEN "aspect_lev06" >= 135 AND "aspect_lev06" < 180 THEN 10
+  WHEN "aspect_lev06" >= 180 AND "aspect_lev06" < 225 THEN 350
+  WHEN "aspect_lev06" >= 225 AND "aspect_lev06" < 270 THEN 355
+  WHEN "aspect_lev06" >= 270 AND "aspect_lev06" < 315 THEN 5
+  WHEN "aspect_lev06" >= 315 AND "aspect_lev06" < 360 THEN 10
   ELSE 0
 END
 ```
@@ -860,7 +860,7 @@ line_substring(extend(make_line(centroid(@geometry), translate(  centroid(@geome
 make_line(centroid(@geometry), translate(  centroid(@geometry),  cos( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height ) - scale_linear(y(@geometry),(y(@map_extent_center)-(@map_extent_height/4)),(y(@map_extent_center)+(@map_extent_height/4)),0,200),  sin( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height ) + scale_linear(y(@geometry),(y(@map_extent_center)-(@map_extent_height/4)),(y(@map_extent_center)+(@map_extent_height/4)),0,200)))
 
 # make building floors
-collect_geometries(array_foreach(generate_series(0, eval(@qgis_25d_height), 1), translate(  $geometry,  cos( radians( eval( @qgis_25d_angle ) ) ) * @element,  sin( radians( eval( @qgis_25d_angle ) ) ) * @element )))
+collect_geometries(array_foreach(generate_series(10,eval( @qgis_25d_height),10),segments_to_lines(translate(  oriented_bbox($geometry),  cos( radians( eval( @qgis_25d_angle ) ) ) * @element,  sin( radians( eval( @qgis_25d_angle ) ) ) * @element))))
 ```
 
 GLAM/GLEAM map with light beam  
