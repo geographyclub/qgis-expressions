@@ -860,7 +860,7 @@ line_substring(extend(make_line(centroid(@geometry), translate(  centroid(@geome
 make_line(centroid(@geometry), translate(  centroid(@geometry),  cos( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height ) - scale_linear(y(@geometry),(y(@map_extent_center)-(@map_extent_height/4)),(y(@map_extent_center)+(@map_extent_height/4)),0,200),  sin( radians( eval( @qgis_25d_angle ) ) ) * eval( @qgis_25d_height ) + scale_linear(y(@geometry),(y(@map_extent_center)-(@map_extent_height/4)),(y(@map_extent_center)+(@map_extent_height/4)),0,200)))
 
 # make building floors
-collect_geometries(array_foreach(generate_series(10,eval( @qgis_25d_height),10),segments_to_lines(translate(  oriented_bbox($geometry),  cos( radians( eval( @qgis_25d_angle ) ) ) * @element,  sin( radians( eval( @qgis_25d_angle ) ) ) * @element))))
+collect_geometries(array_foreach(generate_series(0,eval( @qgis_25d_height),10),segments_to_lines(translate(  $geometry,  cos( radians( eval( @qgis_25d_angle ) ) ) * @element,  sin( radians( eval( @qgis_25d_angle ) ) ) * @element))))
 ```
 
 GLAM/GLEAM map with light beam  
