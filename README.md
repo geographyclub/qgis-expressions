@@ -267,6 +267,12 @@ END
 # make your own color ramp
 ramp_color(
 create_ramp(map(0,'0,0,0',1,'53,123,163')),scale_linear("upland_skm",0,1000,0,1))
+# spectral
+ramp_color(create_ramp(map(0,'215,48,39',0.1429,'215,48,39',0.2857,'252,141,89',0.4286,'254,224,144',0.5714,'255,255,191',0.7143,'224,243,248',0.8571,'145,191,219',1,'69,117,180')),scale_linear("scalerank",3,10,1,0))
+# gebco-shelf
+ramp_color(create_ramp(map(0,'0,240,255',0.0588,'35,255,255',0.1176,'35,255,255',0.1765,'90,255,255',0.2353,'90,255,255',0.2941,'140,255,230',0.3529,'140,255,230',0.4118,'165,255,215',0.4706,'165,255,215',0.5294,'195,255,215',0.5882,'195,255,215',0.6471,'210,255,215',0.7059,'210,255,215',0.7647,'230,255,240',0.8235,'230,255,240',0.8824,'235,255,255',0.9412,'235,255,255',1,'255,255,255')),randf(0,1))
+# incandescent
+ramp_color(create_ramp(map(0,'0,0,0',0.125,'93,0,0',0.25,'186,0,0',0.375,'221,69,25',0.5,'255,139,50',0.625,'251,189,34',0.75,'248,239,19',0.875,'249,243,116',1,'249,247,212')),randf(0,1))
 ```
 
 Intersecting with features
@@ -337,12 +343,12 @@ END
 # intersection with map extent
 smooth(make_line(translate(centroid(intersection($geometry,@map_extent)),-20,0), translate(centroid(intersection($geometry,@map_extent)),0,0), translate(centroid(intersection($geometry,@map_extent)),20,0)),3)
 
-# use make_line
+# intersection with map extent (translate x and y)
 smooth(make_line(translate(make_point(x(@map_extent_center),y(@map_extent_center)-(@map_extent_height/3)),-(@map_extent_height/3),(@map_extent_height/3)), translate(make_point(x(@map_extent_center),y(@map_extent_center)-(@map_extent_height/4)),-(@map_extent_height/3),(@map_extent_height/4)), make_point(x(@map_extent_center),y(@map_extent_center)-(@map_extent_height/3)), translate(make_point(x(@map_extent_center),y(@map_extent_center)-(@map_extent_height/4)),(@map_extent_height/3),(@map_extent_height/4)), translate(make_point(x(@map_extent_center),y(@map_extent_center)-(@map_extent_height/3)),(@map_extent_height/3),(@map_extent_height/3))),10)
 
-# center of map (reverse for labels on the bottom)
+# center of map
 boundary(make_circle(@map_extent_center,(@map_extent_height/3)))
-
+# reverse for labels on the bottom
 reverse(boundary(make_circle(@map_extent_center,(@map_extent_height/3))))
 ```
 
@@ -677,7 +683,7 @@ HTML labels
 Layout projection  
 ```
 # by atlas feature
-'PROJ:+proj=ortho +lat_0=' || y(centroid(buffer(@atlas_geometry,0))) || ' +lon_0=' || x(centroid(buffer(@atlas_geometry,0))) || ' +ellps=sphere'
+'PROJ:+proj=ortho +lat_0=' || y(@atlas_geometry) || ' +lon_0=' || x(@atlas_geometry) || ' +ellps=sphere'
 
 # example of tilted perspective
 'PROJ:+proj=tpers +tilt=0 +azi=10 +h=1000000000 +lon_0=0 +lat_0=-40 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs'
