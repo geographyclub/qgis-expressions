@@ -2,7 +2,7 @@
 
 My most used QGIS expressions, plus style files and screenshots.
 
-See the full list of qgis expressions: https://docs.qgis.org/3.34/en/docs/user_manual/expressions/functions_list.html.
+See the full list of qgis expressions: [Function list](https://docs.qgis.org/3.40/en/docs/user_manual/expressions/functions_list.html).
 
 ## TABLE OF CONTENTS
 
@@ -13,7 +13,7 @@ See the full list of qgis expressions: https://docs.qgis.org/3.34/en/docs/user_m
 5. [Misc](#misc)
 6. [Datasets](#datasets)
 
-### make_point
+## Make
 
 Make snapped points by rounding  
 ```
@@ -660,7 +660,7 @@ lower(replace(replace("name",' ','_'),'.','')) || '_' || round(x_min(map_get(ite
 lower(replace(replace("name",' ','_'),'.','')) || '-' || lower(replace(replace("adm0name",' ','_'),'.','')) 
 ```
 
-leading zeroes in filename  
+Leading zeroes in filename  
 ```
 'frame_' || lpad(@atlas_featurenumber, 4, '0')
 ```
