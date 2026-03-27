@@ -362,6 +362,43 @@ CASE WHEN "aspect" >= 0 AND "aspect" < 90 THEN scale_linear("aspect",0,90,350,36
 END
 ```
 
+Scale labels in ortho projection
+```
+with_variable(
+  'lat0',
+  radians(to_real(regexp_replace(@project_crs_proj4, '.*\+lat_0=([-0-9.]+).*', '\\1'))),
+  with_variable(
+    'lon0',
+    radians(to_real(regexp_replace(@project_crs_proj4, '.*\+lon_0=([-0-9.]+).*', '\\1'))),
+    with_variable(
+      'pt_ll',
+      transform($geometry, @layer_crs, 'EPSG:4326'),
+      with_variable(
+        'lat',
+        radians(y(@pt_ll)),
+        with_variable(
+          'lon',
+          radians(x(@pt_ll)),
+          with_variable(
+            'ang',
+            degrees(
+              acos(
+                sin(@lat0) * sin(@lat) +
+                cos(@lat0) * cos(@lat) * cos(@lon - @lon0)
+              )
+            ),
+            case
+              when @ang > 90 then 0
+              else scale_linear(@ang, 0, 90, 600000, 6000)
+            end
+          )
+        )
+      )
+    )
+  )
+)
+```
+
 Place labels outside geometry
 ```
 difference(@map_extent,$geometry)
