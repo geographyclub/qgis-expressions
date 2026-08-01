@@ -340,6 +340,12 @@ CASE WHEN x($geometry) >= 160 THEN smooth(make_line(translate($geometry,-20,0),t
   ELSE smooth(make_line(translate($geometry,-10,0),$geometry,translate($geometry,10,0)),3)
 END
 
+# use centroid for polygons
+CASE WHEN x(centroid($geometry)) >= 160 THEN smooth(make_line(translate(centroid($geometry),-20,0),translate(centroid($geometry),-10,0),centroid($geometry)),3)
+  WHEN x(centroid($geometry)) <= -160 THEN smooth(make_line(centroid($geometry),translate(centroid($geometry),10,0),translate(centroid($geometry),20,0)),3)
+  ELSE smooth(make_line(translate(centroid($geometry),-10,0),centroid($geometry),translate(centroid($geometry),10,0)),3)
+END
+
 # intersection with map extent
 smooth(make_line(translate(centroid(intersection($geometry,@map_extent)),-20,0), translate(centroid(intersection($geometry,@map_extent)),0,0), translate(centroid(intersection($geometry,@map_extent)),20,0)),3)
 
@@ -352,6 +358,14 @@ boundary(make_circle(@map_extent_center,(@map_extent_height/3)))
 reverse(boundary(make_circle(@map_extent_center,(@map_extent_height/3))))
 ```
 
+Scale line width with latitude  
+```
+CASE WHEN y($geometry) <= 0 THEN scale_linear(y($geometry),-180,0,0.01,0.1)
+  WHEN y($geometry) > 0 THEN scale_linear(y($geometry),0,180,0.1,0.01)
+  ELSE 0.1
+END
+```
+
 Rotate labels
 ```
 CASE WHEN "aspect" >= 0 AND "aspect" < 90 THEN scale_linear("aspect",0,90,350,360)
@@ -362,7 +376,7 @@ CASE WHEN "aspect" >= 0 AND "aspect" < 90 THEN scale_linear("aspect",0,90,350,36
 END
 ```
 
-Scale labels in ortho projection
+Scale label in ortho projection
 ```
 with_variable(
   'lat0',
@@ -391,6 +405,60 @@ with_variable(
               when @ang > 90 then 0
               else scale_linear(@ang, 0, 90, 600000, 6000)
             end
+          )
+        )
+      )
+    )
+  )
+)
+
+# with dem multiplier
+with_variable(
+  'lat0',
+  radians(to_real(regexp_replace(@project_crs_proj4, '.*\+lat_0=([-0-9.]+).*', '\\1'))),
+  with_variable(
+    'lon0',
+    radians(to_real(regexp_replace(@project_crs_proj4, '.*\+lon_0=([-0-9.]+).*', '\\1'))),
+    with_variable(
+      'pt_ll',
+      transform($geometry, @layer_crs, 'EPSG:4326'),
+      with_variable(
+        'lat',
+        radians(y(@pt_ll)),
+        with_variable(
+          'lon',
+          radians(x(@pt_ll)),
+          with_variable(
+            'ang',
+            degrees(
+              acos(
+                sin(@lat0) * sin(@lat) +
+                cos(@lat0) * cos(@lat) * cos(@lon - @lon0)
+              )
+            ),
+
+            -- base size from globe distance
+            with_variable(
+              'base_size',
+              case
+                when @ang > 90 then 0
+                else scale_linear(@ang, 0, 90, 120000, 6000)
+              end,
+
+              -- DEM multiplier
+              with_variable(
+                'dem_factor',
+                scale_linear(
+                  "dem_mean",
+                  0,        -- min elevation (adjust)
+                  1500,     -- max elevation (adjust)
+                  1,      -- smallest multiplier
+                  2       -- largest multiplier
+                ),
+
+                @base_size * @dem_factor
+              )
+            )
           )
         )
       )
@@ -723,6 +791,8 @@ Layout projection
 'PROJ:+proj=ortho +lat_0=' || y(@atlas_geometry) || ' +lon_0=' || x(@atlas_geometry) || ' +ellps=sphere'
 
 # example of tilted perspective
+# low-orbit: +h=400000, satellite: +h=2000000, high-orbit: +h=35786000
+
 'PROJ:+proj=tpers +tilt=0 +azi=10 +h=1000000000 +lon_0=0 +lat_0=-40 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs'
 
 # continent
