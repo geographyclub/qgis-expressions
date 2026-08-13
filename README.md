@@ -747,13 +747,17 @@ Make your own legend with HTML
 
 ## Print layout
 
-Variables
+Examples  
 ```
 "_CONTINENT" || '_' || "adm0name" || '_' || "adm1name" || '_' || "name" || '_' || round(map_get(item_variables('Map 1'),'map_extent_width') / 3)
 
 replace("_CONTINENT" || '_x_' || round("longitude") || '_y_' || round("latitude") || '_width_' || round(map_get(item_variables('Map 1'),'map_extent_width')) || '_height_' || round(map_get(item_variables('Map 1'),'map_extent_height')),' ','_')
 
 replace(replace("_CONTINENT" || '@' || "biome" || '@' || "adm0name" || '_x_' || round("longitude",2) || '_y_' || round("latitude",2) || '_width_' || round(map_get(item_variables('Map 1'),'map_extent_width'),2) || '_height_' || round(map_get(item_variables('Map 1'),'map_extent_height'),2),' ','_'),'/','_')
+
+regexp_replace(replace(replace(replace("area_name", '.', ' '), '/', ' '), '\'', ' '), ' +', '_')
+
+regexp_replace(replace(@atlas_pagename, '.', ''), ' +', '_')
 ```
 
 Example of map variables in filename  
@@ -773,11 +777,6 @@ Leading zeroes in filename
 Scale with map id
 ```
 1:[% format_number(map_get(item_variables( 'map1' ), 'map_scale'),0) %]
-```
-
-Regex replace
-```
-regexp_replace(replace(@atlas_pagename, '.', ''), ' +', '_')
 ```
 
 HTML labels
@@ -851,6 +850,12 @@ bounds_height(transform(@atlas_geometry,'EPSG:4326','EPSG:3857'))*0.001/3
 
 ## Misc
 
+User directories  
+```
+# svg
+~/.local/share/QGIS/QGIS3/profiles/default/svg
+```
+
 XYZ Tiles
 ```
 # google satellite 
@@ -923,12 +928,87 @@ END
 
 ### OpenStreetMap
 
-Tags
+Hstore  
 ```
-# Label english name if available
-CASE WHEN "other_tags" LIKE '%name:en%' THEN regexp_replace(regexp_replace("other_tags",'^.*"name:en"=>"',''),'".*$','')
-  ELSE "name"
+# get value
+"other_tags"['amenity']
+```
+
+HTML label with hstore  
+```
+# html labels
+'<div style="text-align:center;"><p><img width="20" height="20" src="' || 
+CASE
+    WHEN "amenity" = 'arts_centre' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/palette.svg'
+    WHEN "amenity" = 'atm' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/money-bill.svg'
+    WHEN "amenity" = 'bank' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/landmark.svg'
+    WHEN "amenity" = 'bar' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/martini-glass-citrus.svg'
+    WHEN "amenity" = 'bench' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/chair.svg'
+    WHEN "amenity" = 'bicycle_rental' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/bicycle.svg'
+    WHEN "amenity" = 'biergarten' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/beer-mug-empty.svg'
+    WHEN "amenity" = 'cafe' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/mug-saucer.svg'
+    WHEN "amenity" = 'car_rental' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/car.svg'
+    WHEN "amenity" = 'car_sharing' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/car-side.svg'
+    WHEN "amenity" = 'car_wash' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/car.svg'
+    WHEN "amenity" = 'cinema' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/film.svg'
+    WHEN "amenity" = 'college' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/graduation-cap.svg'
+    WHEN "amenity" = 'community_centre' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/people-group.svg'
+    WHEN "amenity" = 'dentist' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/tooth.svg'
+    WHEN "amenity" = 'doctors' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/stethoscope.svg'
+    WHEN "amenity" = 'dog_park' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/dog.svg'
+    WHEN "amenity" = 'drinking_water' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/glass-water.svg'
+    WHEN "amenity" = 'embassy' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/flag.svg'
+    WHEN "amenity" = 'fast_food' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/burger.svg'
+    WHEN "amenity" = 'fire_station' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/fire-extinguisher.svg'
+    WHEN "amenity" = 'fountain' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/fountain.svg'
+    WHEN "amenity" = 'grave_yard' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/cross.svg'
+    WHEN "amenity" = 'hospital' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/hospital.svg'
+    WHEN "amenity" = 'hunting_stand' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/tree.svg'
+    WHEN "amenity" = 'library' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/book.svg'
+    WHEN "amenity" = 'marketplace' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/store.svg'
+    WHEN "amenity" = 'nightclub' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/music.svg'
+    WHEN "amenity" = 'nursing_home' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/hand-holding-heart.svg'
+    WHEN "amenity" = 'pharmacy' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/pills.svg'
+    WHEN "amenity" = 'place_of_worship' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/place-of-worship.svg'
+    WHEN "amenity" = 'playground' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/children.svg'
+    WHEN "amenity" = 'police' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/user-police.svg'
+    WHEN "amenity" = 'post_box' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/envelope-open.svg'
+    WHEN "amenity" = 'post_office' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/envelope.svg'
+    WHEN "amenity" = 'prison' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/lock.svg'
+    WHEN "amenity" = 'pub' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/beer-mug-empty.svg'
+    WHEN "amenity" = 'recycling' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/recycle.svg'
+    WHEN "amenity" = 'restaurant' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/utensils.svg'
+    WHEN "amenity" = 'school' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/school.svg'
+    WHEN "amenity" = 'shelter' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/tent.svg'
+    WHEN "amenity" = 'telephone' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/phone.svg'
+    WHEN "amenity" = 'theatre' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/masks-theater.svg'
+    WHEN "amenity" = 'toilets' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/restroom.svg'
+    WHEN "amenity" = 'townhall' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/city.svg'
+    WHEN "amenity" = 'vending_machine' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/machine.svg'
+    WHEN "amenity" = 'veterinary' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/kitchen-set.svg'
+    WHEN "amenity" = 'waste_basket' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/trash-can.svg'
+    -- Default fallback for unknown or missing values
+    ELSE '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/circle.svg'
 END
+|| '"></p><p style="font-family:Gowun Batang; font-size:18pt; font-weight:600; color:#000; line-height:80%; margin-bottom:3px;">' || "name" || '</p><p style="font-family:Montserrat; font-size:12pt; font-weight:500; color:#666; line-height:80%;">' || "other_tags"['name:en'] || '</p></div>'
+```
+
+Color from hstore  
+```
+ramp_color(
+  'Spectral',
+  scale_linear(
+    array_find(
+      array(
+        'light_rail', 'train', 'road', 'tracks', 'ferry', 
+        'subway', 'running', 'railway', 'tram', 'monorail', 
+        'dead_heading', 'hiking', 'disused', 'bus', 		'historic', 'foot', 'bicycle'
+      ),
+      "other_tags"['route']
+    ),
+    0, 16, 0, 1
+  )
+)
 ```
 
 Highways
