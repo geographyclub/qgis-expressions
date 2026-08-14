@@ -73,6 +73,62 @@ Make line from array
 make_line(array_agg(translate($geometry, 0, raster_value('topo15_432', 1, $geometry) * 0.001), group_by:=$y))
 ```
 
+Split line into equal segments  
+```
+# single line
+with_variable('n', 4, -- Number of equal line parts
+  collect_geometries(
+    array_foreach(
+      generate_series(0, @n - 1),
+      line_substring(
+        $geometry,
+        (@element / @n) * length($geometry),
+        ((@element + 1) / @n) * length($geometry)
+      )
+    )
+  )
+)
+
+# multiline
+with_variable('n', 5, -- Number of equal line parts
+  with_variable('grouped_geom', line_merge(collect(@geometry, group_by:="name")),
+    collect_geometries(
+      array_foreach(
+        generate_series(0, @n - 1),
+        line_substring(
+          @grouped_geom,
+          ((@element * 1.0) / @n) * length(@grouped_geom),
+          (((@element + 1) * 1.0) / @n) * length(@grouped_geom)
+        )
+      )
+    )
+  )
+)
+```
+
+Split lines into points  
+```
+# single line
+with_variable('n', 5, -- Change 5 to the number of equal segments you want
+  collect_geometries(
+    array_foreach(
+      generate_series(0, @n),
+      line_interpolate_point($geometry, (@element / @n) * length($geometry))
+    )
+  )
+)
+
+# multiline
+with_variable('n', 5, -- Change 5 to the number of equal segments you want
+  collect_geometries(
+    array_foreach(
+      generate_series(0, @n),
+      line_interpolate_point(collect(@geometry,group_by:="name"), (@element / @n) * length(collect(@geometry,group_by:="name")))
+    )
+  )
+)
+```
+
 Make dynamic triangle  
 ```
 make_triangle(translate(centroid($geometry),-2.5,0),translate(centroid($geometry),0,scale_linear("dem_mean",-1500,1500,0,5)),translate(centroid($geometry),2.5,0))
@@ -934,10 +990,10 @@ Hstore
 "other_tags"['amenity']
 ```
 
-HTML label with hstore  
+HTML label with hstore (enable html label)  
 ```
-# html labels
-'<div style="text-align:center;"><p><img width="20" height="20" src="' || 
+# with amenity field
+'<div style="text-align:center;"><p><img width="10" height="10" src="' || 
 CASE
     WHEN "amenity" = 'arts_centre' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/palette.svg'
     WHEN "amenity" = 'atm' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/money-bill.svg'
@@ -990,7 +1046,63 @@ CASE
     -- Default fallback for unknown or missing values
     ELSE '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/circle.svg'
 END
-|| '"></p><p style="font-family:Gowun Batang; font-size:18pt; font-weight:600; color:#000; line-height:80%; margin-bottom:3px;">' || "name" || '</p><p style="font-family:Montserrat; font-size:12pt; font-weight:500; color:#666; line-height:80%;">' || "other_tags"['name:en'] || '</p></div>'
+|| '"></p><p style="font-family:Gowun Batang; font-size:9pt; font-weight:600; color:#000; line-height:80%;">' || "name" || '</p><p style="font-family:Montserrat; font-size:6pt; font-weight:500; color:#666; line-height:80%;">' || replace(wordwrap("other_tags"['name:en'], 20), '\n', '<br>') || '</p></div>'
+
+# other_tags
+'<div style="text-align:center;"><p><img width="10" height="10" src="' || 
+CASE
+    WHEN other_tags['amenity'] = 'arts_centre' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/palette.svg'
+    WHEN other_tags['amenity'] = 'atm' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/money-bill.svg'
+    WHEN other_tags['amenity'] = 'bank' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/landmark.svg'
+    WHEN other_tags['amenity'] = 'bar' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/martini-glass-citrus.svg'
+    WHEN other_tags['amenity'] = 'bench' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/chair.svg'
+    WHEN other_tags['amenity'] = 'bicycle_rental' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/bicycle.svg'
+    WHEN other_tags['amenity'] = 'biergarten' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/beer-mug-empty.svg'
+    WHEN other_tags['amenity'] = 'cafe' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/mug-saucer.svg'
+    WHEN other_tags['amenity'] = 'car_rental' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/car.svg'
+    WHEN other_tags['amenity'] = 'car_sharing' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/car-side.svg'
+    WHEN other_tags['amenity'] = 'car_wash' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/car.svg'
+    WHEN other_tags['amenity'] = 'cinema' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/film.svg'
+    WHEN other_tags['amenity'] = 'college' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/graduation-cap.svg'
+    WHEN other_tags['amenity'] = 'community_centre' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/people-group.svg'
+    WHEN other_tags['amenity'] = 'dentist' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/tooth.svg'
+    WHEN other_tags['amenity'] = 'doctors' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/stethoscope.svg'
+    WHEN other_tags['amenity'] = 'dog_park' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/dog.svg'
+    WHEN other_tags['amenity'] = 'drinking_water' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/glass-water.svg'
+    WHEN other_tags['amenity'] = 'embassy' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/flag.svg'
+    WHEN other_tags['amenity'] = 'fast_food' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/burger.svg'
+    WHEN other_tags['amenity'] = 'fire_station' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/fire-extinguisher.svg'
+    WHEN other_tags['amenity'] = 'fountain' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/fountain.svg'
+    WHEN other_tags['amenity'] = 'grave_yard' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/cross.svg'
+    WHEN other_tags['amenity'] = 'hospital' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/hospital.svg'
+    WHEN other_tags['amenity'] = 'hunting_stand' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/tree.svg'
+    WHEN other_tags['amenity'] = 'library' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/book.svg'
+    WHEN other_tags['amenity'] = 'marketplace' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/store.svg'
+    WHEN other_tags['amenity'] = 'nightclub' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/music.svg'
+    WHEN other_tags['amenity'] = 'nursing_home' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/hand-holding-heart.svg'
+    WHEN other_tags['amenity'] = 'pharmacy' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/pills.svg'
+    WHEN other_tags['amenity'] = 'place_of_worship' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/place-of-worship.svg'
+    WHEN other_tags['amenity'] = 'playground' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/children.svg'
+    WHEN other_tags['amenity'] = 'police' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/user-police.svg'
+    WHEN other_tags['amenity'] = 'post_box' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/envelope-open.svg'
+    WHEN other_tags['amenity'] = 'post_office' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/envelope.svg'
+    WHEN other_tags['amenity'] = 'prison' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/lock.svg'
+    WHEN other_tags['amenity'] = 'pub' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/beer-mug-empty.svg'
+    WHEN other_tags['amenity'] = 'recycling' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/recycle.svg'
+    WHEN other_tags['amenity'] = 'restaurant' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/utensils.svg'
+    WHEN other_tags['amenity'] = 'school' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/school.svg'
+    WHEN other_tags['amenity'] = 'shelter' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/tent.svg'
+    WHEN other_tags['amenity'] = 'telephone' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/phone.svg'
+    WHEN other_tags['amenity'] = 'theatre' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/masks-theater.svg'
+    WHEN other_tags['amenity'] = 'toilets' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/restroom.svg'
+    WHEN other_tags['amenity'] = 'townhall' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/city.svg'
+    WHEN other_tags['amenity'] = 'vending_machine' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/machine.svg'
+    WHEN other_tags['amenity'] = 'veterinary' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/kitchen-set.svg'
+    WHEN other_tags['amenity'] = 'waste_basket' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/trash-can.svg'
+    -- Default fallback for unknown or missing values
+    ELSE '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/circle.svg'
+END
+|| '"></p><p style="font-family:Gowun Batang; font-size:9pt; font-weight:600; color:#000; line-height:80%;">' || "name" || '</p><p style="font-family:Montserrat; font-size:6pt; font-weight:500; color:#666; line-height:80%;">' || replace(wordwrap("other_tags"['name:en'], 20), '\n', '<br>') || '</p></div>'
 ```
 
 Color from hstore  
