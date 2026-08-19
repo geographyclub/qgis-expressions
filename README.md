@@ -225,7 +225,7 @@ translate($geometry,0,scale_linear("meters",0,7800,0,2))
 translate(intersection($geometry, @map_extent), (@map_extent_width/2), 0)
 
 # isometric (use with transform)
-translate(smooth(simplify_vw($geometry,0),0), scale_linear("amax",0,4000,0,30) * -1, scale_linear("amax",0,4000,0,30) * -1)
+translate(@geometry, scale_linear("amax",0,4000,0,30) * -1, scale_linear("amax",0,4000,0,30) * -1)
 
 # clip & move
 translate(intersection($geometry,bounds(make_line(make_point(x(@map_extent_center) - (@map_extent_width/4), y(@map_extent_center) - (@map_extent_height/4)), make_point(x(@map_extent_center) + (@map_extent_width/4), y(@map_extent_center) + (@map_extent_height/4))))),0,-(@map_extent_height/4))
@@ -277,8 +277,15 @@ wave_randomized(extend(segments_to_lines($geometry),randf(0,3),randf(0,3)),1,10,
 wave_randomized(simplify_vw(segments_to_lines($geometry),10),10,100,0.1,0.2)
 ```
 
-Make progressively simpler/smoother geometries in an array  
+Smooth  
 ```
+simplify + smooth
+smooth(simplify_vw($geometry,0),0)
+
+# multilines
+smooth(densify_by_distance(simplify(line_merge(collect(@geometry, group_by:="name")),100),100),3)
+
+# make progressively simpler/smoother geometries in an array  
 collect_geometries(array_foreach(generate_series(0,5), smooth(simplify_vw($geometry,@element),3)))
 ```
 
@@ -865,11 +872,6 @@ Scale with map id
 1:[% format_number(map_get(item_variables( 'map1' ), 'map_scale'),0) %]
 ```
 
-HTML labels
-```
-<p style="font-family:'Montserrat Thin';letter-spacing:10">WORLD MAP</p>
-```
-
 Layout projection  
 ```
 # by atlas feature
@@ -1146,6 +1148,26 @@ with_variable('anchor_geom', centroid(geometry(get_feature(@layer_name, 'name', 
 
 # from center to distance
 with_variable('anchor_geom', centroid(geometry(get_feature(@layer_name, 'name', "anchor"))), with_variable('center_3857', transform(@anchor_geom, 'EPSG:4326', 'EPSG:3857'), with_variable('pt_3857', transform($geometry, 'EPSG:4326', 'EPSG:3857'), transform(make_line(project(@center_3857, 500, azimuth(@center_3857, @pt_3857)), @pt_3857), 'EPSG:3857', 'EPSG:4326'))))
+
+# take the geometry of the closest line on boundary
+with_variable('anchor_geom', centroid(geometry(get_feature(@layer_name, 'name', 'anchor'))),
+with_variable('center_3857', transform(@anchor_geom, 'EPSG:4326', 'EPSG:3857'),
+with_variable('pt_3857', transform($geometry, 'EPSG:4326', 'EPSG:3857'),
+with_variable('box_3857', scale(transform(@map_extent, @project_crs, 'EPSG:3857'), 2.2/3, 2.2/3, @center_3857),
+with_variable('lines', geometries_to_array(segments_to_lines(densify_by_count(boundary(@box_3857),8))),
+
+    transform(
+        array_filter(
+            @lines,
+            distance(@element, @pt_3857) = array_min(
+                array_foreach(@lines, distance(@element, @pt_3857))
+            )
+        )[0],
+        'EPSG:3857',
+        'EPSG:4326'
+    )
+
+)))))
 ```
 
 ### WWF Ecoregions
