@@ -304,8 +304,8 @@ rand(0,2) IN (0,1)
 # with variable
 with_variable('rando', rand(0, 1),
 CASE
-  WHEN @rando = 0 THEN '/home/steve/Downloads/person1_' || to_string(rand(1, 15)) || '.svg'
-  WHEN @rando = 1 THEN '/home/steve/Downloads/tree1_' || to_string(rand(1, 16)) || '.svg'
+  WHEN @rando = 0 THEN '/home/steve/Downloads/people_' || to_string(rand(1, 15)) || '.svg'
+  WHEN @rando = 1 THEN '/home/steve/Downloads/tree_' || to_string(rand(1, 16)) || '.svg'
 END
 )
 ```
@@ -1039,7 +1039,7 @@ scale_linear("tag_count",1,100,1,10)
 HTML label + svg marker (enable html label)  
 ```
 # markets
-'<div style="text-align:center;"><p><img width="20" height="20" src="' || '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/store.svg' || '"></p><p style="font-family:Gowun Batang; font-size:18pt; font-weight:600; color:#000; line-height:80%; margin-bottom:1px;">' || replace(wordwrap("name", 10), '\n', '<br>') || '</p><p style="font-family:Montserrat; font-size:12pt; font-weight:500; color:#666; line-height:80%;">' || replace(wordwrap("other_tags"['name:en'], 17), '\n', '<br>') || '</p></div>'
+'<div style="text-align:center; font-family:Noto Sans CJK KR; font-size:9pt; font-weight:500; color:#666;"><p><img height="15" src="' || '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/store.svg' || '"></p><p>' || replace(wordwrap("name", 10), '\n', '<br>') || '</p><p>' || replace(wordwrap(hstore_to_map("other_tags")['name:en'], 17), '\n', '<br>') || '</p></div>'
 
 # amenity
 '<div style="text-align:center;"><p><img width="10" height="10" src="' || CASE WHEN other_tags['amenity'] = 'arts_centre' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/palette.svg' WHEN other_tags['amenity'] = 'atm' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/money-bill.svg' WHEN other_tags['amenity'] = 'bank' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/landmark.svg' WHEN other_tags['amenity'] = 'bar' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/martini-glass-citrus.svg' WHEN other_tags['amenity'] = 'bench' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/chair.svg' WHEN other_tags['amenity'] = 'bicycle_rental' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/bicycle.svg' WHEN other_tags['amenity'] = 'biergarten' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/beer-mug-empty.svg' WHEN other_tags['amenity'] = 'cafe' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/mug-saucer.svg' WHEN other_tags['amenity'] = 'car_rental' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/car.svg' WHEN other_tags['amenity'] = 'car_sharing' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/car-side.svg' WHEN other_tags['amenity'] = 'car_wash' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/car.svg' WHEN other_tags['amenity'] = 'cinema' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/film.svg' WHEN other_tags['amenity'] = 'college' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/graduation-cap.svg' WHEN other_tags['amenity'] = 'community_centre' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/people-group.svg' WHEN other_tags['amenity'] = 'dentist' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/tooth.svg' WHEN other_tags['amenity'] = 'doctors' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/stethoscope.svg' WHEN other_tags['amenity'] = 'dog_park' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/dog.svg' WHEN other_tags['amenity'] = 'drinking_water' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/glass-water.svg' WHEN other_tags['amenity'] = 'embassy' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/flag.svg' WHEN other_tags['amenity'] = 'fast_food' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/burger.svg' WHEN other_tags['amenity'] = 'fire_station' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/fire-extinguisher.svg' WHEN other_tags['amenity'] = 'fountain' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/fountain.svg' WHEN other_tags['amenity'] = 'grave_yard' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/cross.svg' WHEN other_tags['amenity'] = 'hospital' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/hospital.svg' WHEN other_tags['amenity'] = 'hunting_stand' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/tree.svg' WHEN other_tags['amenity'] = 'library' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/book.svg' WHEN other_tags['amenity'] = 'marketplace' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/store.svg' WHEN other_tags['amenity'] = 'nightclub' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/music.svg' WHEN other_tags['amenity'] = 'nursing_home' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/hand-holding-heart.svg' WHEN other_tags['amenity'] = 'pharmacy' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/pills.svg' WHEN other_tags['amenity'] = 'place_of_worship' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/place-of-worship.svg' WHEN other_tags['amenity'] = 'playground' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/children.svg' WHEN other_tags['amenity'] = 'police' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/shield-alt.svg' WHEN other_tags['amenity'] = 'post_box' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/envelope-open.svg' WHEN other_tags['amenity'] = 'post_office' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/envelope.svg' WHEN other_tags['amenity'] = 'prison' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/lock.svg' WHEN other_tags['amenity'] = 'pub' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/beer-mug-empty.svg' WHEN other_tags['amenity'] = 'recycling' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/recycle.svg' WHEN other_tags['amenity'] = 'restaurant' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/utensils.svg' WHEN other_tags['amenity'] = 'school' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/school.svg' WHEN other_tags['amenity'] = 'shelter' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/tent.svg' WHEN other_tags['amenity'] = 'telephone' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/phone.svg' WHEN other_tags['amenity'] = 'theatre' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/masks-theater.svg' WHEN other_tags['amenity'] = 'toilets' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/restroom.svg' WHEN other_tags['amenity'] = 'townhall' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/city.svg' WHEN other_tags['amenity'] = 'vending_machine' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/machine.svg' WHEN other_tags['amenity'] = 'veterinary' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/kitchen-set.svg' WHEN other_tags['amenity'] = 'waste_basket' THEN '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/trash-can.svg' ELSE '/home/steve/.local/share/QGIS/QGIS3/profiles/default/svg/fontawesome/solid/circle.svg' END || '"></p>' || CASE WHEN regexp_match(trim(regexp_replace("name", '\\s*\\([^)]*\\)', '')), '[\\x{ac00}-\\x{d7a3}\\x{1100}-\\x{11ff}\\x{3130}-\\x{318f}]') > 0 THEN '<p style="font-family:Gowun Batang; font-size:9pt; font-weight:500; color:#666; line-height:80%;">' || replace(wordwrap(trim(regexp_replace("name", '\\s*\\([^)]*\\)', '')), 7), '\n', '<br>') ELSE '<p style="font-family:Montserrat; font-size:8pt; font-weight:500; color:#666; line-height:80%;">' || replace(wordwrap(trim(regexp_replace(title("name"), '\\s*\\([^)]*\\)', '')), 17), '\n', '<br>') END || '</p>' || CASE WHEN coalesce(other_tags['name:en'], '') != '' AND other_tags['name:en'] != "name" THEN '<p style="font-family:Montserrat; font-size:6pt; font-weight:400; color:#666; line-height:80%;">' || replace(wordwrap(title(other_tags['name:en']), 17), '\n', '<br>') || '</p>' ELSE '' END || '</div>'
@@ -1143,6 +1143,39 @@ GLAM/GLEAM map with light beam
 
 Make line for labels  
 ```
+# from center to circle
+with_variable('center', point_on_surface(geometry(get_feature(@layer_name, 'name', '서울특별시'))),
+  with_variable('radius', (min(bounds_width(@map_extent), bounds_height(@map_extent)) / 2) * (3 / 3),
+    with_variable('boundary', boundary(buffer(@center, @radius)),
+      with_variable('ray', make_line(@center, project(@center, 10000000, azimuth(@center, centroid($geometry)))),
+        make_line(
+          intersection(@ray, @boundary),
+          point_on_surface($geometry)
+        )
+      )
+    )
+  )
+)
+
+# varying line length to circle (from shorter to longer near the edge)
+with_variable('center', centroid(geometry(get_feature(@layer_name, 'name', '서울특별시'))),
+  with_variable('radius', (min(bounds_width(@map_extent), bounds_height(@map_extent)) / 2) * (3 / 3),
+    with_variable('pt', centroid($geometry),
+      with_variable('bearing', azimuth(@center, @pt),
+        with_variable('d_pt', distance(@center, @pt),
+          with_variable('scale_factor', clamp(0, @d_pt / @radius, 1),
+            with_variable('start_dist', @d_pt + (@radius - @d_pt) * @scale_factor,
+              with_variable('start_pt', project(@center, @start_dist, @bearing),
+                make_line(@start_pt, @pt)
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+)
+
 # from center to boundary
 with_variable('anchor_geom', centroid(geometry(get_feature(@layer_name, 'name', "anchor"))), with_variable('center_3857', transform(@anchor_geom, 'EPSG:4326', 'EPSG:3857'), with_variable('pt_3857', transform($geometry, 'EPSG:4326', 'EPSG:3857'), with_variable('boundary_3857', boundary(scale(transform(@map_extent, @project_crs, 'EPSG:3857'), 2/3, 2/3, @center_3857)), with_variable('ray', make_line(@center_3857, project(@center_3857, 10000000, azimuth(@center_3857, @pt_3857))), transform(make_line(intersection(@ray, @boundary_3857), @pt_3857), 'EPSG:3857', 'EPSG:4326'))))))
 
